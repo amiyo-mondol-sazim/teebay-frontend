@@ -1,2592 +1,712 @@
 openapi: 3.1.1
 info:
-  title: Lune Pulse APIs
-  description: Lune Pulse APIs
+  title: Teebay APIs
+  description: Teebay APIs
   version: 1.0.0
 servers:
   - url: "{base_url}"
     variables:
       base_url:
-        default: http://localhost:3000
+        default: http://localhost:5000
         description: Base URL for the API
-
 security:
   - bearerAuth: []
-
-# ####################################################################################################################
-
-paths:
-  #  Start: Merchant Section
-  /api/v1/profile:
-    get:
-      summary: Get current merchant
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      responses:
-        "200":
-          description: A single merchant
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Merchant"
-        "404":
-          description: Merchant not found
-    put:
-      summary: Update merchant information
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  description: Merchant name
-                  example: "Updated Acme Corporation"
-                website:
-                  type: string
-                  description: Merchant website URL
-                  example: "https://updated-acme.com"
-              minProperties: 1
-      responses:
-        "200":
-          description: Merchant updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Merchant"
-        "400":
-          description: Bad request - Invalid input data
-        "401":
-          description: Unauthorized
-        "403":
-          description: Forbidden
-        "422":
-          description: Unprocessable entity - Validation errors
-
-  /api/v1/auth/me:
-    get:
-      summary: Get current user
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      responses:
-        "200":
-          description: Current authenticated user
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/MerchantUser"
-        "401":
-          description: Unauthorized
-        "404":
-          description: User not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/NotFoundError"
-        "503":
-          description: Service temporarily unavailable
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-    put:
-      summary: Update current user's password
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - current_password
-                - password
-                - password_confirmation
-              properties:
-                current_password:
-                  type: string
-                  description: current password
-                password:
-                  type: string
-                  description: new password
-                password_confirmation:
-                  type: string
-                  description: new password confirmation
-      responses:
-        "200":
-          description: Password updated successfully
-        "400":
-          description: Invalid password format or missing parameters
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-        "401":
-          description: Unauthorized or incorrect current password
-        "404":
-          description: User not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/NotFoundError"
-        "422":
-          description: Validation error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ValidationError"
-        "503":
-          description: Service temporarily unavailable
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-  /api/v1/merchant/users:
-    get:
-      summary: Get all users for current merchant
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      responses:
-        "200":
-          description: A list of users
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/MerchantUser"
-        "401":
-          description: Unauthorized
-        "503":
-          description: Service temporarily unavailable
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-  /api/v1/auth/login:
-    post:
-      summary: Login a user
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - email
-                - password
-              properties:
-                email:
-                  type: string
-                  format: email
-                password:
-                  type: string
-      responses:
-        "200":
-          description: User logged in successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  token:
-                    type: string
-                  user:
-                    $ref: "#/components/schemas/MerchantUser"
-        "400":
-          description: Missing required parameters
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ParameterMissingError"
-        "401":
-          description: Invalid credentials
-        "404":
-          description: Merchant not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/NotFoundError"
-        "503":
-          description: Service temporarily unavailable
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-  /api/v1/auth/logout:
-    delete:
-      summary: Logout a user
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      responses:
-        "204":
-          description: User logged out successfully
-        "401":
-          description: Unauthorized
-        "503":
-          description: Service temporarily unavailable
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-  /api/v1/merchant/offers:
-    get:
-      summary: Get all offers
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-        - name: page
-          in: query
-          required: false
-          schema:
-            type: [integer, string]
-            default: 1
-        - name: per_page
-          in: query
-          required: false
-          schema:
-            type: [integer, string]
-            default: 10
-        - name: status
-          in: query
-          required: false
-          schema:
-            type: string
-            enum:
-              - draft
-              - pending_approval
-              - active
-              - expired
-      responses:
-        "200":
-          description: A list of offers
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  offers:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/OfferList"
-                  status_counts:
-                    type: object
-                    properties:
-                      draft:
-                        type: integer
-                        description: Number of offers in draft status
-                      pending_approval:
-                        type: integer
-                        description: Number of offers pending approval
-                      active:
-                        type: integer
-                        description: Number of active offers
-                      expired:
-                        type: integer
-                        description: Number of expired offers (sum of rejected and completed)
-                  metrics:
-                    type: object
-                    description: "Aggregate metrics across all offers for this merchant"
-                    properties:
-                      total_revenue_generated:
-                        type: number
-                        minimum: 0
-                        description: "Total revenue generated across all offers for this merchant"
-                        example: 15000.00
-                      total_redemptions:
-                        type: integer
-                        minimum: 0
-                        description: "Total number of redemptions across all offers for this merchant"
-                        example: 150
-                      total_budget_used:
-                        type: number
-                        minimum: 0
-                        description: "Total budget used across all offers for this merchant"
-                        example: 1500.00
-                  pagination:
-                    $ref: "#/components/schemas/pagination"
-        "401":
-          description: Unauthorized
-        "403":
-          description: Forbidden
-        "503":
-          description: Service temporarily unavailable
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-    post:
-      summary: Create a new offer
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/CreateOffer"
-
-      responses:
-        "201":
-          description: Offer created successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Offer"
-        "400":
-          description: Invalid request body
-        "401":
-          description: Unauthorized
-        "403":
-          description: Forbidden - Insufficient permissions
-
-  /api/v1/merchant/offers/{id}:
-    get:
-      summary: Get an offer by ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      responses:
-        "200":
-          description: A single offer with rules
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Offer"
-        "404":
-          description: Offer not found
-
-    put:
-      summary: Update an existing offer
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  example: "10% off all items"
-                description:
-                  type: string
-                  example: "Get 10% off on all items in the store"
-                is_draft:
-                  type: boolean
-                  default: true
-                tenant_id:
-                  type: integer
-                  description: "Tenant ID that this offer applies to"
-                  example: 1
-                redemptions_count_limit:
-                  type: integer
-                  description: "Maximum number of redemptions allowed for this offer"
-                  example: 1000
-                budget_limit:
-                  type: number
-                  description: "Maximum budget limit for this offer in currency units"
-                  example: 50000.00
-                start_date:
-                  type: string
-                  format: date-time
-                  description: "Required for non-draft offers to set status to pending_approval"
-                  example: "2024-06-01T00:00:00Z"
-                end_date:
-                  type: string
-                  format: date-time
-                  description: "Required for non-draft offers to set status to pending_approval"
-                  example: "2024-12-31T23:59:59Z"
-                terms_and_conditions:
-                  type: string
-                  description: "Terms and conditions for the offer"
-                  example: "This offer is valid for a limited time only. Cashback will be credited within 24-48 hours."
-                rules:
-                  type: array
-                  items:
-                    type: object
-                    required:
-                      - transaction_count_lower_limit
-                      - transaction_count_upper_limit
-                      - transaction_amount_lower_limit
-                      - transaction_amount_upper_limit
-                    properties:
-                      transaction_count_lower_limit:
-                        type: [integer, "null"]
-                        example: 1
-                      transaction_count_upper_limit:
-                        type: [integer, "null"]
-                        example: 10
-                      transaction_amount_lower_limit:
-                        type: [integer, "null"]
-                        example: 100
-                      transaction_amount_upper_limit:
-                        type: [integer, "null"]
-                        example: 1000
-                      number_of_days:
-                        type: integer
-                        minimum: 1
-                        maximum: 365
-                        description: "Number of days for the offer rule (1-365)"
-                        example: 30
-                      target_brand_ids:
-                        type: array
-                        items:
-                          type: integer
-                        description: "Optional array of brand IDs. At least one of target_brand_ids, target_category_ids, or target_sub_category_ids must be provided."
-                        example: [1, 2, 3]
-                      target_category_ids:
-                        type: array
-                        items:
-                          type: integer
-                        description: "Optional array of category IDs. At least one of target_brand_ids, target_category_ids, or target_sub_category_ids must be provided."
-                        example: [1, 2]
-                      target_sub_category_ids:
-                        type: array
-                        items:
-                          type: integer
-                        description: "Optional array of sub-category IDs. At least one of target_brand_ids, target_category_ids, or target_sub_category_ids must be provided."
-                        example: [1]
-                  example:
-                    - transaction_count_lower_limit: 1
-                      transaction_count_upper_limit: 10
-                      transaction_amount_lower_limit: 100
-                      transaction_amount_upper_limit: 1000
-                      number_of_days: 30
-                      target_brand_ids: [1, 2, 3]
-                      target_category_ids: [1, 2]
-                      target_sub_category_ids: [1]
-                cashback_rule:
-                  type: object
-                  description: "Required for non-draft offers. Optional for draft offers."
-                  properties:
-                    cashback_type:
-                      type: string
-                      enum:
-                        - fixed
-                        - percentage
-                        - tiered
-                      example: "fixed"
-                    cashback_config:
-                      $ref: "#/components/schemas/CashbackRuleConfig"
-                  example:
-                    cashback_type: "fixed"
-                    cashback_config:
-                      cashback_amount: 10.50
-                      minimum_transaction_value: 100.00
-                offer_attachments_attributes:
-                  type: array
-                  description: "Optional array of offer attachments with images"
-                  items:
-                    type: object
-                    properties:
-                      id:
-                        type: integer
-                        description: "ID of existing attachment (for updates)"
-                      image:
-                        type: string
-                        format: binary
-                        description: "Image file to upload"
-                      _destroy:
-                        type: boolean
-                        description: "Set to true to delete this attachment"
-      responses:
-        "200":
-          description: Offer updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Offer"
-        "400":
-          description: Invalid request body
-        "401":
-          description: Unauthorized
-        "403":
-          description: Forbidden - Insufficient permissions
-        "404":
-          description: Offer not found
-        "422":
-          description: Unprocessable entity - Offer can only be modified when status is 'draft' or 'pending_approval'
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-    delete:
-      summary: Delete an offer
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      responses:
-        "204":
-          description: Offer deleted successfully
-        "401":
-          description: Unauthorized
-        "404":
-          description: Offer not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-  /api/v1/merchant/offers/{id}/add_attachments:
-    post:
-      summary: Upload a single attachment to an offer
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              required:
-                - image
-                - attachment_type
-              properties:
-                image:
-                  type: string
-                  format: binary
-                  description: "Image file to upload"
-                attachment_type:
-                  type: string
-                  enum:
-                    - banner
-                    - promotional
-                    - logo
-                  description: "Type of attachment (banner, promotional, or logo)"
-      responses:
-        "200":
-          description: Attachment added successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/OfferAttachment"
-        "400":
-          description: Bad request - Image and attachment_type are required
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-        "401":
-          description: Unauthorized
-        "404":
-          description: Offer not found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-        "422":
-          description: Validation error or offer status restriction - Offer can only be modified when status is 'draft' or 'pending_approval'
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-  /api/v1/merchant/offers/{id}/remove_attachments:
-    delete:
-      summary: Bulk delete attachments from an offer
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - attachment_ids
-              properties:
-                attachment_ids:
-                  type: array
-                  items:
-                    type: integer
-                  description: "Array of attachment IDs to remove"
-                  example: [1, 2, 3]
-      responses:
-        "200":
-          description: Attachments deleted successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    description: "Success message"
-                    example: "Successfully deleted 3 attachment(s)"
-                  deleted_count:
-                    type: integer
-                    description: "Number of attachments deleted"
-                    example: 3
-        "400":
-          description: Bad request - Attachment IDs are required
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-        "401":
-          description: Unauthorized
-        "404":
-          description: Offer not found or no attachments found with provided IDs
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-        "422":
-          description: Failed to remove attachment or offer status restriction - Offer can only be modified when status is 'draft' or 'pending_approval'
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-  /api/v1/merchant/brands:
-    get:
-      summary: Get all brands
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-        - name: search
-          in: query
-          required: true
-          schema:
-            type: string
-            minLength: 3
-            description: Search term must be at least 3 characters
-        - name: page
-          in: query
-          required: false
-          schema:
-            type: integer
-            default: 1
-        - name: per_page
-          in: query
-          required: false
-          schema:
-            type: integer
-            default: 10
-      responses:
-        "200":
-          description: A list of brands
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  brands:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Brand"
-                  pagination:
-                    $ref: "#/components/schemas/pagination"
-        "400":
-          description: Bad request - Invalid parameters
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-        "401":
-          description: Unauthorized
-        "403":
-          description: Forbidden
-        "503":
-          description: Service temporarily unavailable
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-  /api/v1/merchant/categories:
-    get:
-      summary: Get all categories
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-        - name: search
-          in: query
-          required: false
-          schema:
-            type: string
-            description: Optional search term to filter categories
-      responses:
-        "200":
-          description: A list of categories
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  categories:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Category"
-        "400":
-          description: Bad request - Invalid parameters
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-        "401":
-          description: Unauthorized
-        "403":
-          description: Forbidden
-        "503":
-          description: Service temporarily unavailable
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-  /api/v1/merchant/sub_categories:
-    get:
-      summary: Get all sub categories
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-        - name: category_id
-          in: query
-          required: true
-          schema:
-            type: integer
-            description: ID of the category to get sub-categories for
-        - name: search
-          in: query
-          required: false
-          schema:
-            type: string
-            description: Optional search term to filter sub-categories
-      responses:
-        "200":
-          description: A list of sub categories
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  sub_categories:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/SubCategory"
-        "400":
-          description: Bad request - Invalid parameters
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-        "401":
-          description: Unauthorized
-        "403":
-          description: Forbidden
-        "503":
-          description: Service temporarily unavailable
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-  /api/v1/merchant/tenants:
-    get:
-      summary: Get all tenants
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-        - name: page
-          in: query
-          required: false
-          schema:
-            type: integer
-            default: 1
-        - name: per_page
-          in: query
-          required: false
-          schema:
-            type: integer
-            default: 10
-      responses:
-        "200":
-          description: A list of tenants
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  tenants:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Tenant"
-                  pagination:
-                    $ref: "#/components/schemas/pagination"
-        "400":
-          description: Bad request - Invalid parameters
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-        "401":
-          description: Unauthorized
-        "403":
-          description: Forbidden
-        "503":
-          description: Service temporarily unavailable
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-  /api/v1/merchant/rule_target_count:
-    post:
-      summary: Get target customer count for offer rule validation
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - tenant_id
-                - offer_rule
-              properties:
-                tenant_id:
-                  type: integer
-                  description: "Tenant ID to get customer count for"
-                  example: 1
-                offer_rule:
-                  type: object
-                  description: "Offer rule object to calculate customer count"
-                  properties:
-                    transaction_count_lower_limit:
-                      type: [integer, "null"]
-                      description: "Lower limit for transaction count"
-                      example: 1
-                    transaction_count_upper_limit:
-                      type: [integer, "null"]
-                      description: "Upper limit for transaction count"
-                      example: 10
-                    transaction_amount_lower_limit:
-                      type: [integer, "null"]
-                      description: "Lower limit for transaction amount"
-                      example: 100
-                    transaction_amount_upper_limit:
-                      type: [integer, "null"]
-                      description: "Upper limit for transaction amount"
-                      example: 1000
-                    number_of_days:
-                      type: integer
-                      minimum: 1
-                      maximum: 90
-                      description: "Number of days for the offer rule"
-                      example: 30
-                    target_brand_ids:
-                      type: [array, "null"]
-                      items:
-                        type: integer
-                      description: "Array of target brand IDs"
-                      example: [1, 2, 3]
-                    target_category_ids:
-                      type: [array, "null"]
-                      items:
-                        type: integer
-                      description: "Array of target category IDs"
-                      example: [1, 2]
-                    target_sub_category_ids:
-                      type: [array, "null"]
-                      items:
-                        type: integer
-                      description: "Array of target sub-category IDs"
-                      example: [1, 2, 3]
-      responses:
-        "200":
-          description: Customer count retrieved successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  customer_count:
-                    type: integer
-                    description: "Number of customers matching the offer rule criteria"
-                    example: 1500
-        "400":
-          description: Invalid request body - missing required parameters
-        "401":
-          description: Unauthorized
-        "422":
-          description: Unprocessable entity - failed to get customer count
-
-  /api/v1/merchant/add_merchant_id:
-    post:
-      summary: Add a new merchant ID
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - merchant_id
-              properties:
-                merchant_id:
-                  type: string
-                  description: External merchant ID to add
-                  example: "MERCHANT-123456"
-      responses:
-        "201":
-          description: Merchant ID added successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  merchant_ids:
-                    type: array
-                    items:
-                      type: string
-                    example: ["MERCHANT-123456", "MERCHANT-789012"]
-        "400":
-          description: Bad request - Merchant ID is required
-        "401":
-          description: Unauthorized
-        "422":
-          description: Unprocessable entity - Merchant ID already exists
-
-  /api/v1/merchant/remove_merchant_id:
-    post:
-      summary: Remove a merchant ID
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - merchant_id
-              properties:
-                merchant_id:
-                  type: string
-                  description: External merchant ID to remove
-                  example: "MERCHANT-123456"
-      responses:
-        "204":
-          description: Merchant ID removed successfully
-        "400":
-          description: Bad request - Merchant ID is required
-        "401":
-          description: Unauthorized
-        "404":
-          description: Merchant ID not found
-
-  /api/v1/merchant/upload_logo:
-    post:
-      summary: Upload merchant logo
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      requestBody:
-        required: true
-        content:
-          multipart/form-data:
-            schema:
-              type: object
-              required:
-                - logo
-              properties:
-                logo:
-                  type: string
-                  format: binary
-                  description: Logo image file (JPEG, PNG, or GIF)
-      responses:
-        "200":
-          description: Logo uploaded successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  logo_url:
-                    type: string
-                    description: URL of the uploaded logo
-                    example: "https://example.com/logo.png"
-                  message:
-                    type: string
-                    example: "Logo uploaded successfully"
-        "400":
-          description: Bad request - No logo file provided
-        "401":
-          description: Unauthorized
-        "403":
-          description: Forbidden
-        "422":
-          description: Unprocessable entity - Invalid file format or size
-
-  /api/v1/merchant/delete_logo:
-    delete:
-      summary: Delete merchant logo
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      responses:
-        "200":
-          description: Logo deleted successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "Logo deleted successfully"
-        "401":
-          description: Unauthorized
-        "403":
-          description: Forbidden
-        "404":
-          description: No logo found to delete
-
-  #  End: Merchant Section
-
-  # ####################################################################################################################
-
-  # Start: Tenant Section
-  /api/v1/tenant/offers:
-    get:
-      summary: Get all tenant's offers
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-        - name: page
-          in: query
-          required: false
-          schema:
-            type: [integer, string]
-            default: 1
-        - name: per_page
-          in: query
-          required: false
-          schema:
-            type: [integer, string]
-            default: 10
-        - name: status
-          in: query
-          required: false
-          schema:
-            type: string
-            enum:
-              - pending_approval
-              - active
-              - expired
-      responses:
-        "200":
-          description: A list of offers
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  offers:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/TenantOfferList"
-                  status_counts:
-                    type: object
-                    required:
-                      - pending_approval
-                      - active
-                      - expired
-                    properties:
-                      pending_approval:
-                        type: integer
-                        description: Number of offers pending approval
-                      active:
-                        type: integer
-                        description: Number of active offers
-                      expired:
-                        type: integer
-                        description: Number of expired offers (sum of rejected and completed)
-                  metrics:
-                    type: object
-                    description: "Aggregate metrics across all offers for this merchant"
-                    properties:
-                      total_revenue_generated:
-                        type: number
-                        minimum: 0
-                        description: "Total revenue generated across all offers for this merchant"
-                        example: 15000.00
-                      total_redemptions:
-                        type: integer
-                        minimum: 0
-                        description: "Total number of redemptions across all offers for this merchant"
-                        example: 150
-                      total_budget_used:
-                        type: number
-                        minimum: 0
-                        description: "Total budget used across all offers for this merchant"
-                        example: 1500.00
-                  pagination:
-                    $ref: "#/components/schemas/pagination"
-        "401":
-          description: Unauthorized
-        "403":
-          description: Forbidden
-        "503":
-          description: Service temporarily unavailable
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-  /api/v1/tenant/offers/{id}:
-    get:
-      summary: Get a tenant's offer by ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      responses:
-        "200":
-          description: A single offer with full offer's details
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/TenantOffer"
-        "404":
-          description: Offer not found
-
-  /api/v1/tenant/offers/{id}/accept:
-    put:
-      summary: Update a tenant's offer status - accept
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      responses:
-        "200":
-          description: Offer updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/TenantOffer"
-        "401":
-          description: Unauthorized
-        "403":
-          description: Forbidden - Insufficient permissions
-        "404":
-          description: Offer not found
-        "422":
-          description: Failed to update offer
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-  /api/v1/tenant/offers/{id}/reject:
-    put:
-      summary: Update a tenant's offer status - reject
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      responses:
-        "200":
-          description: Offer updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/TenantOffer"
-        "401":
-          description: Unauthorized
-        "403":
-          description: Forbidden - Insufficient permissions
-        "404":
-          description: Offer not found
-        "422":
-          description: Failed to update offer
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-  /api/v1/tenant/cashbacks:
-    get:
-      summary: Get all tenant's cashbacks
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-        - name: status
-          in: query
-          required: false
-          schema:
-            type: string
-            enum:
-              - pending_approval
-              - approved
-              - declined
-          description: Filter cashbacks by status
-        - name: page
-          in: query
-          required: false
-          schema:
-            type: integer
-            default: 1
-        - name: per_page
-          in: query
-          required: false
-          schema:
-            type: integer
-            default: 10
-      responses:
-        "200":
-          description: A list of cashbacks for the tenant
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  cashbacks:
-                    type: array
-                    items:
-                      $ref: "#/components/schemas/Cashback"
-                  status_counts:
-                    type: object
-                    properties:
-                      pending_approval:
-                        type: integer
-                      approved:
-                        type: integer
-                      declined:
-                        type: integer
-                  pagination:
-                    $ref: "#/components/schemas/pagination"
-        "401":
-          description: Unauthorized
-        "422":
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-  /api/v1/tenant/cashbacks/{id}:
-    get:
-      summary: Get a tenant's cashback by ID
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      responses:
-        "200":
-          description: A single cashback with full details
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Cashback"
-        "401":
-          description: Unauthorized
-        "404":
-          description: Cashback not found
-        "422":
-          description: Unprocessable entity
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-    put:
-      summary: Update a tenant's cashback status
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - cashback
-              properties:
-                cashback:
-                  type: object
-                  required:
-                    - status
-                  properties:
-                    status:
-                      type: string
-                      enum:
-                        - pending_approval
-                        - approved
-                        - declined
-                      description: New status for the cashback
-      responses:
-        "200":
-          description: Cashback updated successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Cashback"
-        "401":
-          description: Unauthorized
-        "404":
-          description: Cashback not found
-        "422":
-          description: Failed to update cashback
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-  /api/v1/tenant/cashbacks/{id}/submit_feedback:
-    post:
-      summary: Submit feedback for a cashback
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              required:
-                - feedback
-              properties:
-                feedback:
-                  type: object
-                  required:
-                    - feedback_type
-                    - message
-                  properties:
-                    feedback_type:
-                      type: string
-                      enum:
-                        - wrong_calculation
-                        - refunded
-                      description: Type of feedback being submitted
-                      example: "wrong_calculation"
-                    message:
-                      type: string
-                      minLength: 10
-                      maxLength: 1000
-                      description: Detailed feedback message
-                      example: "The cashback amount calculated seems incorrect. I was expecting $15.00 but received $10.00."
-      responses:
-        "201":
-          description: Feedback submitted successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/CashbackFeedback"
-        "401":
-          description: Unauthorized
-        "404":
-          description: Cashback not found
-        "422":
-          description: Failed to submit feedback
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-  /api/v1/tenant/cashbacks/{id}/delete_feedback:
-    delete:
-      summary: Delete feedback for a cashback
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema:
-            type: integer
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      responses:
-        "200":
-          description: Feedback deleted successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-                    example: "Feedback deleted successfully"
-        "401":
-          description: Unauthorized
-        "404":
-          description: Cashback not found or no feedback exists
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-        "422":
-          description: Failed to delete feedback
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-
-  /api/v1/tenant/recalculate_cashbacks:
-    post:
-      summary: Recalculate cashbacks by IDs or offer ID
-      parameters:
-        - name: Authorization
-          in: header
-          required: false
-          schema:
-            type: string
-            format: bearer
-            example: Bearer 1234567890
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              oneOf:
-                - type: object
-                  required:
-                    - cashback_ids
-                  properties:
-                    cashback_ids:
-                      type: array
-                      items:
-                        type: integer
-                      description: Array of cashback IDs to recalculate
-                      example: [1, 2, 3]
-                - type: object
-                  required:
-                    - offer_id
-                  properties:
-                    offer_id:
-                      type: integer
-                      description: ID of the offer to recalculate all cashbacks for
-                      example: 1
-      responses:
-        "200":
-          description: Cashback recalculation job queued successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                required:
-                  - message
-                properties:
-                  message:
-                    type: string
-                    example: "Cashback recalculation job has been queued"
-                  cashback_ids:
-                    type: [array, "null"]
-                    items:
-                      type: integer
-                    nullable: true
-                    example: [1, 2, 3]
-                  offer_id:
-                    type: [integer, "null"]
-                    nullable: true
-                    example: 1
-        "400":
-          description: Bad request - invalid parameters
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-        "401":
-          description: Unauthorized
-        "500":
-          description: Internal server error
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Error"
-  # End: Tenant Section
-
-# ####################################################################################################################
-
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
-      bearerFormat: token
-
+      bearerFormat: JWT
   schemas:
+    EUserRole:
+      type: string
+      enum:
+        - SUPER_USER
+        - ADMIN
+    EUserState:
+      type: string
+      enum:
+        - UNREGISTERED
+        - ACTIVE
+        - INACTIVE
+    EVerificationRequestType:
+      type: string
+      enum:
+        - EMAIL_VERIFICATION
+        - RESET_PASSWORD
+    EVerificationRequestStatus:
+      type: string
+      enum:
+        - ACTIVE
+        - EXPIRED
+
     Error:
       type: object
-      required:
-        - error
       properties:
+        statusCode:
+          type: number
+        message:
+          type: string
         error:
           type: string
-          description: Error message
-          example: "Service temporarily unavailable"
-
-    ValidationError:
-      type: object
-      required:
-        - error
-        - details
-      properties:
-        error:
-          type: string
-          description: Error message
-          example: "Validation failed"
-        details:
-          type: array
-          items:
-            type: string
-          description: List of validation error messages
-          example:
-            - "Email can't be blank"
-            - "Password is too short (minimum is 6 characters)"
-
-    ParameterMissingError:
-      type: object
-      required:
-        - error
-      properties:
-        error:
-          type: string
-          description: Error message indicating which parameter is missing
-          example: "Missing required parameter: auth"
-
     NotFoundError:
       type: object
-      required:
-        - error
       properties:
+        statusCode:
+          type: number
+          example: 404
+        message:
+          type: string
         error:
           type: string
-          description: Error message
-          example: "Resource not found"
-
-    Merchant:
+    ParameterMissingError:
       type: object
       properties:
-        id:
-          type: integer
-        name:
-          type: [string, "null"]
-        logo:
-          type: [string, "null"]
-        website:
-          type: [string, "null"]
-        merchant_ids:
+        statusCode:
+          type: number
+          example: 400
+        message:
           type: array
           items:
             type: string
-          description: Array of external merchant IDs
-          example: ["MERCHANT-123456", "MERCHANT-789012"]
-        created_at:
+        error:
           type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
 
-    MerchantUser:
+    LoginRequest:
       type: object
+      required:
+        - email
+        - password
       properties:
-        id:
-          type: integer
-        name:
-          type: [string, "null"]
         email:
           type: string
           format: email
-        created_at:
+        password:
           type: string
-          format: date-time
-        updated_at:
+    SignInResponse:
+      type: object
+      properties:
+        accessToken:
           type: string
-          format: date-time
-
-    CreateOffer:
+        user:
+          $ref: "#/components/schemas/TokenizedUser"
+    TokenizedUser:
+      type: object
+      properties:
+        id:
+          type: number
+        claimId:
+          type: number
+        claim:
+          $ref: "#/components/schemas/EUserRole"
+        userProfileId:
+          type: number
+        email:
+          type: string
+    SelfRegisterUserDto:
       type: object
       required:
-        - name
-        - description
-        - is_draft
-        - tenant_id
-        - redemptions_count_limit
-        - budget_limit
+        - email
+        - password
+        - userProfile
       properties:
-        name:
+        email:
           type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+        userProfile:
+          $ref: "#/components/schemas/SelfRegisterUserProfileDto"
+    SelfRegisterUserProfileDto:
+      type: object
+      required:
+        - firstName
+        - lastName
+      properties:
+        firstName:
+          type: string
+          minLength: 2
           maxLength: 255
-          example: "10% off all items"
-        description:
+        lastName:
           type: string
-          example: "Get 10% off on all items in the store"
-        is_draft:
-          type: boolean
-          default: true
-        tenant_id:
-          type: integer
-          description: "Tenant ID that this offer applies to"
-          example: 1
-        redemptions_count_limit:
-          type: integer
-          minimum: 1
-          description: "Maximum number of redemptions allowed for this offer"
-          example: 1000
-        budget_limit:
+          minLength: 2
+          maxLength: 255
+    UserResponse:
+      type: object
+      properties:
+        id:
           type: number
-          minimum: 0.01
-          description: "Maximum budget limit for this offer in currency units"
-          example: 50000.00
-        start_date:
+        email:
+          type: string
+        createdAt:
           type: string
           format: date-time
-          description: "Required for non-draft offers to set status to pending_approval"
-          example: "2024-06-01T00:00:00Z"
-        end_date:
+        updatedAt:
           type: string
           format: date-time
-          description: "Required for non-draft offers to set status to pending_approval"
-          example: "2024-12-31T23:59:59Z"
-        terms_and_conditions:
-          type: string
-          description: "Terms and conditions for the offer"
-          example: "This offer is valid for a limited time only. Cashback will be credited within 24-48 hours."
-        rules:
-          type: array
-          items:
-            type: object
-            required:
-              - transaction_count_lower_limit
-              - transaction_count_upper_limit
-              - transaction_amount_lower_limit
-              - transaction_amount_upper_limit
-            properties:
-              transaction_count_lower_limit:
-                type: [integer, "null"]
-                example: 1
-              transaction_count_upper_limit:
-                type: [integer, "null"]
-                example: 10
-              transaction_amount_lower_limit:
-                type: [integer, "null"]
-                example: 100
-              transaction_amount_upper_limit:
-                type: [integer, "null"]
-                example: 1000
-              number_of_days:
-                type: integer
-                minimum: 1
-                maximum: 90
-                description: "Number of days for the offer rule (1-90). Required for non-draft offers. Defaults to 30."
-                example: 30
-              target_brand_ids:
-                type: [array, "null"]
-                items:
-                  type: integer
-                description: "Optional array of brand IDs. At least one of target_brand_ids, target_category_ids, or target_sub_category_ids must be provided."
-                example: [1, 2, 3]
-              target_category_ids:
-                type: [array, "null"]
-                items:
-                  type: integer
-                description: "Optional array of category IDs. At least one of target_brand_ids, target_category_ids, or target_sub_category_ids must be provided."
-                example: [1, 2]
-              target_sub_category_ids:
-                type: [array, "null"]
-                items:
-                  type: integer
-                description: "Optional array of sub-category IDs. At least one of target_brand_ids, target_category_ids, or target_sub_category_ids must be provided."
-                example: [1]
-          example:
-            - transaction_count_lower_limit: 1
-              transaction_count_upper_limit: 10
-              transaction_amount_lower_limit: 100
-              transaction_amount_upper_limit: 1000
-              number_of_days: 30
-              target_brand_ids: [1, 2, 3]
-              target_category_ids: [1, 2]
-              target_sub_category_ids: [1]
-        cashback_rule:
-          type: object
-          description: "Required for non-draft offers. Optional for draft offers."
-          properties:
-            cashback_type:
-              type: string
-              enum:
-                - fixed
-                - percentage
-                - tiered
-              example: "fixed"
-            cashback_config:
-              $ref: "#/components/schemas/CashbackRuleConfig"
-          example:
-            cashback_type: "fixed"
-            cashback_config:
-              cashback_amount: 10.5
-              minimum_transaction_value: 100
-      example:
-        name: "10% off all items"
-        description: "Get 10% off on all items in the store"
-        is_draft: false
-        tenant_id: 1
-        redemptions_count_limit: 1000
-        budget_limit: 50000.00
-        start_date: "2025-09-01T00:00:00Z"
-        end_date: "2025-12-31T23:59:59Z"
-        rules:
-          - transaction_count_lower_limit: 1
-            transaction_count_upper_limit: 10
-            transaction_amount_lower_limit: 100
-            transaction_amount_upper_limit: 1000
-            number_of_days: 30
-            target_brand_ids: [1, 2, 3]
-            target_category_ids: [1, 2]
-            target_sub_category_ids: [1]
-        cashback_rule:
-          cashback_type: "fixed"
-          cashback_config:
-            cashback_amount: 10.5
-            minimum_transaction_value: 100
-
-    Offer:
+        userProfile:
+          $ref: "#/components/schemas/UserProfileResponse"
+    UserProfileResponse:
       type: object
       properties:
         id:
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-        merchant_id:
-          type: integer
-        merchant_name:
-          type: string
-        status:
-          type: string
-          enum:
-            - draft
-            - pending_approval
-            - rejected
-            - active
-            - completed
-        tenant_id:
-          type: integer
-          description: "Tenant ID that this offer applies to"
-          example: 1
-        tenant_name:
-          type: [string, "null"]
-          description: "Name of the tenant that this offer applies to"
-          example: "Bank ABC"
-        redemptions_count_limit:
-          type: integer
-          minimum: 1
-          description: "Maximum number of redemptions allowed for this offer"
-          example: 1000
-        budget_limit:
           type: number
-          minimum: 0.01
-          description: "Maximum budget limit for this offer in currency units"
-          example: 50000.00
-        start_date:
-          type: [string, "null"]
-          format: date-time
-        end_date:
-          type: [string, "null"]
-          format: date-time
-        terms_and_conditions:
-          type: [string, "null"]
-          description: "Terms and conditions for the offer"
-        created_at:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
-        offer_rules:
-          type: array
-          items:
-            $ref: "#/components/schemas/OfferRule"
-        cashback_rule:
-          $ref: "#/components/schemas/CashbackRule"
-        offer_attachments:
-          type: array
-          items:
-            $ref: "#/components/schemas/OfferAttachment"
-        metrics:
-          $ref: "#/components/schemas/Metrics"
-
-    TenantOffer:
+        role:
+          $ref: "#/components/schemas/RoleResponse"
+    RoleResponse:
       type: object
       properties:
         id:
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-        merchant_id:
-          type: integer
-        merchant_name:
-          type: string
-        status:
-          type: string
-          enum:
-            - pending_approval
-            - rejected
-            - active
-            - completed
-        tenant_id:
-          type: integer
-          description: "Tenant ID that this offer applies to"
-          example: 1
-        redemptions_count_limit:
-          type: integer
-          minimum: 1
-          description: "Maximum number of redemptions allowed for this offer"
-          example: 1000
-        budget_limit:
           type: number
-          minimum: 0.01
-          description: "Maximum budget limit for this offer in currency units"
-          example: 50000.00
-        start_date:
-          type: [string, "null"]
-          format: date-time
-        end_date:
-          type: [string, "null"]
-          format: date-time
-        terms_and_conditions:
-          type: [string, "null"]
-          description: "Terms and conditions for the offer"
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-        rules:
-          type: array
-          items:
-            $ref: "#/components/schemas/OfferRule"
-        cashback_rule:
-          $ref: "#/components/schemas/CashbackRule"
-        offer_attachments:
-          type: array
-          items:
-            $ref: "#/components/schemas/OfferAttachment"
-
-    OfferRule:
-      type: [object, "null"]
-      description: "Required for non-draft offers. Optional for draft offers."
-      properties:
-        id:
-          type: integer
-        offer_id:
-          type: integer
-        transaction_count_lower_limit:
-          type: [integer, "null"]
-        transaction_count_upper_limit:
-          type: [integer, "null"]
-        transaction_amount_lower_limit:
-          type: [integer, "null"]
-        transaction_amount_upper_limit:
-          type: [integer, "null"]
-        number_of_days:
-          type: integer
-          minimum: 1
-          maximum: 90
-          description: "Number of days for the offer rule (1-90). Defaults to 30."
-        target_brands:
-          type: [object, "null"]
-          description: "Hash mapping brand IDs to brand names"
-          additionalProperties:
-            type: string
-          example:
-            "1": "Brand 1"
-            "2": "Brand 2"
-        target_categories:
-          type: [object, "null"]
-          description: "Hash mapping category IDs to category names"
-          additionalProperties:
-            type: string
-          example:
-            "1": "Category 1"
-            "2": "Category 2"
-        target_sub_categories:
-          type: [object, "null"]
-          description: "Hash mapping sub-category IDs to sub-category names"
-          additionalProperties:
-            type: string
-          example:
-            "1": "Sub-category 1"
-            "2": "Sub-category 2"
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-
-    Brand:
-      type: object
-      properties:
-        id:
-          type: integer
         name:
           type: string
-        logo:
-          type: [string, "null"]
-        website:
-          type: [string, "null"]
-
-    Category:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        icon:
-          type: [string, "null"]
-        icon_dark:
-          type: [string, "null"]
-
-    SubCategory:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-
-    Tenant:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique identifier for the tenant
-          example: 1
-        name:
-          type: string
-          description: Name of the tenant
-          example: "Bank ABC"
-
-    OfferList:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-        merchant_id:
-          type: integer
-        merchant_name:
-          type: string
-        tenant_name:
-          type: [string, "null"]
-          description: "Name of the tenant that this offer applies to"
-        status:
-          type: string
-          enum:
-            - draft
-            - pending_approval
-            - rejected
-            - active
-            - completed
-        tenant_id:
-          type: integer
-          description: "Tenant ID that this offer applies to"
-          example: 1
-        redemptions_count_limit:
-          type: integer
-          minimum: 1
-          description: "Maximum number of redemptions allowed for this offer"
-          example: 1000
-        budget_limit:
-          type: number
-          minimum: 0.01
-          description: "Maximum budget limit for this offer in currency units"
-          example: 50000.00
-        start_date:
-          type: [string, "null"]
-          format: date-time
-        end_date:
-          type: [string, "null"]
-          format: date-time
-        created_at:
+        createdAt:
           type: string
           format: date-time
-        updated_at:
+        updatedAt:
           type: string
           format: date-time
-        cover_image:
-          type: [object, "null"]
-          description: "First attachment of the offer, if any"
-          properties:
-            id:
-              type: integer
-              description: "Attachment ID"
-            image_url:
-              type: string
-              description: "URL to the attachment image"
-            image_filename:
-              type: string
-              description: "Original filename of the image"
-            image_content_type:
-              type: string
-              description: "MIME type of the image"
-            image_byte_size:
-              type: integer
-              description: "Size of the image in bytes"
-        metrics:
-          $ref: "#/components/schemas/Metrics"
-
-    TenantOfferList:
-      type: object
-      properties:
-        id:
-          type: integer
-        name:
-          type: string
-        description:
-          type: string
-        merchant_id:
-          type: integer
-        merchant_name:
-          type: string
-        status:
-          type: string
-          enum:
-            - pending_approval
-            - rejected
-            - active
-            - completed
-        tenant_id:
-          type: integer
-          description: "Tenant ID that this offer applies to"
-          example: 1
-        redemptions_count_limit:
-          type: integer
-          minimum: 1
-          description: "Maximum number of redemptions allowed for this offer"
-          example: 1000
-        budget_limit:
-          type: number
-          minimum: 0.01
-          description: "Maximum budget limit for this offer in currency units"
-          example: 50000.00
-        start_date:
-          type: [string, "null"]
-          format: date-time
-        end_date:
-          type: [string, "null"]
-          format: date-time
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-        metrics:
-          $ref: "#/components/schemas/Metrics"
-
-    CashbackRule:
-      type: [object, "null"]
-      description: "Required for non-draft offers. Optional for draft offers."
-      properties:
-        id:
-          type: integer
-        offer_id:
-          type: integer
-        cashback_type:
-          type: string
-          enum:
-            - fixed
-            - percentage
-            - tiered
-        cashback_config:
-          $ref: "#/components/schemas/CashbackRuleConfig"
-        created_at:
-          type: string
-          format: date-time
-        updated_at:
-          type: string
-          format: date-time
-
-    Cashback:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique identifier for the cashback
-          example: 1
-        transaction_id:
-          type: string
-          description: Unique transaction identifier
-          example: "TXN-00000001"
-        customer_original_id:
-          type: string
-          description: Customer identifier from the original system
-          example: "CUST-00000001"
-        transaction_amount:
-          type: string
-          description: Amount of the original transaction
-          example: "100.00"
-        cashback_amount:
-          type: string
-          description: Amount of cashback earned
-          example: "10.00"
-        status:
-          type: string
-          enum:
-            - pending_approval
-            - approved
-            - declined
-          description: Current status of the cashback
-          example: "pending_approval"
-        tenant_id:
-          type: integer
-          description: Tenant ID that this cashback belongs to
-          example: 123
-        offer:
-          type: object
-          properties:
-            id:
-              type: integer
-              example: 1
-            name:
-              type: string
-              example: "Test Offer"
-            description:
-              type: string
-              example: "This is a test offer description"
-            merchant_name:
-              type: string
-              example: "Merchant 1"
-        cashback_feedback:
-          type: [object, "null"]
-          description: Feedback associated with this cashback, if any
-          properties:
-            id:
-              type: integer
-              example: 1
-            feedback:
-              type: string
-              description: The feedback message
-              example: "Customer complaint about cashback calculation"
-            feedback_type:
-              type: string
-              enum:
-                - wrong_calculation
-                - refunded
-              example: "wrong_calculation"
-            created_at:
-              type: string
-              format: date-time
-        created_at:
-          type: string
-          format: date-time
-          description: When the cashback was created
-        updated_at:
-          type: string
-          format: date-time
-          description: When the cashback was last updated
-
-    Metrics:
-      type: object
-      description: "Per-offer metrics for this specific offer"
-      properties:
-        revenue_generated:
-          type: number
-          minimum: 0
-          description: "Total revenue generated from this offer"
-          example: 1500.0
-        redemptions_count:
-          type: integer
-          minimum: 0
-          description: "Number of redemptions for this offer"
-          example: 15
-        budget_used:
-          type: number
-          minimum: 0
-          description: "Total budget used for this offer"
-          example: 150.0
-
-    CashbackFeedback:
-      type: object
-      properties:
-        id:
-          type: integer
-          description: Unique identifier for the feedback
-          example: 1
-        feedback_type:
-          type: string
-          enum:
-            - wrong_calculation
-            - refunded
-          description: Type of feedback submitted
-          example: "wrong_calculation"
-        feedback:
-          type: string
-          description: The feedback message
-          example: "The cashback amount calculated seems incorrect. I was expecting $15.00 but received $10.00."
-        created_at:
-          type: string
-          format: date-time
-          description: When the feedback was created
-          example: "2024-01-15T10:30:00Z"
-
-    OfferAttachment:
+    ForgotPasswordDto:
       type: object
       required:
-        - id
-        - attachment_type
-        - image_url
-        - image_filename
-        - image_content_type
-        - image_byte_size
+        - email
+      properties:
+        email:
+          type: string
+          format: email
+    ResetPasswordDto:
+      type: object
+      required:
+        - password
+      properties:
+        password:
+          type: string
+          minLength: 8
+    ChangePasswordDto:
+      type: object
+      required:
+        - currentPassword
+        - newPassword
+      properties:
+        currentPassword:
+          type: string
+        newPassword:
+          type: string
+          minLength: 8
+
+    RegisterUserDto:
+      type: object
+      required:
+        - email
+        - userProfile
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 8
+        userProfile:
+          $ref: "#/components/schemas/UserProfileDto"
+    UserProfileDto:
+      type: object
+      required:
+        - firstName
+        - lastName
+        - roleId
+      properties:
+        firstName:
+          type: string
+          minLength: 2
+          maxLength: 255
+        lastName:
+          type: string
+          minLength: 2
+          maxLength: 255
+        roleId:
+          type: number
+    UpdateUserAsSuperuserDto:
+      type: object
+      properties:
+        password:
+          type: string
+        state:
+          $ref: "#/components/schemas/EUserState"
+        roleId:
+          type: number
+    SuperuserFindAllUserResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/SuperuserUserResponse"
+        meta:
+          type: object
+    SuperuserUserResponse:
+      allOf:
+        - $ref: "#/components/schemas/UserResponse"
+        - type: object
+          properties:
+            state:
+              $ref: "#/components/schemas/EUserState"
+
+    UpdateRolesPermissionsDto:
+      type: object
+      required:
+        - roleId
+        - permissionsToRemoveIds
+        - permissionsToAddIds
+      properties:
+        roleId:
+          type: number
+        permissionsToRemoveIds:
+          type: array
+          items:
+            type: number
+        permissionsToAddIds:
+          type: array
+          items:
+            type: number
+    RolesWithUsersAndPermissionsResponse:
+      type: object
+      properties:
+        roles:
+          type: array
+          items:
+            $ref: "#/components/schemas/RolesWithUsersCount"
+        permissions:
+          type: array
+          items:
+            $ref: "#/components/schemas/PermissionResponse"
+    RolesWithUsersCount:
+      type: object
+      properties:
+        role:
+          $ref: "#/components/schemas/RoleResponse"
+        activeUsersCount:
+          type: number
+        inactiveUsersCount:
+          type: number
+    PermissionResponse:
+      type: object
       properties:
         id:
-          type: integer
-        attachment_type:
+          type: number
+        name:
           type: string
-          enum:
-            - banner
-            - promotional
-            - logo
-          description: Type of attachment
-          example: "banner"
-        image_url:
+        createdAt:
           type: string
-          description: URL to the attached image
-          example: "/rails/active_storage/blobs/.../logo.png"
-        image_filename:
+          format: date-time
+        updatedAt:
           type: string
-          description: Original filename of the attached image
-          example: "logo.png"
-        image_content_type:
-          type: string
-          description: MIME type of the attached image
-          example: "image/png"
-        image_byte_size:
-          type: integer
-          description: Size of the attached image in bytes
-          example: 1024
+          format: date-time
 
-    CashbackRuleConfig:
-      oneOf:
-        - type: object
-          required:
-            - cashback_amount
-            - minimum_transaction_value
-          properties:
-            cashback_amount:
-              type: number
-              description: Fixed cashback amount in currency units
-              example: 10.50
-            minimum_transaction_value:
-              type: number
-              description: Minimum transaction value required to earn cashback
-              example: 100.00
-        - type: object
-          required:
-            - cashback_percentage
-            - maximum_cashback_value
-          properties:
-            cashback_percentage:
-              type: number
-              minimum: 0
-              maximum: 100
-              description: Cashback percentage (e.g., 5.0 for 5%)
-              example: 5.0
-            maximum_cashback_value:
-              type: number
-              description: Maximum cashback value that can be earned
-              example: 50.00
-        - type: array
-          description: Array of spending tiers with corresponding cashback percentages
-          items:
-            type: object
-            required:
-              - spending_tier
-              - cashback_percentage
-            properties:
-              spending_tier:
-                type: number
-                description: Minimum spending amount for this tier
-                example: 100.00
-              cashback_percentage:
-                type: number
-                minimum: 0
-                maximum: 100
-                description: Cashback percentage for this tier (e.g., 2.0 for 2%)
-                example: 2.0
-          example:
-            - spending_tier: 100.00
-              cashback_percentage: 2.0
-            - spending_tier: 500.00
-              cashback_percentage: 5.0
-            - spending_tier: 1000.00
-              cashback_percentage: 10.0
-
-    pagination:
+    UpdateUserProfileDto:
       type: object
       properties:
-        current_page:
-          type: integer
-        next_page:
-          type: [integer, "null"]
-        previous_page:
-          type: [integer, "null"]
-        total_pages:
-          type: integer
-        per_page:
-          type: integer
-        total_entries:
-          type: integer
+        firstName:
+          type: string
+          minLength: 2
+          maxLength: 255
+        lastName:
+          type: string
+          minLength: 2
+          maxLength: 255
 
-    Pagination:
+    VerifyByTokenResponse:
       type: object
       properties:
-        current_page:
-          type: integer
-        next_page:
-          type: [integer, "null"]
-        previous_page:
-          type: [integer, "null"]
-        total_pages:
-          type: integer
-        per_page:
-          type: integer
-        total_entries:
-          type: integer
+        message:
+          type: string
+    VerificationRequestResponse:
+      type: object
+      properties:
+        id:
+          type: number
+        token:
+          type: string
+        status:
+          $ref: "#/components/schemas/EVerificationRequestStatus"
+        type:
+          $ref: "#/components/schemas/EVerificationRequestType"
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        user:
+          type: object
+          properties:
+            id:
+              type: number
+
+paths:
+  /api/v1/auth/sign-in:
+    post:
+      summary: Sign in with email and password
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SignInResponse"
+        "401":
+          description: Invalid credentials
+
+  /api/v1/auth/google/sign-in:
+    post:
+      summary: Sign in with Google (OAuth flow)
+      tags: [Auth]
+      security: []
+      responses:
+        "200":
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SignInResponse"
+
+  /api/v1/auth/google/token/sign-in:
+    post:
+      summary: Sign in with Google ID Token
+      tags: [Auth]
+      security: []
+      responses:
+        "200":
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SignInResponse"
+
+  /api/v1/auth/sign-up:
+    post:
+      summary: Register a new user
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SelfRegisterUserDto"
+      responses:
+        "201":
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+
+  /api/v1/auth/forgot-password:
+    post:
+      summary: Request a password reset email
+      tags: [Auth]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ForgotPasswordDto"
+      responses:
+        "201":
+          description: Email sent successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+  /api/v1/auth/reset-password/{token}:
+    post:
+      summary: Reset password using token
+      tags: [Auth]
+      security: []
+      parameters:
+        - in: path
+          name: token
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ResetPasswordDto"
+      responses:
+        "201":
+          description: Password reset successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+
+  /api/v1/auth/change-password:
+    post:
+      summary: Change password for logged in user
+      tags: [Auth]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ChangePasswordDto"
+      responses:
+        "201":
+          description: Password changed successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+
+  /api/v1/users/me:
+    get:
+      summary: Get current logged in user details
+      tags: [Users]
+      responses:
+        "200":
+          description: Current user details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TokenizedUser"
+
+  /api/v1/users:
+    get:
+      summary: Get all users (SuperUser only)
+      tags: [Users]
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: number
+        - in: query
+          name: limit
+          schema:
+            type: number
+        - in: query
+          name: state
+          schema:
+            $ref: "#/components/schemas/EUserState"
+      responses:
+        "200":
+          description: List of users
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuperuserFindAllUserResponse"
+    post:
+      summary: Create a new user (SuperUser only)
+      tags: [Users]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterUserDto"
+      responses:
+        "201":
+          description: User created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+
+  /api/v1/users/{id}:
+    patch:
+      summary: Update user (SuperUser only)
+      tags: [Users]
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUserAsSuperuserDto"
+      responses:
+        "200":
+          description: User updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserResponse"
+
+  /api/v1/roles:
+    get:
+      summary: Get all roles (SuperUser only)
+      tags: [Roles]
+      responses:
+        "200":
+          description: List of roles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/RoleResponse"
+
+  /api/v1/roles/users-permissions:
+    get:
+      summary: Get roles with user counts and permissions (Admin/SuperUser)
+      tags: [Roles]
+      responses:
+        "200":
+          description: Roles with permissions info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RolesWithUsersAndPermissionsResponse"
+
+  /api/v1/roles/update-permissions:
+    patch:
+      summary: Update role permissions (Admin/SuperUser)
+      tags: [Roles]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateRolesPermissionsDto"
+      responses:
+        "200":
+          description: Permissions updated
+          content:
+            application/json:
+              schema:
+                type: object
+
+  /api/v1/user-profiles/me:
+    get:
+      summary: Get current user profile
+      tags: [User Profiles]
+      responses:
+        "200":
+          description: User profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfileResponse"
+    patch:
+      summary: Update current user profile
+      tags: [User Profiles]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUserProfileDto"
+      responses:
+        "200":
+          description: Profile updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfileResponse"
+
+  /api/v1/verification-requests/verify/{token}:
+    post:
+      summary: Verify a token
+      tags: [Verification]
+      security: []
+      parameters:
+        - in: path
+          name: token
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: type
+          required: true
+          schema:
+            $ref: "#/components/schemas/EVerificationRequestType"
+      responses:
+        "200":
+          description: Verification successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VerifyByTokenResponse"
+
+  /api/v1/verification-requests/{token}:
+    get:
+      summary: Get verification request details
+      tags: [Verification]
+      security: []
+      parameters:
+        - in: path
+          name: token
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: type
+          required: true
+          schema:
+            $ref: "#/components/schemas/EVerificationRequestType"
+      responses:
+        "200":
+          description: Verification request details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VerificationRequestResponse"
+
+  /api/v1/health:
+    get:
+      summary: Simple health check
+      tags: [Health]
+      security: []
+      responses:
+        "200":
+          description: Service is up
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: OK
+
+  /api/v1/health/check:
+    get:
+      summary: Detailed health check
+      tags: [Health]
+      security: []
+      responses:
+        "200":
+          description: Detailed health status
+          content:
+            application/json:
+              schema:
+                type: object
