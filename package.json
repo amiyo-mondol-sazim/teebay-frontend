@@ -1,6 +1,7 @@
 {
-  "name": "nuxt-app",
+  "name": "nuxt-feature-starter",
   "private": true,
+  "description": "Nuxt 3 Feature-Driven Starter Template",
   "type": "module",
   "scripts": {
     "build": "nuxt build",
@@ -50,7 +51,6 @@
     "@nuxt/test-utils": "^3.19.1",
     "@vitest/ui": "^3.2.4",
     "@vue/test-utils": "^2.4.6",
-    "happy-dom": "^17.6.3",
     "jsdom": "^26.1.0",
     "openapi-typescript": "^7.9.1",
     "prettier": "^3.6.2",
