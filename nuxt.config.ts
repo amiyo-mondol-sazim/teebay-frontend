@@ -56,7 +56,7 @@ export default defineNuxtConfig({
     dirs: [
       "./common/composables/*.{ts,js}",
       "./common/api/*/*.{queries,mutations}.ts",
-      "./common/utils/**",
+      "./common/utils/**/*.{ts,js}",
     ],
   },
   shadcn: {
