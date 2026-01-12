@@ -1,20 +1,20 @@
-import tailwindcss from '@tailwindcss/vite';
+import tailwindcss from "@tailwindcss/vite";
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  compatibilityDate: '2025-05-15',
+  compatibilityDate: "2025-05-15",
   ssr: false,
 
   hooks: {
-    'prerender:routes': ({ routes }) => {
+    "prerender:routes": ({ routes }) => {
       routes.clear();
     },
   },
 
   app: {
     head: {
-      title: 'Lune Pulse',
-      link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.svg' }],
+      title: "Nuxt 3 Feature-Driven Starter",
+      link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.svg" }],
     },
   },
   image: {},
@@ -29,52 +29,56 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  css: ['~/assets/css/tailwind.css'],
+  css: ["~/assets/css/tailwind.css"],
   fonts: {
     families: [
       {
-        name: 'Figtree',
-        provider: 'google',
-        display: 'swap',
+        name: "Figtree",
+        provider: "google",
+        display: "swap",
         weights: [500, 700],
       },
       {
-        name: 'Plus Jakarta Sans',
-        provider: 'google',
-        display: 'swap',
+        name: "Plus Jakarta Sans",
+        provider: "google",
+        display: "swap",
         weights: [400, 500, 600, 700, 800],
       },
     ],
   },
   components: {
     dirs: [
-      { path: '~/features', pathPrefix: false },
-      { path: '~/common/components', pathPrefix: false, ignore: ['ui/**'] },
+      { path: "~/features", pathPrefix: false },
+      { path: "~/common/components", pathPrefix: false, ignore: ["ui/**"] },
     ],
   },
   imports: {
-    dirs: ['./common/composables/*.{ts,js}', './common/api/*/*.{queries,mutations}.ts', './common/utils/**'],
+    dirs: [
+      "./common/composables/*.{ts,js}",
+      "./common/api/*/*.{queries,mutations}.ts",
+      "./common/utils/**",
+    ],
   },
   shadcn: {
-    prefix: 'Ui',
-    componentDir: './common/components/ui',
+    prefix: "Ui",
+    componentDir: "./common/components/ui",
   },
   icon: {
-    mode: 'svg',
+    mode: "svg",
     customCollections: [
       {
-        prefix: 'custom',
-        dir: './assets/icons',
+        prefix: "custom",
+        dir: "./assets/icons",
       },
     ],
   },
   modules: [
-    '@nuxt/eslint',
-    '@nuxt/fonts',
-    '@nuxt/icon',
-    '@nuxt/image',
-    '@nuxt/test-utils/module',
-    'shadcn-nuxt',
-    '@pinia/nuxt',
+    "@nuxt/eslint",
+    "@nuxt/fonts",
+    "@nuxt/icon",
+    "@nuxt/image",
+    "@nuxt/test-utils/module",
+    "shadcn-nuxt",
+    "@pinia/nuxt",
   ],
 });
