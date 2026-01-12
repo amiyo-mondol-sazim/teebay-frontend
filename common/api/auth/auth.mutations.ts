@@ -1,15 +1,15 @@
-import type { LoginInput } from '~/features/auth/components/LoginForm/LoginForm.helpers';
-import { client } from '../client';
+import type { LoginInput } from "~/features/auth/components/LoginForm/LoginForm.helpers";
+import { client } from "../client";
 
 const loginFn = async (input: LoginInput) => {
-  const { data, error } = await client.POST('/api/v1/merchant/auth/login', {
+  const { data, error } = await client.POST("/api/v1/auth/login", {
     body: { email: input.email, password: input.password },
   });
   if (error) {
     throw new Error(error.error);
   }
   if (!data?.token || !data?.user) {
-    throw new Error('Failed to login');
+    throw new Error("Failed to login");
   }
   return {
     token: data.token,
@@ -18,7 +18,7 @@ const loginFn = async (input: LoginInput) => {
 };
 
 const logoutFn = async () => {
-  const { error } = await client.DELETE('/api/v1/merchant/auth/logout');
+  const { error } = await client.DELETE("/api/v1/auth/logout");
   if (error) {
     throw new Error(error.error);
   }

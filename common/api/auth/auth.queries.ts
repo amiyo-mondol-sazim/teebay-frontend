@@ -1,25 +1,10 @@
-import { client } from '../client';
-import { authQueryKeys } from './auth.keys';
-
-const getMerchant = async () => {
-  const { data, error } = await client.GET('/api/v1/merchant');
-  if (error || !data) {
-    throw new Error('Failed to fetch merchant');
-  }
-  return data;
-};
-
-export const useMerchantQuery = () => {
-  return useQuery({
-    queryKey: authQueryKeys.merchant(),
-    queryFn: getMerchant,
-  });
-};
+import { client } from "../client";
+import { authQueryKeys } from "./auth.keys";
 
 const getUser = async () => {
-  const { data, error } = await client.GET('/api/v1/merchant/me');
+  const { data, error } = await client.GET("/api/v1/auth/me");
   if (error || !data) {
-    throw new Error('Failed to fetch user');
+    throw new Error("Failed to fetch user");
   }
   return data;
 };
