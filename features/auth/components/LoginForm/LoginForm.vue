@@ -9,7 +9,7 @@ const onSubmit = form.handleSubmit((values) => login(values));
 <template>
   <UiCard class="gap-0 px-8 pt-8 pb-10">
     <UiCardHeader>
-      <UiCardTitle class="pb-6 text-center text-2xl leading-none font-bold">Welcome to Lune Pulse!</UiCardTitle>
+      <UiCardTitle class="pb-6 text-center text-2xl leading-none font-bold">Welcome to Teebay!</UiCardTitle>
     </UiCardHeader>
     <form @submit="onSubmit">
       <UiCardContent class="space-y-6 px-0 pt-10">
