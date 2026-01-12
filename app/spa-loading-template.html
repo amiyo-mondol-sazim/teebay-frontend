@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Loading... | Lune Pulse</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      :root {
+        --color-background: oklch(1 0 0); /* white */
+        --color-primary: oklch(0.6374 0.1242 169.51); /* primary */
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        color: var(--color-primary);
+        background-color: var(--color-background);
+        font-family: 'Plus Jakarta Sans', 'sans-serif', Arial;
+        font-size: 16px;
+        width: 100%;
+        min-height: 100vh;
+      }
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+      .loader-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        animation: fadeIn 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(24px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+      }
+      .loader {
+        width: 75px;
+        aspect-ratio: 2.5;
+        --_g: no-repeat radial-gradient(circle closest-side, var(--color-primary) 90%, var(--color-background));
+        background:
+          var(--_g) 0% 50%,
+          var(--_g) 50% 50%,
+          var(--_g) 100% 50%;
+        background-size: calc(100% / 3) 50%;
+        animation: juggle 1s infinite linear;
+      }
+      @keyframes juggle {
+        20% {
+          background-position:
+            0% 0%,
+            50% 50%,
+            100% 50%;
+        }
+        40% {
+          background-position:
+            0% 100%,
+            50% 0%,
+            100% 50%;
+        }
+        60% {
+          background-position:
+            0% 50%,
+            50% 100%,
+            100% 0%;
+        }
+        80% {
+          background-position:
+            0% 50%,
+            50% 50%,
+            100% 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loader-container">
+      <div class="loader"></div>
+      <span class="sr-only">Loading</span>
+    </div>
+  </body>
+</html>
