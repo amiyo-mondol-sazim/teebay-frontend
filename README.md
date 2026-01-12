@@ -1,103 +1,66 @@
-# Lune Pulse
+# Nuxt 3 Feature-Driven Starter
 
-Lune Pulse is a modern, modular Nuxt 3 application for managing and launching cashback offers, featuring a robust UI built with Tailwind CSS and Shadcn Vue components.
+A robust, modular **Nuxt 3** starter template built with a **Feature-Driven Architecture**, **Tailwind CSS 4**, and **Shadcn Vue**.
 
-## Features & Architecture
+## 🚀 Features
 
-- **Nuxt 3**: SSR, static site generation, modular structure, auto-imports
-- **TypeScript**: Strict typing, interfaces, and composables
-- **Tailwind CSS**: Custom color palette, utility-first, responsive design
-- **Shadcn Vue UI**: Accessible, themeable, and composable UI components (prefixed with `Ui`)
-- **VueUse**: Advanced reactivity and performance
-- **Pinia**: State management with persisted state
-- **Vue Router**: Modern routing
-- **Google Fonts**: Figtree & Plus Jakarta Sans
-- **OpenAPI**: Auto-generated API docs (Swagger & Scalar UI)
-- **Prettier & ESLint**: Enforced code style
-- **Vitest**: Unit and integration testing
-- **Mock Data**: For local development and testing
-- **Azure Deployment**: CI/CD workflow for Azure Static Web Apps
+- **Feature-Driven Architecture**: Modular `features/` directory structure for scalable development.
+- **Nuxt 3**: SSR, Auto-imports, Modules.
+- **TypeScript**: Fully typed codebase.
+- **Tailwind CSS 4**: Next-gen utility-first CSS.
+- **Shadcn Vue**: Accessible, customizable UI components.
+- **Pinia**: State management.
+- **Vue Query**: Server state management.
+- **OpenAPI**: Typed API client generation.
+- **Vitest**: Unit testing setup.
 
-## Main Business Flows
+## 📂 Project Structure
 
-- **Authentication**: Secure login with token-based auth
-- **Offer Management**: Create, review, and manage cashback offers (fixed, percentage, tiered)
-- **User Segments**: Target offers to dynamic user segments
-- **Dashboard & Insights**: View offer stats, user acquisition, and revenue
-- **Bank Integration**: Associate offers with banks
-
-## Project Structure
-
-- `features/` - Modular business logic, components, containers, composables, typedefs
-- `assets/css/` - Tailwind and custom CSS
-- `pages/` - Nuxt pages (routing)
-- `server/` - API routes (REST, OpenAPI docs)
-- `public/` - Static files (images, icons, etc.)
-- `mock/` - Local mock data for dev/testing
-- `tests/` - Vitest tests, mocks, and data generators
-
-## API Endpoints
-
-All endpoints are documented and browsable via OpenAPI/Swagger/Scalar UI:
-
-- **Offers**: CRUD for cashback offers (`/api/offers`, `/api/offers/:offerId`)
-- **User Segments**: CRUD for customer segments (`/api/user-segments`)
-- **Banks**: List banks (`/api/banks`)
-- **Insights**: Offer and segment analytics (`/api/insights`)
-- **Authentication**: Sign in (`/api/auth/signin`)
-
-- OpenAPI JSON: [`/_docs/openapi.json`](http://localhost:3000/_docs/openapi.json)
-- Swagger UI: [`/_docs/swagger`](http://localhost:3000/_docs/swagger)
-- Scalar UI: [`/_docs/scalar`](http://localhost:3000/_docs/scalar)
-
-## Developer Workflow
-
-### Prerequisites
-
-- Node.js (see `.nvmrc` for version)
-- npm
-
-### Setup & Scripts
-
-```sh
-npm install           # Install dependencies
-npm run dev           # Start development server
-npm run build         # Build for production
-npm run preview       # Preview production build
-npm run lint          # Lint code
-npm run typecheck     # Type-check code
-npm run test          # Run tests (Vitest)
+```
+.
+├── features/         # Domain-specific modules (Auth, etc.)
+│   ├── */containers/ # Smart components (Logic, Data)
+│   └── */components/ # Dumb components (UI only)
+├── common/           # Shared utilities and components
+│   ├── api/          # API Client & Typedefs
+│   ├── components/   # Shared UI (Shadcn)
+│   └── composables/  # Global composables
+├── pages/            # File-based routing (thin wrappers)
+└── assets/           # Static assets & Global CSS
 ```
 
-### Code Style & Conventions
+## 🛠️ Setup
 
-- **TypeScript**: Functional, composable, no classes
-- **Components**: `<script setup>`, PascalCase, colocated types/helpers/constants
-- **Composables**: Named `useXxx`, auto-imported
-- **UI**: Use Shadcn Vue (`UiButton`, `UiCard`, etc.), Tailwind for layout/colors
-- **Icons**: Use Nuxt Icons (Phosphor set, e.g. `ph:plus`)
-- **Images**: Use `<NuxtImg>` or `<NuxtPicture>`
-- **Colors**: Only use those defined in `assets/css/tailwind.css`
-- **Prettier**: Enforced with Tailwind plugin
-- **VSCode**: Recommended extensions in `.vscode/extensions.json`
+```bash
+# Install dependencies
+npm install
 
-## Testing & Quality
+# Start development server
+npm run dev
 
-- **Vitest**: Unit/integration tests (`tests/`)
-- **@vue/test-utils**: Component testing
-- **happy-dom**: DOM environment for tests
-- **Mock Data**: Provided in `mock/data/`
-- **CI**: Lint, typecheck, test, and build on PRs (see `.github/workflows/`)
+# Build for production
+npm run build
+```
 
-## Deployment & Environment
+## 🧩 Adding a New Feature
 
-- **Azure Static Web Apps**: See `.github/workflows/deploy-development-azure.yml`
-- **Environment Variables**: No `.env.example` provided; deployment uses Azure secrets for config
-- **Local Development**: No special env vars required by default
+1. Create `features/my-feature/`.
+2. Add `containers/MyFeatureContainer.vue`.
+3. Add `components/MyFeatureComponent.vue`.
+4. Create a page in `pages/my-feature/index.vue` that mounts the container.
 
-## Configuration
+## 🧪 Testing
 
-- Main config: [`nuxt.config.ts`](nuxt.config.ts)
-- Tailwind CSS: [`assets/css/tailwind.css`](assets/css/tailwind.css)
-- Google Fonts: Configured via `fonts` in Nuxt config
-- Shadcn Vue: See `components.json` for config
+```bash
+# Run unit tests
+npm run test
+
+# Run type check
+npm run typecheck
+```
+
+## 📝 API Integration
+
+1. Update `assets/openapi.yml` with your backend spec.
+2. Run `npm run generate:types` to regenerate TypeScript definitions.
+3. Use the typed client in `common/api/`.
