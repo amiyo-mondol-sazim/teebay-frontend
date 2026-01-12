@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import { toast } from 'vue-sonner';
-import { getImageDimensions } from './DndImageUpload.helpers';
-import type { TDndImageUploadProps } from './DndImageUpload.types';
+import { toast } from "vue-sonner";
+import { getImageDimensions } from "./DndImageUpload.helpers";
+import type { TDndImageUploadProps } from "./DndImageUpload.types";
 
 const props = defineProps<TDndImageUploadProps>();
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: File | null): void;
+  (e: "update:modelValue", value: File | null): void;
 }>();
 
-const fileInputRef = useTemplateRef<HTMLInputElement | null>('fileInputRef');
+const fileInputRef = useTemplateRef<HTMLInputElement | null>("fileInputRef");
 const selectedFile = computed({
   get: () => props.modelValue,
-  set: (value) => emit('update:modelValue', value as File),
+  set: (value) => emit("update:modelValue", value as File),
 });
 
 const acceptString = computed(() => {
-  return props.accept ? props.accept.join(',') : undefined;
+  return props.accept ? props.accept.join(",") : undefined;
 });
 
 const fileProps = computed(() => {
@@ -29,9 +29,9 @@ const fileProps = computed(() => {
     };
   }
   return {
-    url: selectedFile.value.image_url,
-    name: selectedFile.value.image_filename,
-    size: selectedFile.value.image_byte_size,
+    url: selectedFile.value.url || selectedFile.value.image_url || "",
+    name: (selectedFile.value as any).image_filename || "Uploaded Image",
+    size: (selectedFile.value as any).image_byte_size || 0,
   };
 });
 
@@ -74,7 +74,7 @@ function handleFileInputChange(e: Event) {
   if (file) {
     processFile(file);
   }
-  target.value = '';
+  target.value = "";
 }
 </script>
 
@@ -90,16 +90,35 @@ function handleFileInputChange(e: Event) {
     @dragover="handleDragOver"
     @click="fileInputRef?.click()"
   >
-    <input ref="fileInputRef" type="file" class="hidden" :accept="acceptString" @change="handleFileInputChange" />
-    <div v-if="fileProps" class="flex h-full items-center justify-center gap-3.5">
+    <input
+      ref="fileInputRef"
+      type="file"
+      class="hidden"
+      :accept="acceptString"
+      @change="handleFileInputChange"
+    />
+    <div
+      v-if="fileProps"
+      class="flex h-full items-center justify-center gap-3.5"
+    >
       <div class="flex items-center gap-3">
         <div class="bg-primary-25 size-15 overflow-hidden rounded-sm">
-          <img v-if="fileProps" :src="fileProps.url" class="size-full object-cover" />
-          <Icon v-else name="ph:image-square-fill" class="text-primary size-6" />
+          <img
+            v-if="fileProps"
+            :src="fileProps.url"
+            class="size-full object-cover"
+          />
+          <Icon
+            v-else
+            name="ph:image-square-fill"
+            class="text-primary size-6"
+          />
         </div>
         <div class="text-start">
           <p class="truncate text-sm font-semibold">{{ fileProps.name }}</p>
-          <p class="mt-1 text-xs text-gray-100">{{ (fileProps.size / 1024 / 1024).toFixed(2) }} MB</p>
+          <p class="mt-1 text-xs text-gray-100">
+            {{ (fileProps.size / 1024 / 1024).toFixed(2) }} MB
+          </p>
         </div>
       </div>
       <UiButton
@@ -112,8 +131,13 @@ function handleFileInputChange(e: Event) {
         <Icon name="ph:x" class="size-3" /> Remove
       </UiButton>
     </div>
-    <div v-else class="flex h-full flex-col items-center justify-center gap-3.5">
-      <div class="bg-primary-25 mx-auto flex size-9 items-center justify-center rounded-sm">
+    <div
+      v-else
+      class="flex h-full flex-col items-center justify-center gap-3.5"
+    >
+      <div
+        class="bg-primary-25 mx-auto flex size-9 items-center justify-center rounded-sm"
+      >
         <Icon name="ph:image-square-fill" class="text-primary size-6" />
       </div>
       <div>
