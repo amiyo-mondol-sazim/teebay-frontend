@@ -6,7 +6,6 @@ const loginFn = async (input: LoginInput) => {
     body: { email: input.email, password: input.password },
   });
   if (error) {
-    // @ts-expect-error - openapi-fetch types error as never if no schema defined for 401
     throw new Error((error as any)?.error || "Login failed");
   }
 
