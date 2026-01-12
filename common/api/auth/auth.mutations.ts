@@ -6,17 +6,13 @@ const loginFn = async (input: LoginInput) => {
     body: { email: input.email, password: input.password },
   });
   if (error) {
-    // @ts-expect-error - error type is complex
     throw new Error(error.error || "Login failed");
   }
-  // @ts-expect-error - data type is complex
   if (!data?.accessToken || !data?.user) {
     throw new Error("Failed to login");
   }
   return {
-    // @ts-expect-error - data type is complex
     token: data.accessToken,
-    // @ts-expect-error - data type is complex
     user: data.user,
   };
 };
