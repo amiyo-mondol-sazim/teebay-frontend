@@ -1,6 +1,6 @@
 import type { components } from "./api-schema";
 
-export type TUser = components["schemas"]["MerchantUser"];
+export type TUser = components["schemas"]["TokenizedUser"];
 
 /**
  * Legacy Mock API types

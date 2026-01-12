@@ -10,9 +10,7 @@ defineProps<AppSidebarProps>();
 
 const { data: user } = useUserQuery();
 const { logout } = useAuthActions();
-const userName = computed(
-  () => user.value?.name || user.value?.email?.split("@")[0],
-);
+const userName = computed(() => user.value?.email?.split("@")[0] ?? "User");
 
 const route = useRoute();
 const isActive = (path: string) => {
