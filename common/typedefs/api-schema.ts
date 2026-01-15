@@ -644,9 +644,6 @@ export interface components {
                 id: number;
             };
         };
-        ProductsListResponse: {
-            meta: components["schemas"]["PaginationMetadataResponse"];
-        };
         /** @enum {string} */
         ERentalPeriod: "DAY" | "WEEK" | "MONTH";
         /** @enum {string} */
@@ -667,6 +664,10 @@ export interface components {
             createdAt: string;
             /** Format: date-time */
             updatedAt: string;
+        };
+        ProductsListResponse: {
+            data: components["schemas"]["ProductResponse"][];
+            meta: components["schemas"]["PaginationMetadataResponse"];
         };
         CreateProductDto: {
             /** @example Product title */
@@ -719,6 +720,7 @@ export interface components {
             seller: components["schemas"]["User"];
         };
         SalesListResponse: {
+            data: components["schemas"]["SaleResponse"][];
             meta: components["schemas"]["PaginationMetadataResponse"];
         };
         CreateRentDto: {
@@ -745,6 +747,7 @@ export interface components {
             owner: components["schemas"]["User"];
         };
         RentsListResponse: {
+            data: components["schemas"]["RentResponse"][];
             meta: components["schemas"]["PaginationMetadataResponse"];
         };
         SignInDto: {
