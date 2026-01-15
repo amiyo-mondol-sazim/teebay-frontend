@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { components } from "~/common/typedefs/api-schema";
+import { PRODUCT_STATUS_CLASSES } from "./products.helper";
 
 interface Props {
   product: components["schemas"]["ProductResponse"];
@@ -55,14 +56,7 @@ const navigateToDetail = () => {
       <div class="pt-2">
         <span
           class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
-          :class="{
-            'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400':
-              product.status === 'AVAILABLE',
-            'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400':
-              product.status === 'SOLD',
-            'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400':
-              product.status === 'RENTED',
-          }"
+          :class="PRODUCT_STATUS_CLASSES[product.status]"
         >
           {{ product.status }}
         </span>

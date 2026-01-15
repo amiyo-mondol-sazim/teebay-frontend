@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { Button } from "~/common/components/ui/button";
-
 const route = useRoute();
 const router = useRouter();
 
@@ -73,23 +71,23 @@ const { data, isLoading, isError, error } = useProductsQuery(params);
       </div>
 
       <div class="mt-8 flex items-center justify-center space-x-4">
-        <Button
+        <UiButton
           variant="outline"
           :disabled="(data?.meta?.currentPage ?? 1) <= 1"
           @click="page--"
         >
           Previous
-        </Button>
+        </UiButton>
         <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
           Page {{ data?.meta?.currentPage }} of {{ data?.meta?.totalPages }}
         </span>
-        <Button
+        <UiButton
           variant="outline"
           :disabled="!data?.meta?.hasNextPage"
           @click="page++"
         >
           Next
-        </Button>
+        </UiButton>
       </div>
     </div>
   </div>
