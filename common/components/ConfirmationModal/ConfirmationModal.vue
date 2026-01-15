@@ -17,22 +17,28 @@ const emits = defineEmits<{ action: []; cancel: [] }>();
         </UiButton>
       </slot>
     </UiAlertDialogTrigger>
-    <UiAlertDialogContent class="gap-6 p-8 sm:max-w-140">
+    <UiAlertDialogContent class="gap-6 p-8 sm:max-w-lg">
       <UiAlertDialogHeader class="pb-8">
-        <UiAlertDialogTitle class="text-[1.375rem] font-bold">{{ title }}</UiAlertDialogTitle>
-        <UiAlertDialogDescription class="text-base font-semibold text-gray-400">
+        <UiAlertDialogTitle class="text-xl font-bold">{{
+          title
+        }}</UiAlertDialogTitle>
+        <UiAlertDialogDescription class="text-muted-foreground text-base">
           {{ description }}
         </UiAlertDialogDescription>
       </UiAlertDialogHeader>
       <UiAlertDialogFooter>
         <UiAlertDialogCancel as-child @click="emits('cancel')">
           <slot name="cancel">
-            <UiButton variant="ghost" class="h-10.5 shadow-none"> {{ cancelText ?? 'Cancel' }} </UiButton>
+            <UiButton variant="outline" class="h-10.5">
+              {{ cancelText ?? "Cancel" }}
+            </UiButton>
           </slot>
         </UiAlertDialogCancel>
         <UiAlertDialogAction as-child @click="emits('action')">
           <slot name="action">
-            <UiButton variant="primary" class="h-10.5"> {{ actionText ?? 'Save' }} </UiButton>
+            <UiButton variant="destructive" class="h-10.5">
+              {{ actionText ?? "Save" }}
+            </UiButton>
           </slot>
         </UiAlertDialogAction>
       </UiAlertDialogFooter>
