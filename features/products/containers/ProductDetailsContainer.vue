@@ -1,15 +1,6 @@
 <script setup lang="ts">
-import { computed, onMounted, ref, toRef } from "vue";
-
-import { useUserQuery } from "~/common/api/auth/auth.queries";
-import { useIncrementViewsMutation } from "~/common/api/products/products.mutations";
-import { useProductDetailQuery } from "~/common/api/products/products.queries";
 import { useCreateRentMutation } from "~/common/api/rents/mutations";
 import { useBuyProductMutation } from "~/common/api/sales/mutations";
-
-import BuyConfirmationModal from "~/common/components/ProductDetails/BuyConfirmationModal.vue";
-import ProductDetailsCard from "~/common/components/ProductDetails/ProductDetailsCard.vue";
-import RentDatePickerModal from "~/common/components/ProductDetails/RentDatePickerModal.vue";
 
 interface Props {
   productId: number;
@@ -17,7 +8,6 @@ interface Props {
 
 const props = defineProps<Props>();
 
-// Data fetching
 const {
   data: product,
   isLoading,
@@ -25,33 +15,27 @@ const {
   error,
 } = useProductDetailQuery(toRef(props, "productId"));
 
-// Mutations
 const buyMutation = useBuyProductMutation();
 const rentMutation = useCreateRentMutation();
 const incrementViewsMutation = useIncrementViewsMutation();
 
-// Increment views on mount
 onMounted(() => {
   if (props.productId) {
     incrementViewsMutation.mutate(props.productId);
   }
 });
 
-// Check if current user owns the product
 const { data: user } = useUserQuery();
 const isOwnProduct = computed(
   () => product.value?.owner?.id === user.value?.id
 );
 
-// Computed for pending states
 const isBuying = computed(() => buyMutation.isPending.value);
 const isRenting = computed(() => rentMutation.isPending.value);
 
-// Modals
 const buyModalOpen = ref(false);
 const rentModalOpen = ref(false);
 
-// Handlers
 const handleBuy = () => {
   buyModalOpen.value = true;
 };
@@ -89,12 +73,10 @@ const handleRentCancel = () => {
 
 <template>
   <div v-if="isLoading">
-    <!-- Loading skeleton -->
     <UiSkeleton class="h-96 w-full" />
   </div>
 
   <div v-else-if="isError">
-    <!-- Error state -->
     <div class="text-center">
       <p class="text-destructive">
         Failed to load product: {{ error?.message }}

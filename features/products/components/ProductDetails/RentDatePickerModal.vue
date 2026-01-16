@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { computed, ref } from "vue";
 
-import dayjs from "dayjs";
-
 import type { components } from "~/common/typedefs/api-schema";
+import {
+  calculateRentalCost,
+  getRentPricePerDay,
+  validateRentalDates,
+  type RentalDateErrors,
+} from "./product-details.helper";
 
 interface Props {
   product: components["schemas"]["ProductResponse"];
@@ -23,28 +27,19 @@ const emit = defineEmits<{
 const startDate = ref("");
 const endDate = ref("");
 
-const errors = ref<{ startDate?: string; endDate?: string }>({});
+const errors = ref<RentalDateErrors>({});
 
-const totalCost = computed(() => {
-  if (!startDate.value || !endDate.value) return 0;
-  const start = dayjs(startDate.value);
-  const end = dayjs(endDate.value);
-  if (!start.isValid() || !end.isValid() || start.isAfter(end)) return 0;
-  const days = end.diff(start, "day") + 1; // inclusive
-  return days * props.product.rentPrice;
+const totalRentingCost = computed(() => {
+  const rentPricePerDay = getRentPricePerDay(
+    props.product.rentPrice,
+    props.product.rentalPeriod
+  );
+  return calculateRentalCost(startDate.value, endDate.value, rentPricePerDay);
 });
 
 const validate = () => {
-  errors.value = {};
-  if (!startDate.value) errors.value.startDate = "Start date is required";
-  if (!endDate.value) errors.value.endDate = "End date is required";
-  if (startDate.value && endDate.value) {
-    const start = dayjs(startDate.value);
-    const end = dayjs(endDate.value);
-    if (start.isAfter(end)) {
-      errors.value.endDate = "End date must be after start date";
-    }
-  }
+  const validationErrors = validateRentalDates(startDate.value, endDate.value);
+  errors.value = validationErrors;
   return Object.keys(errors.value).length === 0;
 };
 
@@ -83,9 +78,9 @@ const handleCancel = () => {
           </p>
         </div>
 
-        <div v-if="totalCost > 0" class="rounded-lg bg-muted p-4">
+        <div v-if="totalRentingCost > 0" class="rounded-lg bg-muted p-4">
           <p class="text-sm text-muted-foreground">Estimated Total Cost</p>
-          <p class="text-lg font-bold">${{ totalCost }}</p>
+          <p class="text-lg font-bold">${{ totalRentingCost }}</p>
         </div>
       </div>
 

@@ -13,7 +13,6 @@ defineProps<Props>();
     <div
       class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between"
     >
-      <!-- Purchase Price -->
       <div class="text-center md:text-left">
         <p class="text-sm text-muted-foreground">Purchase Price</p>
         <p class="text-3xl font-bold text-primary">
@@ -21,11 +20,9 @@ defineProps<Props>();
         </p>
       </div>
 
-      <!-- Divider -->
       <div class="hidden h-12 w-px bg-border md:block"></div>
       <div class="h-px w-full bg-border md:hidden"></div>
 
-      <!-- Rent Prices -->
       <div class="text-center md:text-right">
         <p class="text-sm text-muted-foreground">Rent Price</p>
         <p class="text-lg font-semibold text-muted-foreground">
