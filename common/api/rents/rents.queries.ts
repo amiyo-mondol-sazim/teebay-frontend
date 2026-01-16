@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/vue-query";
-import type { MaybeRef } from "vue";
-import { computed, toValue } from "vue";
+import { toValue } from "vue";
+import type { RentsListResponse } from "~/common/typedefs/query";
 import { getNextPage, getPreviousPage } from "~/common/utils/pagination";
 import { client } from "../client";
 import { rentKeys } from "./rents.keys";
@@ -9,7 +9,7 @@ export const getProductRents = async (params: {
   productId: number;
   page: number;
   limit: number;
-}) => {
+}): Promise<RentsListResponse> => {
   const { data, error } = await client.GET(
     "/api/v1/rents/products/{productId}",
     {
@@ -20,7 +20,7 @@ export const getProductRents = async (params: {
           limit: params.limit,
         },
       },
-    }
+    },
   );
 
   if (error || !data) {
@@ -29,17 +29,17 @@ export const getProductRents = async (params: {
   return data;
 };
 
-export const useInfiniteProductRentsQuery = (params: {
-  productId: MaybeRef<number>;
-  limit?: number;
-}) => {
+export const useInfiniteProductRentsQuery = (
+  productId: number,
+  limit: number = 5,
+) => {
   return useInfiniteQuery({
-    queryKey: computed(() => rentKeys.products(toValue(params.productId))),
+    queryKey: rentKeys.products(toValue(productId)),
     queryFn: ({ pageParam }) =>
       getProductRents({
-        productId: toValue(params.productId),
+        productId: productId,
         page: pageParam,
-        limit: params.limit || 5,
+        limit: limit || 5,
       }),
     getNextPageParam: getNextPage,
     getPreviousPageParam: getPreviousPage,

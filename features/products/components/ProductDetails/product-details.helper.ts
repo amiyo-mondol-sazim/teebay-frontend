@@ -1,11 +1,10 @@
 import dayjs from "dayjs";
 
 import { ERentalPeriod } from "~/common/typedefs/enums";
-import { ProductStatus } from "~/common/utils/enum";
 
 export const getRentPricePerDay = (
   rentPrice: number,
-  rentalPeriod: string
+  rentalPeriod: string,
 ): number => {
   let rentPriceDividedByDay = rentPrice;
   if (rentalPeriod === ERentalPeriod.WEEK) {
@@ -22,19 +21,15 @@ export const formatCreatedDate = (dateString: string): string => {
 
 export const isActionButtonDisabled = (
   productStatus: string,
-  isOwnProduct: boolean
+  isOwnProduct: boolean,
 ): boolean => {
-  return (
-    productStatus === ProductStatus.SOLD ||
-    productStatus === ProductStatus.RENTED ||
-    isOwnProduct
-  );
+  return productStatus === EProductStatus.SOLD || isOwnProduct;
 };
 
 export const calculateRentalCost = (
   startDate: string,
   endDate: string,
-  rentPrice: number
+  rentPrice: number,
 ): number => {
   if (!startDate || !endDate) return 0;
 
@@ -49,7 +44,7 @@ export const calculateRentalCost = (
 
 export const validateRentalDates = (
   startDate: string,
-  endDate: string
+  endDate: string,
 ): { startDate?: string; endDate?: string } => {
   const errors: { startDate?: string; endDate?: string } = {};
   const today = dayjs().startOf("day");

@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from "@tanstack/vue-query";
 import { toast } from "vue-sonner";
 import { client } from "../client";
 import { productKeys } from "../products/products.keys";
+import { rentKeys } from "./rents.keys";
 
 export const useCreateRentMutation = () => {
   const queryClient = useQueryClient();
@@ -11,8 +12,9 @@ export const useCreateRentMutation = () => {
       startDate: string;
       endDate: string;
     }) => client.POST("/api/v1/rents", { body: input }),
-    onSuccess: () => {
+    onSuccess: (_, variables) => {
       queryClient.invalidateQueries({ queryKey: productKeys.all });
+      queryClient.invalidateQueries({ queryKey: rentKeys.products(variables.productId) });
       toast.success("Product rented successfully!");
     },
     onError: () => {

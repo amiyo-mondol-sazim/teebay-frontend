@@ -1,24 +1,22 @@
 <script setup lang="ts">
 import { useIntersectionObserver } from "@vueuse/core";
-import { computed, ref } from "vue";
-import { useInfiniteProductRentsQuery } from "~/common/api/rents/rents.queries";
 import { formatCreatedDate } from "./product-details.helper";
+import type { RentWithRenter } from "./product-details.types";
 
 const props = defineProps<{ productId: number }>();
 
 const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-  useInfiniteProductRentsQuery({
-    productId: computed(() => props.productId),
-  });
+  useInfiniteProductRentsQuery(props.productId);
 
 const rents = computed(
-  () => data.value?.pages.flatMap((page) => page.data) ?? []
+  () =>
+    (data.value?.pages.flatMap((page) => page.data) as RentWithRenter[]) || [],
 );
 
 const loadMoreTrigger = ref<HTMLElement | null>(null);
 
-useIntersectionObserver(loadMoreTrigger, ([{ isIntersecting }]) => {
-  if (isIntersecting && hasNextPage.value && !isFetchingNextPage.value) {
+useIntersectionObserver(loadMoreTrigger, ([entry]) => {
+  if (entry?.isIntersecting && hasNextPage.value && !isFetchingNextPage.value) {
     fetchNextPage();
   }
 });
