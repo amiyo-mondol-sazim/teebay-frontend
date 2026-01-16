@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useCreateRentMutation } from "~/common/api/rents/mutations";
+import { useCreateRentMutation } from "~/common/api/rents/rents.mutations";
 import { useBuyProductMutation } from "~/common/api/sales/mutations";
 
 interface Props {

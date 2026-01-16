@@ -1371,6 +1371,76 @@ paths:
         - bearer: []
       tags:
         - Rents
+  /api/v1/rents/products/{productId}:
+    get:
+      operationId: getRentsByProduct
+      parameters:
+        - name: productId
+          required: true
+          in: path
+          schema:
+            type: number
+        - name: page
+          required: true
+          in: query
+          schema:
+            type: number
+        - name: limit
+          required: true
+          in: query
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RentsListResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Rents
   /api/v1/rents/borrows/{userId}:
     get:
       operationId: getBorrowsByUser

@@ -4,6 +4,7 @@ import type { components } from "~/common/typedefs/api-schema";
 import { PRODUCT_STATUS_CLASSES } from "~/features/products/components/Product/products.helper";
 import { formatCreatedDate } from "./product-details.helper";
 
+import PreviousRentals from "./PreviousRentals.vue";
 import ProductActionButtons from "./ProductActionButtons.vue";
 import ProductPriceDisplay from "./ProductPriceDisplay.vue";
 
@@ -68,6 +69,8 @@ const props = withDefaults(defineProps<Props>(), {
         </div>
 
         <ProductPriceDisplay :product="product" />
+
+        <PreviousRentals :product-id="product.id" />
 
         <ProductActionButtons
           :on-buy="onBuy"
