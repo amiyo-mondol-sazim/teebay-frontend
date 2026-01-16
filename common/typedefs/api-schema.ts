@@ -1677,6 +1677,7 @@ export interface operations {
             query: {
                 page: number;
                 limit: number;
+                categories?: string;
             };
             header?: never;
             path?: never;
