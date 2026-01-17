@@ -29,7 +29,7 @@ const props = defineProps<TFormSelectProps>();
       </UiSelect>
       <div class="h-5 pt-2">
         <UiFormMessage class="text-xs leading-none" />
-        <UiFormDescription v-if="description" class="hidden text-xs text-gray-100 only:block">
+        <UiFormDescription v-if="description" class="hidden text-xs only:block">
           {{ description }}
         </UiFormDescription>
       </div>

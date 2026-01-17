@@ -10,7 +10,7 @@ const error = useFieldError(props.name);
 <template>
   <UiFormField v-slot="{ componentField }" :name>
     <UiFormItem class="block gap-0" :class="props.class">
-      <UiFormLabel class="pb-3.5 text-gray-400">{{ label }}</UiFormLabel>
+      <UiFormLabel class="pb-3.5 text-muted-foreground">{{ label }}</UiFormLabel>
       <UiFormControl>
         <UiTextarea
           v-bind="componentField"
@@ -24,13 +24,13 @@ const error = useFieldError(props.name);
         <p
           v-if="maxLength"
           class="text-xs"
-          :class="componentField.modelValue?.length > maxLength ? 'text-destructive' : 'text-gray-100'"
+          :class="componentField.modelValue?.length > maxLength ? 'text-destructive' : 'text-muted-foreground'"
         >
           {{ componentField.modelValue?.length || 0 }}/{{ maxLength }} Characters
         </p>
 
         <UiFormMessage v-if="error" class="text-xs leading-none" />
-        <UiFormDescription v-else-if="description && !maxLength" class="hidden text-xs text-gray-100 only:block">
+        <UiFormDescription v-else-if="description && !maxLength" class="hidden text-xs only:block">
           {{ description }}
         </UiFormDescription>
       </div>
