@@ -1,7 +1,5 @@
 import { useInfiniteQuery } from "@tanstack/vue-query";
-import { toValue } from "vue";
 import type { TRentsListResponse } from "~/common/typedefs/query";
-import { getNextPage, getPreviousPage } from "~/common/utils/pagination";
 import { client } from "../client";
 import { rentKeys } from "./rents.keys";
 

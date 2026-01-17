@@ -9,7 +9,7 @@ const showPassword = ref(false);
 <template>
   <UiFormField v-slot="{ componentField }" :name>
     <UiFormItem class="relative block gap-0" :class="props.class">
-      <UiFormLabel class="block truncate pb-3.5 text-gray-400">{{ label }}</UiFormLabel>
+      <UiFormLabel class="block truncate pb-3.5 text-muted-foreground">{{ label }}</UiFormLabel>
       <UiButton
         v-if="type === 'password'"
         type="button"
@@ -33,7 +33,7 @@ const showPassword = ref(false);
       </UiFormControl>
       <div class="h-5 pt-2">
         <UiFormMessage class="text-xs leading-none" />
-        <UiFormDescription v-if="description" class="hidden text-xs text-gray-100 only:block">
+        <UiFormDescription v-if="description" class="hidden text-xs only:block">
           {{ description }}
         </UiFormDescription>
       </div>

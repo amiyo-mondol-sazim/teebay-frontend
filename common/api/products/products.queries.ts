@@ -1,8 +1,6 @@
 import { useInfiniteQuery, useQuery } from "@tanstack/vue-query";
 import type { Ref } from "vue";
-import { computed, toValue } from "vue";
 import type { TGetProductsQuery } from "~/common/typedefs/query";
-import { getNextPage, getPreviousPage } from "~/common/utils/pagination";
 import { STALE_TIME } from "~/common/constants/api.constants";
 import { client } from "../client";
 import { productKeys } from "./products.keys";

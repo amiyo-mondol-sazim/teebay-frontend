@@ -1,15 +1,18 @@
 <script lang="ts" setup>
-import { NuxtLink } from "#components";
 import logo from "~/assets/images/logo.svg";
-import { useAuthActions } from "./AppSidebar.composables";
-import { getInitials } from "./AppSidebar.helpers";
 import type { TAppSidebarProps } from "./AppSidebar.types";
 
-defineProps<TAppSidebarProps>();
+interface Props extends TAppSidebarProps {
+  userName: string;
+  userEmail: string;
+  userInitials: string;
+}
 
-const { data: user } = useUserQuery();
-const { logout } = useAuthActions();
-const userName = computed(() => user.value?.email?.split("@")[0] ?? "User");
+defineProps<Props>();
+
+defineEmits<{
+  logout: [];
+}>();
 </script>
 
 <template>
@@ -71,13 +74,13 @@ const userName = computed(() => user.value?.email?.split("@")[0] ?? "User");
                 <div
                   class="bg-sidebar-accent text-sidebar-primary flex size-8 items-center justify-center rounded-lg text-xs font-bold italic"
                 >
-                  {{ getInitials(userName || "Anonymous") }}
+                  {{ userInitials }}
                 </div>
                 <div
                   class="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden"
                 >
                   <span class="truncate font-semibold">{{ userName }}</span>
-                  <span class="truncate text-xs">{{ user?.email }}</span>
+                  <span class="truncate text-xs">{{ userEmail }}</span>
                 </div>
                 <Icon
                   name="lucide:chevrons-up-down"
@@ -95,7 +98,7 @@ const userName = computed(() => user.value?.email?.split("@")[0] ?? "User");
                 title="Sign Out?"
                 description="Are you sure you want to sign out your account?"
                 action-text="Sign Out"
-                @action="logout"
+                @action="$emit('logout')"
               >
                 <UiDropdownMenuItem @select.prevent>
                   <Icon name="ph:sign-out" class="mr-2 size-4" />

@@ -1,9 +1,20 @@
 <script lang="ts" setup>
-import { useLogin, useLoginForm } from "./LoginForm.composables";
+import { useLoginForm } from "./LoginForm.composables";
+
+interface Props {
+  isPending?: boolean;
+}
+
+withDefaults(defineProps<Props>(), {
+  isPending: false,
+});
+
+const emit = defineEmits<{
+  submit: [values: { email: string; password: string }];
+}>();
 
 const form = useLoginForm();
-const { login, isPending } = useLogin();
-const onSubmit = form.handleSubmit((values) => login(values));
+const onSubmit = form.handleSubmit((values) => emit("submit", values));
 </script>
 
 <template>

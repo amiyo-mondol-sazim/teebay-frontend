@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { useId } from 'reka-ui';
-import { type HTMLAttributes, provide } from 'vue';
+import type { HTMLAttributes } from 'vue';
 import { cn } from '~/common/utils/css';
 import { FORM_ITEM_INJECTION_KEY } from './injectionKeys';
 

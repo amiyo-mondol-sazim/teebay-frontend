@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import type { TProductResponse } from "~/common/typedefs/query";
 
-import { useRentDateState } from "~/common/composables/useRentDateState";
 import RentCostPreview from "./RentCostPreview.vue";
 import RentDateSelector from "./RentDateSelector.vue";
 

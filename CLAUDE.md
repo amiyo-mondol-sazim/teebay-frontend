@@ -8,6 +8,54 @@ Teebay is a **Nuxt 3 SPA** (SSR disabled) built with **Feature-Driven Architectu
 
 **Tech Stack:** Nuxt 3, TypeScript, Tailwind CSS 4, Shadcn Vue, Pinia, TanStack Query (Vue Query), VeeValidate + Zod, Vitest.
 
+**Requirements:** Node.js >=22.16.0
+
+## Working with Claude (Superpowers Skills)
+
+This project uses the **superpowers** framework for structured development workflows.
+
+### The Golden Rule
+
+**Invoke relevant skills BEFORE any response or action.** If there's even a 1% chance a skill might apply, invoke it first using the `Skill` tool.
+
+### Key Skills
+
+**Process Skills** (determine HOW to approach):
+- `superpowers:brainstorming` — Before ANY creative work (features, components, functionality)
+- `superpowers:systematic-debugging` — When encountering bugs, test failures, or unexpected behavior
+- `superpowers:test-driven-development` — When implementing features or bugfixes (write tests first!)
+- `superpowers:writing-plans` — When you have requirements for multi-step implementation tasks
+- `superpowers:writing-skills` — When creating new skills or updating existing ones
+
+**Execution Skills** (guide implementation):
+- `superpowers:executing-plans` — When executing written implementation plans
+- `superpowers:subagent-driven-development` — When executing plans with independent tasks
+- `superpowers:using-git-worktrees` — When starting feature work needing isolation
+- `superpowers:dispatching-parallel-agents` — When facing 2+ independent tasks
+- `superpowers:verification-before-completion` — Before claiming work is complete, fixing bugs, or passing tests
+
+**Review Skills**:
+- `superpowers:requesting-code-review` — After completing tasks, before merging
+- `superpowers:receiving-code-review` — When receiving code review feedback
+- `code-review:code-review` — Review pull requests against plans and standards
+
+**Development Skills**:
+- `feature-dev:feature-dev` — Guided feature development with codebase understanding
+- `feature-dev:code-explorer` — Deeply analyze existing codebase features
+- `feature-dev:code-architect` — Design feature architectures
+- `frontend-design:frontend-design` — Build production-grade frontend interfaces
+
+### Skill Priority Order
+
+1. **Process skills first** — These determine the approach
+2. **Implementation skills second** — These guide execution
+
+Example: "Let's build X" → `brainstorming` first, then `frontend-design` if building UI
+
+### When in Doubt
+
+Invoke the skill. It's better to check and not need it than to skip it and waste time.
+
 ## Common Commands
 
 ```bash
@@ -54,10 +102,20 @@ project/
 └── assets/                # Static assets, CSS, OpenAPI spec
 ```
 
-### Smart/Dumb Component Pattern
+### Smart/Dumb Component Pattern (STRICTLY ENFORCED)
 
-- **Containers** (`containers/`): Smart components that handle data fetching (useQuery), permissions, and business logic. Minimal styling.
-- **Components** (`components/`): Dumb UI-only components. No API calls, no global state. Pure presentation based on props and events.
+**ALL components MUST follow this pattern without exception.**
+
+- **Containers** (`containers/`): Smart components that handle data fetching (useQuery), permissions, business logic, state management, and event handlers. Minimal styling. NO presentation logic.
+- **Components** (`components/`): Dumb UI-only components. **STRICTLY** no API calls, no global state, no business logic. Pure presentation based on props and events only.
+
+**Rules:**
+- NEVER call `useQuery`, `useMutation`, or any API hooks in `components/`
+- NEVER use Pinia stores or global composables in `components/`
+- NEVER perform data transformation or business logic in `components/`
+- ALL data fetching and state management MUST be in `containers/`
+- `components/` receive data via props and emit events for user actions
+- If a component needs API data, create a container that fetches it and passes it down
 
 ### Auto-Import System
 
@@ -89,6 +147,12 @@ Nuxt auto-imports from:
 3. Create query keys in `common/api/*/*.keys.ts`
 4. Implement queries/mutations in `common/api/*/*.queries.ts` or `*.mutations.ts`
 
+**API Client Architecture:**
+- **OpenAPI Client:** Located in `common/api/client.ts`
+- **Response Middleware:** Automatically extracts `data` from wrapped API responses
+- **Auth Middleware:** Auto-includes tokens and handles 401 redirects
+- **Toast Notifications:** Built-in success/error toasts in mutations
+
 **Pattern:**
 ```typescript
 // keys.ts
@@ -105,6 +169,18 @@ export function useEntityList(params: Params) {
     queryFn: () => client.GET("/api/entities", { params }),
   });
 }
+
+// mutations.ts - with cache invalidation
+export const useCreateEntityMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: createEntity,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: entityKeys.all });
+      toast.success("Entity created!");
+    },
+  });
+};
 ```
 
 ## Feature Implementation Rules
@@ -125,15 +201,17 @@ export function useEntityList(params: Params) {
 
 ## Coding Standards
 
-- **Date Handling:** Use `date-fns` or `dayjs`. **NEVER** use native `Date`
+- **No Comments:** NEVER add comments to self-explanatory code. Comments should only explain complex context or business rules, not obvious functionality
+- **Date Handling:** Use `date-fns` or `dayjs` with timezone support (`date-fns-tz`). **NEVER** use native `Date`
 - **Styling:** Use Tailwind CSS with `rem`/`em` units (avoid `px`). Spacing divisible by 4
-- **Icons:** Use `<Icon name="ph:<name>" />` or `lucide-vue-next` icons
+- **Icons:** Use `<Icon name="ph:<name>" />` (Phosphor icons via @nuxt/icon) or `lucide-vue-next` icons
 - **Forms:** Wrap inputs in `UiFormField` > `UiFormItem` > `UiFormControl`
 - **Conditionals:** Prefer ternary over short-circuit for side effects/rendering
 - **Composables:** Use arrow functions `export const useX = () => {}`
 - **Helpers:** Use regular functions `export function helper() {}` for hoisting
 - **Enums:** Prefer `enum` over string literals
 - **No Magic Values:** Extract to constants
+- **No `any` Types:** NEVER use `any` type. Use `unknown` with type guards, proper type definitions, or generic types instead.
 
 ## UI Components
 
@@ -168,4 +246,21 @@ export function useEntityList(params: Params) {
 - **Colocation:** Keep `.types.ts`, `.helpers.ts`, `.test.ts` next to component files
 - **Type Safety:** Never edit `api-schema.ts` manually - it's auto-generated
 - **Reusability:** Check `features/shared` and existing features before building new components
-- **Node Version:** Requires Node.js >=22.16.0
+
+## Additional Patterns
+
+**Authentication:**
+- Token stored in localStorage under `ACCESS_TOKEN_STORAGE_KEY` constant
+- Cross-tab auth sync via `useAuthBroadcastListener` and `useAuthBroadcaster` composables
+- Automatic 401 handling redirects to login
+
+**Navigation:**
+- Centralized URL constants in `common/constants/` (e.g., `PAGE_URLS`)
+- Use typed constants for all navigation paths
+
+**File Upload:**
+- Use `DndImageUpload` component from `common/components/` for drag-and-drop image handling
+
+**Pagination:**
+- Use infinite query patterns from TanStack Query for paginated data
+- Reference existing implementations in products/my-products features

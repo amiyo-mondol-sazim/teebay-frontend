@@ -1,14 +1,14 @@
 <script lang="ts" setup>
-import { navItems } from "./AppShell.helpers";
-
 const route = useRoute();
 </script>
 
 <template>
-  <UiSidebarProvider>
-    <AppSidebar :nav-items="navItems" />
-    <UiScrollArea :key="route.path" class="max-h-screen w-full">
-      <slot />
-    </UiScrollArea>
+  <UiSidebarProvider class="h-svh">
+    <AppSidebarContainer />
+    <UiSidebarInset class="h-full">
+      <UiScrollArea :key="route.path" class="h-full w-full">
+        <slot />
+      </UiScrollArea>
+    </UiSidebarInset>
   </UiSidebarProvider>
 </template>

@@ -2,6 +2,7 @@ export const PAGE_URLS = {
   HOME: "/",
   LOGIN: "/auth/login",
   MY_PRODUCTS: "/my-products",
+  ADD_PRODUCTS: "/add-product",
 };
 
 export const DEFAULT_OFFER_IMAGE_URL = "/images/offer-placeholder.svg";

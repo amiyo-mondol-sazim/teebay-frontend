@@ -1,51 +1,21 @@
 <script setup lang="ts">
-import { useIntersectionObserver } from "@vueuse/core";
 import type { TProductResponse } from "~/common/typedefs/query";
 
-const props = defineProps<{
-  ownerId: number;
-  statusFilter: TProductStatus | "ALL";
-}>();
+interface Props {
+  products: TProductResponse[];
+  isLoading: boolean;
+  isError: boolean;
+  error?: Error | null;
+  isFetchingNextPage: boolean;
+  loadMoreTriggerRef: (ref: Element | ComponentPublicInstance | null, refs: Record<string, Element | ComponentPublicInstance | null>) => void;
+  getAnimationDelay: (index: number) => string;
+}
 
-const limit = 12;
-
-const {
-  data,
-  fetchNextPage,
-  hasNextPage,
-  isFetchingNextPage,
-  isLoading,
-  isError,
-  error,
-} = useOwnerProductsInfiniteQuery(
-  computed(() => props.ownerId),
-  { page: 1, limit },
-);
-
-// Filter products based on statusFilter (client-side filtering)
-const products = computed(() => {
-  const allProducts = (data.value as TProductResponse[]) || [];
-  if (props.statusFilter === "ALL") {
-    return allProducts;
-  }
-  return allProducts.filter((p) => p.status === props.statusFilter);
-});
-
-const loadMoreTrigger = ref<HTMLElement | null>(null);
-
-useIntersectionObserver(loadMoreTrigger, ([entry]) => {
-  if (entry?.isIntersecting && hasNextPage.value && !isFetchingNextPage.value) {
-    fetchNextPage();
-  }
-});
-
-// Stagger animation delay for product cards
-const getAnimationDelay = (index: number) => `${Math.min(index * 0.05, 0.5)}s`;
+defineProps<Props>();
 </script>
 
 <template>
   <div class="space-y-6">
-    <!-- Loading State - Animated Skeletons -->
     <div
       v-if="isLoading"
       class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
@@ -58,7 +28,6 @@ const getAnimationDelay = (index: number) => `${Math.min(index * 0.05, 0.5)}s`;
       />
     </div>
 
-    <!-- Error State -->
     <div
       v-else-if="isError"
       class="overflow-hidden rounded-xl border border-destructive/20 bg-destructive/5 p-6"
@@ -84,7 +53,6 @@ const getAnimationDelay = (index: number) => `${Math.min(index * 0.05, 0.5)}s`;
       </div>
     </div>
 
-    <!-- Empty State -->
     <div
       v-else-if="!products.length"
       class="flex min-h-[400px] flex-col items-center justify-center rounded-2xl border border-dashed border-muted-foreground/25 bg-muted/30 p-12 text-center"
@@ -101,7 +69,6 @@ const getAnimationDelay = (index: number) => `${Math.min(index * 0.05, 0.5)}s`;
       </p>
     </div>
 
-    <!-- Products Grid with Enhanced Cards -->
     <div v-else class="space-y-8">
       <div
         class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
@@ -117,13 +84,12 @@ const getAnimationDelay = (index: number) => `${Math.min(index * 0.05, 0.5)}s`;
             :style="{ animationDelay: getAnimationDelay(index) }"
             class="animate-fade-in-up"
           >
-            <ProductCard :product="product" class="hover-card h-full" />
+            <ProductCardContainer :product="product" :is-owner="true" class="hover-card h-full" />
           </div>
         </TransitionGroup>
       </div>
 
-      <!-- Infinite Scroll Trigger -->
-      <div ref="loadMoreTrigger" class="flex h-12 items-center justify-center">
+      <div :ref="loadMoreTriggerRef" class="flex h-12 items-center justify-center">
         <div
           v-if="isFetchingNextPage"
           class="flex items-center gap-3 text-muted-foreground"
