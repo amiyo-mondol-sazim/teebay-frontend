@@ -68,7 +68,7 @@ const props = withDefaults(defineProps<Props>(), {
         </div>
 
         <div class="shrink-0">
-          <PreviousRentals :product-id="product.id" />
+          <PreviousRentalsContainer :product-id="product.id" />
         </div>
 
         <div class="shrink-0 mt-4">

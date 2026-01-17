@@ -1,27 +1,17 @@
 <script setup lang="ts">
-import { useIntersectionObserver } from "@vueuse/core";
 import type { TRentWithRenter } from "~/common/components/rent-calendar/rent-calendar.types";
 import { FORMAT_CREATED_DATE } from "../../../../common/components/products/product-details.helper";
 
 const PREVIOUS_RENTALS_HEIGHT = "21.875rem"; // 350px
 
-const props = defineProps<{ productId: number }>();
+interface Props {
+  rents: TRentWithRenter[];
+  isLoading: boolean;
+  isFetchingNextPage: boolean;
+  loadMoreTriggerRef: (ref: Element | ComponentPublicInstance | null, refs: Record<string, Element | ComponentPublicInstance | null>) => void;
+}
 
-const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-  useInfiniteProductRentsQuery(props.productId);
-
-const rents = computed(
-  () =>
-    (data.value?.pages.flatMap((page) => page.data) as TRentWithRenter[]) || [],
-);
-
-const loadMoreTrigger = ref<HTMLElement | null>(null);
-
-useIntersectionObserver(loadMoreTrigger, ([entry]) => {
-  if (entry?.isIntersecting && hasNextPage.value && !isFetchingNextPage.value) {
-    fetchNextPage();
-  }
-});
+defineProps<Props>();
 </script>
 
 <template>
@@ -76,7 +66,7 @@ useIntersectionObserver(loadMoreTrigger, ([entry]) => {
       </div>
 
       <div
-        ref="loadMoreTrigger"
+        :ref="loadMoreTriggerRef"
         class="flex h-4 w-full items-center justify-center py-2"
       >
         <Icon

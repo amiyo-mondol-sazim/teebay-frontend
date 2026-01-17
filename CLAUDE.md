@@ -10,6 +10,52 @@ Teebay is a **Nuxt 3 SPA** (SSR disabled) built with **Feature-Driven Architectu
 
 **Requirements:** Node.js >=22.16.0
 
+## Working with Claude (Superpowers Skills)
+
+This project uses the **superpowers** framework for structured development workflows.
+
+### The Golden Rule
+
+**Invoke relevant skills BEFORE any response or action.** If there's even a 1% chance a skill might apply, invoke it first using the `Skill` tool.
+
+### Key Skills
+
+**Process Skills** (determine HOW to approach):
+- `superpowers:brainstorming` — Before ANY creative work (features, components, functionality)
+- `superpowers:systematic-debugging` — When encountering bugs, test failures, or unexpected behavior
+- `superpowers:test-driven-development` — When implementing features or bugfixes (write tests first!)
+- `superpowers:writing-plans` — When you have requirements for multi-step implementation tasks
+- `superpowers:writing-skills` — When creating new skills or updating existing ones
+
+**Execution Skills** (guide implementation):
+- `superpowers:executing-plans` — When executing written implementation plans
+- `superpowers:subagent-driven-development` — When executing plans with independent tasks
+- `superpowers:using-git-worktrees` — When starting feature work needing isolation
+- `superpowers:dispatching-parallel-agents` — When facing 2+ independent tasks
+- `superpowers:verification-before-completion` — Before claiming work is complete, fixing bugs, or passing tests
+
+**Review Skills**:
+- `superpowers:requesting-code-review` — After completing tasks, before merging
+- `superpowers:receiving-code-review` — When receiving code review feedback
+- `code-review:code-review` — Review pull requests against plans and standards
+
+**Development Skills**:
+- `feature-dev:feature-dev` — Guided feature development with codebase understanding
+- `feature-dev:code-explorer` — Deeply analyze existing codebase features
+- `feature-dev:code-architect` — Design feature architectures
+- `frontend-design:frontend-design` — Build production-grade frontend interfaces
+
+### Skill Priority Order
+
+1. **Process skills first** — These determine the approach
+2. **Implementation skills second** — These guide execution
+
+Example: "Let's build X" → `brainstorming` first, then `frontend-design` if building UI
+
+### When in Doubt
+
+Invoke the skill. It's better to check and not need it than to skip it and waste time.
+
 ## Common Commands
 
 ```bash
@@ -165,6 +211,7 @@ export const useCreateEntityMutation = () => {
 - **Helpers:** Use regular functions `export function helper() {}` for hoisting
 - **Enums:** Prefer `enum` over string literals
 - **No Magic Values:** Extract to constants
+- **No `any` Types:** NEVER use `any` type. Use `unknown` with type guards, proper type definitions, or generic types instead.
 
 ## UI Components
 
