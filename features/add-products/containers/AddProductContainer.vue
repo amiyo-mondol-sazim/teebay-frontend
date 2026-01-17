@@ -1,16 +1,18 @@
 <script setup lang="ts">
 import { useCreateProductMutation } from "~/common/api/products/products.mutations";
-import type { TAddProductInput } from "~/features/add-products/components/AddProductForm/AddProductForm.helpers";
+import type { TCreateProductInput } from "~/common/typedefs/products";
 
 const { mutate: createProduct, isPending } = useCreateProductMutation();
 
-const handleSubmit = (values: TAddProductInput) => {
+const handleSubmit = (values: TCreateProductInput) => {
   createProduct(values);
+};
+
+const handleCancel = () => {
+  navigateTo("/my-products");
 };
 </script>
 
 <template>
-  <div class="container mx-auto py-8">
-    <AddProductForm :is-pending="isPending" @submit="handleSubmit" />
-  </div>
+  <AddProductForm :is-pending="isPending" @submit="handleSubmit" @cancel="handleCancel" />
 </template>

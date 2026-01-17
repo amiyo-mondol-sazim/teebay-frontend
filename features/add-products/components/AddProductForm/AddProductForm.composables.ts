@@ -1,6 +1,5 @@
 import { useForm } from "vee-validate";
-import { useCreateProductMutation } from "~/common/api/products/products.mutations";
-import { validationSchema, type TAddProductInput } from "./AddProductForm.helpers";
+import { validationSchema } from "./AddProductForm.helpers";
 
 export const useAddProductForm = () => {
   return useForm({
@@ -14,17 +13,4 @@ export const useAddProductForm = () => {
       rentalPeriod: "DAY" as const,
     },
   });
-};
-
-export const useAddProduct = () => {
-  const { mutate, isPending } = useCreateProductMutation();
-
-  const addProduct = (values: TAddProductInput) => {
-    mutate(values);
-  };
-
-  return {
-    addProduct,
-    isPending,
-  };
 };

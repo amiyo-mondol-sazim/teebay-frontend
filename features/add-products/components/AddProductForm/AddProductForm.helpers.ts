@@ -1,5 +1,6 @@
 import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
+import type { TCreateProductInput } from "~/common/typedefs/products";
 
 export const addProductSchema = z.object({
   title: z
@@ -31,8 +32,6 @@ export const addProductSchema = z.object({
   rentalPeriod: z.enum(["DAY", "WEEK", "MONTH"], {
     required_error: "Select a rental period",
   }),
-});
-
-export type TAddProductInput = z.infer<typeof addProductSchema>;
+}) satisfies z.ZodType<TCreateProductInput>;
 
 export const validationSchema = toTypedSchema(addProductSchema);

@@ -1,13 +1,14 @@
 <script lang="ts" setup>
 import { useAddProductForm } from "./AddProductForm.composables";
-import type { TAddProductInput } from "./AddProductForm.helpers";
+import type { TCreateProductInput } from "~/common/typedefs/products";
 
 defineProps<{
   isPending?: boolean;
 }>();
 
 const emit = defineEmits<{
-  (e: "submit", values: TAddProductInput): void;
+  (e: "submit", values: TCreateProductInput): void;
+  (e: "cancel"): void;
 }>();
 
 const form = useAddProductForm();
@@ -26,7 +27,7 @@ const onSubmit = form.handleSubmit((values) => {
 </script>
 
 <template>
-  <UiCard class="max-w-2xl">
+  <UiCard class="w-full max-w-2xl">
     <UiCardHeader>
       <UiCardTitle class="text-2xl font-serif">Add New Product</UiCardTitle>
       <UiCardDescription>
@@ -81,7 +82,7 @@ const onSubmit = form.handleSubmit((values) => {
       </UiCardContent>
 
       <UiCardFooter class="flex justify-end gap-3">
-        <UiButton type="button" variant="outline" @click="$router.back()">
+        <UiButton type="button" variant="outline" @click="emit('cancel')">
           Cancel
         </UiButton>
         <UiButton type="submit" :disabled="isPending">

@@ -5,10 +5,12 @@ const route = useRoute();
 </script>
 
 <template>
-  <UiSidebarProvider>
+  <UiSidebarProvider class="h-svh">
     <AppSidebar :nav-items="navItems" />
-    <UiScrollArea :key="route.path" class="max-h-screen w-full">
-      <slot />
-    </UiScrollArea>
+    <UiSidebarInset class="h-full">
+      <UiScrollArea :key="route.path" class="h-full w-full">
+        <slot />
+      </UiScrollArea>
+    </UiSidebarInset>
   </UiSidebarProvider>
 </template>
