@@ -1,4 +1,5 @@
 import { toast } from "~/common/utils/toaster";
+import { removeAccessToken } from "~/common/utils/token";
 import type { LoginInput } from "~/features/auth/components/LoginForm/LoginForm.helpers";
 import type { RegisterInput } from "~/features/auth/components/RegisterForm/RegisterForm.helpers";
 import { client } from "../client";
@@ -47,7 +48,7 @@ const loginFn = async (input: LoginInput) => {
 };
 
 const logoutFn = async () => {
-  // Client-side only logout for now as API doesn't support it
+  removeAccessToken();
   return Promise.resolve();
 };
 

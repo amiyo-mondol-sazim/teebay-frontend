@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { NuxtLink } from "#components";
 import logo from "~/assets/images/logo.svg";
-import { PAGE_URLS } from "../../utils/constants";
 import { useAuthActions } from "./AppSidebar.composables";
 import { getInitials } from "./AppSidebar.helpers";
 import type { AppSidebarProps } from "./AppSidebar.types";
@@ -11,100 +10,103 @@ defineProps<AppSidebarProps>();
 const { data: user } = useUserQuery();
 const { logout } = useAuthActions();
 const userName = computed(() => user.value?.email?.split("@")[0] ?? "User");
-
-const route = useRoute();
-const isActive = (path: string) => {
-  return route.path === path;
-};
 </script>
 
 <template>
-  <UiSidebar default-open class="flex flex-col justify-between border-r">
-    <UiSidebarHeader class="gap-6 px-4">
-      <div class="flex h-25 items-center px-4">
-        <img :src="logo" alt="Lune Pulse Logo" class="h-11" />
-      </div>
+  <UiSidebar collapsible="icon">
+    <UiSidebarHeader>
+      <UiSidebarMenu>
+        <UiSidebarMenuItem>
+          <UiSidebarMenuButton
+            size="lg"
+            class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground group-data-[collapsible=icon]:!justify-center group-data-[collapsible=icon]:!mx-auto"
+          >
+            <div
+              class="flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground"
+            >
+              <img :src="logo" alt="TeeBay Logo" class="size-6" />
+            </div>
+            <div
+              class="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden"
+            >
+              <span class="truncate font-bold">TeeBay</span>
+            </div>
+          </UiSidebarMenuButton>
+        </UiSidebarMenuItem>
+      </UiSidebarMenu>
     </UiSidebarHeader>
     <UiSidebarContent>
-      <span
-        style="
-          background: linear-gradient(
-            to right,
-            white,
-            rgb(223, 225, 226),
-            white
-          );
-        "
-        class="my-5 block h-0.25"
-      />
-      <nav>
-        <ul class="flex flex-col gap-2 px-4">
-          <li v-for="navItem in navItems" :key="navItem.name">
-            <UiButton
-              :as="NuxtLink"
-              :to="navItem.path"
-              variant="ghost"
-              size="2xl"
-              :class="
-                cn(
-                  'hover:bg-primary-25 w-full justify-start gap-2.5 text-base',
-                  isActive(navItem.path) ? 'bg-primary-25' : '',
-                )
-              "
-            >
-              <Icon
-                :name="navItem.icon"
-                :class="
-                  cn('size-7', isActive(navItem.path) ? 'text-primary' : '')
-                "
-              />
-              {{ navItem.name }}
-            </UiButton>
-          </li>
-        </ul>
-      </nav>
+      <UiSidebarGroup>
+        <UiSidebarGroupContent>
+          <UiSidebarMenu>
+            <UiSidebarMenuItem v-for="navItem in navItems" :key="navItem.name">
+              <UiSidebarMenuButton
+                as-child
+                size="lg"
+                :tooltip="navItem.name"
+                :is-active="$route.path === navItem.path"
+                class="group-data-[collapsible=icon]:!justify-center group-data-[collapsible=icon]:!mx-auto"
+              >
+                <NuxtLink :to="navItem.path">
+                  <Icon :name="navItem.icon" />
+                  <span class="group-data-[collapsible=icon]:hidden">{{
+                    navItem.name
+                  }}</span>
+                </NuxtLink>
+              </UiSidebarMenuButton>
+            </UiSidebarMenuItem>
+          </UiSidebarMenu>
+        </UiSidebarGroupContent>
+      </UiSidebarGroup>
     </UiSidebarContent>
-    <UiSidebarFooter class="px-4 pb-6">
-      <div
-        v-if="user"
-        class="border-gray-30 flex items-center gap-2 rounded-full border p-1.5"
-      >
-        <div
-          class="bg-primary-25 text-primary flex size-15 items-center justify-center rounded-full text-xl font-bold italic"
-        >
-          {{ getInitials(userName || "Anonymous") }}
-        </div>
-        <div class="min-w-0 flex-1">
-          <p class="truncate text-base font-bold">{{ userName ?? "User" }}</p>
-          <div class="truncate text-sm text-gray-200 italic">
-            {{ user?.email ?? "n/a" }}
-          </div>
-        </div>
-
-        <ConfirmationModal
-          title="Sign Out?"
-          description="Are you sure you want to sign out your account?"
-          action-text="Sign Out"
-          @action="logout"
-        >
-          <UiButton
-            variant="ghost"
-            size="lg"
-            class="text-gray-60 hover:text-gray-80 size-12 rounded-full"
-          >
-            <Icon name="ph:sign-out" class="size-5" />
-          </UiButton>
-
-          <template #action>
-            <UiButton
-              variant="primary"
-              class="dark-gradient-shadow h-10.5 px-5 py-3 text-base font-semibold"
+    <UiSidebarFooter>
+      <UiSidebarMenu>
+        <UiSidebarMenuItem>
+          <UiDropdownMenu>
+            <UiDropdownMenuTrigger as-child>
+              <UiSidebarMenuButton
+                size="lg"
+                class="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground group-data-[collapsible=icon]:!justify-center group-data-[collapsible=icon]:!mx-auto"
+              >
+                <div
+                  class="bg-sidebar-accent text-sidebar-primary flex size-8 items-center justify-center rounded-lg text-xs font-bold italic"
+                >
+                  {{ getInitials(userName || "Anonymous") }}
+                </div>
+                <div
+                  class="grid flex-1 text-left text-sm leading-tight group-data-[collapsible=icon]:hidden"
+                >
+                  <span class="truncate font-semibold">{{ userName }}</span>
+                  <span class="truncate text-xs">{{ user?.email }}</span>
+                </div>
+                <Icon
+                  name="lucide:chevrons-up-down"
+                  class="ml-auto size-4 group-data-[collapsible=icon]:hidden"
+                />
+              </UiSidebarMenuButton>
+            </UiDropdownMenuTrigger>
+            <UiDropdownMenuContent
+              class="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+              side="top"
+              align="end"
+              :side-offset="4"
             >
-              Sign Out
-            </UiButton>
-          </template>
-        </ConfirmationModal>
-      </div>
+              <ConfirmationModal
+                title="Sign Out?"
+                description="Are you sure you want to sign out your account?"
+                action-text="Sign Out"
+                @action="logout"
+              >
+                <UiDropdownMenuItem @select.prevent>
+                  <Icon name="ph:sign-out" class="mr-2 size-4" />
+                  <span>Sign Out</span>
+                </UiDropdownMenuItem>
+              </ConfirmationModal>
+            </UiDropdownMenuContent>
+          </UiDropdownMenu>
+        </UiSidebarMenuItem>
+      </UiSidebarMenu>
     </UiSidebarFooter>
+    <UiSidebarRail />
   </UiSidebar>
 </template>
