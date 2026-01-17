@@ -1,10 +1,16 @@
 <script lang="ts" setup>
-import { useAddProductForm } from "./AddProductForm.composables";
 import type { TCreateProductInput } from "~/common/typedefs/products";
+import { useAddProductForm } from "./AddProductForm.composables";
 
 defineProps<{
   isPending?: boolean;
 }>();
+
+const rentalPeriodOptions = [
+  { label: "Day", value: "DAY" },
+  { label: "Week", value: "WEEK" },
+  { label: "Month", value: "MONTH" },
+];
 
 const emit = defineEmits<{
   (e: "submit", values: TCreateProductInput): void;
@@ -15,14 +21,16 @@ const form = useAddProductForm();
 
 const categories = ref<string[]>([]);
 
-const rentalPeriodOptions = [
-  { label: "Day", value: "DAY" },
-  { label: "Week", value: "WEEK" },
-  { label: "Month", value: "MONTH" },
-];
+watch(
+  categories,
+  (newCategories) => {
+    form.setFieldValue("categories", newCategories);
+  },
+  { deep: true },
+);
 
 const onSubmit = form.handleSubmit((values) => {
-  emit("submit", { ...values, categories: categories.value });
+  emit("submit", values);
 });
 </script>
 
@@ -35,7 +43,7 @@ const onSubmit = form.handleSubmit((values) => {
       </UiCardDescription>
     </UiCardHeader>
 
-    <form @submit="onSubmit">
+    <form @submit.prevent="onSubmit">
       <UiCardContent class="space-y-6">
         <FormTextfield
           label="Title"

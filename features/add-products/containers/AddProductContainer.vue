@@ -5,6 +5,7 @@ import type { TCreateProductInput } from "~/common/typedefs/products";
 const { mutate: createProduct, isPending } = useCreateProductMutation();
 
 const handleSubmit = (values: TCreateProductInput) => {
+  console.log(values);
   createProduct(values);
 };
 
@@ -14,5 +15,9 @@ const handleCancel = () => {
 </script>
 
 <template>
-  <AddProductForm :is-pending="isPending" @submit="handleSubmit" @cancel="handleCancel" />
+  <AddProductForm
+    :is-pending="isPending"
+    @submit="handleSubmit"
+    @cancel="handleCancel"
+  />
 </template>

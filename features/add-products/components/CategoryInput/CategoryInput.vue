@@ -16,7 +16,8 @@ const categories = computed({
 
 const categoryInput = ref("");
 
-const { addCategory, removeCategory, MAX_CATEGORIES } = useCategoryInput(categories);
+const { addCategory, removeCategory, MAX_CATEGORIES } =
+  useCategoryInput(categories);
 
 const handleAddCategory = () => {
   const result = addCategory(categoryInput.value);
@@ -46,19 +47,31 @@ const handleAddCategory = () => {
       </UiBadge>
     </div>
 
-    <!-- Input field -->
-    <FormTextfield
-      v-model="categoryInput"
-      label="Categories"
-      name="categoryInput"
-      type="text"
-      placeholder="Type category and press Enter"
-      @keydown.enter.prevent="handleAddCategory"
-    />
+    <!-- Input field with add button -->
+    <div class="flex items-center gap-2">
+      <FormTextfield
+        v-model="categoryInput"
+        label="Categories"
+        name="categoryInput"
+        type="text"
+        placeholder="Type category and press Enter"
+        class="flex-1"
+        @keydown.enter.prevent="handleAddCategory"
+      />
+      <UiButton
+        type="button"
+        variant="outline"
+        :disabled="!categoryInput.trim() || categories.length >= MAX_CATEGORIES"
+        class="mt-2"
+        @click="handleAddCategory"
+      >
+        <Icon name="ph:plus" class="h-6 w-6" />
+      </UiButton>
+    </div>
 
     <!-- Helper text -->
     <p class="text-xs text-muted-foreground">
-      Press Enter to add category ({{ categories.length }}/{{ MAX_CATEGORIES }})
+      {{ categories.length }}/{{ MAX_CATEGORIES }} categories
     </p>
   </div>
 </template>
