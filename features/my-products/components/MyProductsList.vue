@@ -22,7 +22,6 @@ const {
   { page: 1, limit },
 );
 
-// Filter products based on statusFilter (client-side filtering)
 const products = computed(() => {
   const allProducts = (data.value as TProductResponse[]) || [];
   if (props.statusFilter === "ALL") {
@@ -39,13 +38,11 @@ useIntersectionObserver(loadMoreTrigger, ([entry]) => {
   }
 });
 
-// Stagger animation delay for product cards
 const getAnimationDelay = (index: number) => `${Math.min(index * 0.05, 0.5)}s`;
 </script>
 
 <template>
   <div class="space-y-6">
-    <!-- Loading State - Animated Skeletons -->
     <div
       v-if="isLoading"
       class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
@@ -58,7 +55,6 @@ const getAnimationDelay = (index: number) => `${Math.min(index * 0.05, 0.5)}s`;
       />
     </div>
 
-    <!-- Error State -->
     <div
       v-else-if="isError"
       class="overflow-hidden rounded-xl border border-destructive/20 bg-destructive/5 p-6"
@@ -84,7 +80,6 @@ const getAnimationDelay = (index: number) => `${Math.min(index * 0.05, 0.5)}s`;
       </div>
     </div>
 
-    <!-- Empty State -->
     <div
       v-else-if="!products.length"
       class="flex min-h-[400px] flex-col items-center justify-center rounded-2xl border border-dashed border-muted-foreground/25 bg-muted/30 p-12 text-center"
@@ -101,7 +96,6 @@ const getAnimationDelay = (index: number) => `${Math.min(index * 0.05, 0.5)}s`;
       </p>
     </div>
 
-    <!-- Products Grid with Enhanced Cards -->
     <div v-else class="space-y-8">
       <div
         class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
@@ -122,7 +116,6 @@ const getAnimationDelay = (index: number) => `${Math.min(index * 0.05, 0.5)}s`;
         </TransitionGroup>
       </div>
 
-      <!-- Infinite Scroll Trigger -->
       <div ref="loadMoreTrigger" class="flex h-12 items-center justify-center">
         <div
           v-if="isFetchingNextPage"

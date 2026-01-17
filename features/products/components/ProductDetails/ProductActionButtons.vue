@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { computed } from "vue";
-
 import { IS_ACTION_BUTTON_DISABLED } from "./product-details.helper";
 
 interface Props {

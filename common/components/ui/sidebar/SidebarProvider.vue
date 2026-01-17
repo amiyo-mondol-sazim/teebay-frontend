@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useEventListener, useMediaQuery, useVModel } from "@vueuse/core";
 import { TooltipProvider } from "reka-ui";
-import { computed, type HTMLAttributes, type Ref, ref } from "vue";
+import type { HTMLAttributes, Ref } from "vue";
 import { cn } from "~/common/utils/css";
 import {
   provideSidebarContext,

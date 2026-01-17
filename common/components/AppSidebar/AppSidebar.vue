@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { NuxtLink } from "#components";
 import logo from "~/assets/images/logo.svg";
 import { useAuthActions } from "./AppSidebar.composables";
 import { getInitials } from "./AppSidebar.helpers";
