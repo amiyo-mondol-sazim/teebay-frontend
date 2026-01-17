@@ -1,5 +1,3 @@
-import { toast } from "~/common/utils/toaster";
-import { removeAccessToken } from "~/common/utils/token";
 import type { TLoginInput } from "~/features/auth/components/LoginForm/LoginForm.helpers";
 import type { TRegisterInput } from "~/features/auth/components/RegisterForm/RegisterForm.helpers";
 import { client } from "../client";

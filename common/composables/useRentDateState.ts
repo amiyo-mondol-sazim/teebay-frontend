@@ -1,6 +1,5 @@
 import { now, type DateValue } from "@internationalized/date";
 import type { ComputedRef, Ref } from "vue";
-import { computed, ref } from "vue";
 
 import {
   formatRentalDuration,

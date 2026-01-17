@@ -3,9 +3,6 @@ import { PRODUCT_STATUS_CLASSES } from "~/features/products/components/Product/p
 import { FORMAT_CREATED_DATE } from "./product-details.helper";
 
 import type { TProductResponse } from "~/common/typedefs/query";
-import PreviousRentals from "./PreviousRentals.vue";
-import ProductActionButtons from "./ProductActionButtons.vue";
-import ProductPriceDisplay from "~/common/components/products/ProductPriceDisplay.vue";
 
 interface Props {
   product: TProductResponse;

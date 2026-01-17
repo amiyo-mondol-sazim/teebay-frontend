@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, type HTMLAttributes } from 'vue';
+import type { HTMLAttributes } from 'vue';
 import { Skeleton } from '~/common/components/ui/skeleton';
 import { cn } from '~/common/utils/css';
 

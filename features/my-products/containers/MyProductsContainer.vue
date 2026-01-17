@@ -52,11 +52,12 @@ const allProducts = computed(
             </p>
           </div>
 
-          <!-- Future: Add Product Button -->
-          <!-- <UiButton size="lg" class="shadow-lg shadow-primary/20">
-            <Icon name="ph:plus" class="mr-2 h-5 w-5" />
-            Add Product
-          </UiButton> -->
+          <NuxtLink to="/products/add">
+            <UiButton size="lg" class="shadow-lg shadow-primary/20">
+              <Icon name="ph:plus" class="mr-2 h-5 w-5" />
+              Add Product
+            </UiButton>
+          </NuxtLink>
         </div>
       </div>
     </div>
