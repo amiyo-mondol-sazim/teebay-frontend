@@ -3,6 +3,7 @@ import { toast } from "vue-sonner";
 import { client } from "../client";
 import { productKeys } from "./products.keys";
 import type { TCreateProductInput } from "~/common/typedefs/products";
+import type { TProductResponse } from "~/common/typedefs/query";
 
 export const useIncrementViewsMutation = () => {
   return useMutation({
@@ -38,6 +39,33 @@ export const useCreateProductMutation = () => {
     },
     onError: (error) => {
       toast.error(error?.message || "Failed to create product. Please try again.");
+    },
+  });
+};
+
+const deleteProduct = async (productId: number): Promise<TProductResponse> => {
+  const { data, error } = await client.DELETE("/api/v1/products/{id}", {
+    params: { path: { id: productId } },
+  });
+
+  if (error || !data) {
+    throw new Error(error?.message || "Failed to delete product");
+  }
+
+  return data;
+};
+
+export const useDeleteProductMutation = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: deleteProduct,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: productKeys.all });
+      toast.success("Product deleted successfully!");
+    },
+    onError: (error) => {
+      toast.error(error?.message || "Failed to delete product. Please try again.");
     },
   });
 };

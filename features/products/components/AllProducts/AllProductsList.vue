@@ -49,6 +49,7 @@ const { data, isLoading, isError, error } = useProductsQuery(params);
         v-for="n in 8"
         :key="n"
         class="h-72 animate-pulse rounded-xl bg-gray-100 dark:bg-gray-800"
+        :style="{ animationDelay: `${n * 0.1}s` }"
       ></div>
     </div>
 
@@ -61,12 +62,15 @@ const { data, isLoading, isError, error } = useProductsQuery(params);
 
     <div v-else>
       <div
-        class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        :key="page"
+        class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 animate-fade-in-up"
+        style="animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards"
       >
         <ProductCard
           v-for="product in data.data"
           :key="product.id"
           :product="product"
+          class="hover-card h-full"
         />
       </div>
 
