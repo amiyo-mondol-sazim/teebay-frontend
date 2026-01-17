@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { components } from "~/common/typedefs/api-schema";
+import type { TProductResponse } from "~/common/typedefs/query";
 
 interface Props {
-  product: components["schemas"]["ProductResponse"];
+  product: TProductResponse;
   open: boolean;
   isLoading?: boolean;
 }

@@ -1,6 +1,6 @@
 import { useInfiniteQuery } from "@tanstack/vue-query";
 import { toValue } from "vue";
-import type { RentsListResponse } from "~/common/typedefs/query";
+import type { TRentsListResponse } from "~/common/typedefs/query";
 import { getNextPage, getPreviousPage } from "~/common/utils/pagination";
 import { client } from "../client";
 import { rentKeys } from "./rents.keys";
@@ -9,7 +9,7 @@ export const getProductRents = async (params: {
   productId: number;
   page: number;
   limit: number;
-}): Promise<RentsListResponse> => {
+}): Promise<TRentsListResponse> => {
   const { data, error } = await client.GET(
     "/api/v1/rents/products/{productId}",
     {

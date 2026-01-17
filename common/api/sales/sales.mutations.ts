@@ -3,10 +3,14 @@ import { toast } from "vue-sonner";
 import { client } from "../client";
 import { productKeys } from "../products/products.keys";
 
-const buyProduct = (productId: number) => {
-  return client.POST("/api/v1/sales/buy", {
+const buyProduct = async (productId: number) => {
+  const { data, error } = await client.POST("/api/v1/sales/buy", {
     body: { productId },
   });
+  if (error || !data) {
+    throw new Error(error?.message || "Failed to buy product");
+  }
+  return data;
 };
 
 export const useBuyProductMutation = () => {

@@ -1,4 +1,4 @@
-import { ACCEPTED_FILE_TYPES } from "./DndImageUpload.constants";
+import type { ACCEPTED_FILE_TYPES } from "./DndImageUpload.constants";
 
 export type TDndImageUploadProps = {
   accept?: Array<(typeof ACCEPTED_FILE_TYPES)[number] | (string & {})>;

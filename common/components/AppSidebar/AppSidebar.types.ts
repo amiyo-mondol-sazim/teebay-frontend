@@ -1,9 +1,9 @@
-export type AppNavItem = {
+export type TAppNavItem = {
   name: string;
   path: string;
   icon: string;
 };
 
-export type AppSidebarProps = {
-  navItems: AppNavItem[];
+export type TAppSidebarProps = {
+  navItems: TAppNavItem[];
 };
