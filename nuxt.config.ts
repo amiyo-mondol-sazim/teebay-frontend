@@ -57,6 +57,7 @@ export default defineNuxtConfig({
       "./common/composables/*.{ts,js}",
       "./common/api/*/*.{queries,mutations}.ts",
       "./common/utils/**/*.{ts,js}",
+      "./common/typedefs/**/*.{ts,js}",
     ],
   },
   shadcn: {

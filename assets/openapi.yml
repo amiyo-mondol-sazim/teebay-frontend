@@ -5,48 +5,48 @@ paths:
       operationId: me
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TokenizedUser'
-        '400':
+                $ref: "#/components/schemas/TokenizedUser"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -64,50 +64,50 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/RegisterUserDto'
+              $ref: "#/components/schemas/RegisterUserDto"
       responses:
-        '201':
-          description: ''
+        "201":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserResponse'
-        '400':
+                $ref: "#/components/schemas/UserResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -123,7 +123,7 @@ paths:
           required: false
           in: query
           schema:
-            $ref: '#/components/schemas/EUserState'
+            $ref: "#/components/schemas/EUserState"
         - name: page
           required: true
           in: query
@@ -139,48 +139,48 @@ paths:
             default: 10
             type: number
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SuperuserFindAllUserResponse'
-        '400':
+                $ref: "#/components/schemas/SuperuserFindAllUserResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -203,50 +203,50 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateUserAsSuperuserDto'
+              $ref: "#/components/schemas/UpdateUserAsSuperuserDto"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserResponse'
-        '400':
+                $ref: "#/components/schemas/UserResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -260,50 +260,50 @@ paths:
       operationId: getAllRoles
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/RoleResponse'
-        '400':
+                  $ref: "#/components/schemas/RoleResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -317,48 +317,48 @@ paths:
       operationId: getRolesUserCountPermissions
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RolesWithUsersAndPermissionsResponse'
-        '400':
+                $ref: "#/components/schemas/RolesWithUsersAndPermissionsResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -376,50 +376,50 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateRolesPermissionsDto'
+              $ref: "#/components/schemas/UpdateRolesPermissionsDto"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: object
-        '400':
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -433,48 +433,48 @@ paths:
       operationId: getUserProfile
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserProfileResponse'
-        '400':
+                $ref: "#/components/schemas/UserProfileResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -491,50 +491,50 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateUserProfileDto'
+              $ref: "#/components/schemas/UpdateUserProfileDto"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserProfileResponse'
-        '400':
+                $ref: "#/components/schemas/UserProfileResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -558,48 +558,48 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VerifyByTokenResponse'
-        '400':
+                $ref: "#/components/schemas/VerifyByTokenResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -621,48 +621,48 @@ paths:
           schema:
             type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/VerificationRequestResponse'
-        '400':
+                $ref: "#/components/schemas/VerificationRequestResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -683,49 +683,54 @@ paths:
           in: query
           schema:
             type: number
+        - name: categories
+          required: false
+          in: query
+          schema:
+            type: string
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProductsListResponse'
-        '400':
+                $ref: "#/components/schemas/ProductsListResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -742,50 +747,50 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateProductDto'
+              $ref: "#/components/schemas/CreateProductDto"
       responses:
-        '201':
-          description: ''
+        "201":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProductResponse'
-        '400':
+                $ref: "#/components/schemas/ProductResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -814,48 +819,48 @@ paths:
           schema:
             type: number
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProductsListResponse'
-        '400':
+                $ref: "#/components/schemas/ProductsListResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -874,48 +879,48 @@ paths:
           schema:
             type: number
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProductResponse'
-        '400':
+                $ref: "#/components/schemas/ProductResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -937,50 +942,50 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/UpdateProductDto'
+              $ref: "#/components/schemas/UpdateProductDto"
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProductResponse'
-        '400':
+                $ref: "#/components/schemas/ProductResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -998,44 +1003,44 @@ paths:
           schema:
             type: number
       responses:
-        '200':
-          description: ''
-        '400':
+        "200":
+          description: ""
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -1054,48 +1059,48 @@ paths:
           schema:
             type: number
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ProductResponse'
-        '400':
+                $ref: "#/components/schemas/ProductResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -1113,50 +1118,50 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateSaleDto'
+              $ref: "#/components/schemas/CreateSaleDto"
       responses:
-        '201':
-          description: ''
+        "201":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SaleResponse'
-        '400':
+                $ref: "#/components/schemas/SaleResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -1185,48 +1190,48 @@ paths:
           schema:
             type: number
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SalesListResponse'
-        '400':
+                $ref: "#/components/schemas/SalesListResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -1255,48 +1260,48 @@ paths:
           schema:
             type: number
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SalesListResponse'
-        '400':
+                $ref: "#/components/schemas/SalesListResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -1314,50 +1319,120 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/CreateRentDto'
+              $ref: "#/components/schemas/CreateRentDto"
       responses:
-        '201':
-          description: ''
+        "201":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RentResponse'
-        '400':
+                $ref: "#/components/schemas/RentResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Rents
+  /api/v1/rents/products/{productId}:
+    get:
+      operationId: getRentsByProduct
+      parameters:
+        - name: productId
+          required: true
+          in: path
+          schema:
+            type: number
+        - name: page
+          required: true
+          in: query
+          schema:
+            type: number
+        - name: limit
+          required: true
+          in: query
+          schema:
+            type: number
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RentsListResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        "403":
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -1386,48 +1461,48 @@ paths:
           schema:
             type: number
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RentsListResponse'
-        '400':
+                $ref: "#/components/schemas/RentsListResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -1456,48 +1531,48 @@ paths:
           schema:
             type: number
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/RentsListResponse'
-        '400':
+                $ref: "#/components/schemas/RentsListResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -1515,50 +1590,50 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SignInDto'
+              $ref: "#/components/schemas/SignInDto"
       responses:
-        '201':
-          description: ''
+        "201":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SignInResponse'
-        '400':
+                $ref: "#/components/schemas/SignInResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -1572,48 +1647,48 @@ paths:
       operationId: signInWithGoogle
       parameters: []
       responses:
-        '201':
-          description: ''
+        "201":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SignInResponse'
-        '400':
+                $ref: "#/components/schemas/SignInResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -1627,48 +1702,48 @@ paths:
       operationId: signInWithGoogleToken
       parameters: []
       responses:
-        '201':
-          description: ''
+        "201":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SignInResponse'
-        '400':
+                $ref: "#/components/schemas/SignInResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -1686,50 +1761,50 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/SelfRegisterUserDto'
+              $ref: "#/components/schemas/SelfRegisterUserDto"
       responses:
-        '201':
-          description: ''
+        "201":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserResponse'
-        '400':
+                $ref: "#/components/schemas/UserResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -1747,50 +1822,50 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ForgotPasswordDto'
+              $ref: "#/components/schemas/ForgotPasswordDto"
       responses:
-        '201':
-          description: ''
+        "201":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SendForgotPasswordEmailResponse'
-        '400':
+                $ref: "#/components/schemas/SendForgotPasswordEmailResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -1813,50 +1888,50 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ResetPasswordDto'
+              $ref: "#/components/schemas/ResetPasswordDto"
       responses:
-        '201':
-          description: ''
+        "201":
+          description: ""
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/UserResponse'
-        '400':
+                $ref: "#/components/schemas/UserResponse"
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -1874,50 +1949,50 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ChangePasswordDto'
+              $ref: "#/components/schemas/ChangePasswordDto"
       responses:
-        '201':
-          description: ''
+        "201":
+          description: ""
           content:
             application/json:
               schema:
                 type: object
-        '400':
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -1931,48 +2006,48 @@ paths:
       operationId: up
       parameters: []
       responses:
-        '200':
-          description: ''
+        "200":
+          description: ""
           content:
             application/json:
               schema:
                 type: string
-        '400':
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
@@ -1984,7 +2059,7 @@ paths:
       operationId: check
       parameters: []
       responses:
-        '200':
+        "200":
           description: The Health Check is successful
           content:
             application/json:
@@ -2033,47 +2108,47 @@ paths:
                         status:
                           type: string
                       additionalProperties: true
-        '400':
+        "400":
           description: Bad Request
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 400
                 message: Bad Request
                 errors: []
-        '401':
+        "401":
           description: Unauthorized
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 401
                 message: Unauthorized
                 errors: []
-        '403':
+        "403":
           description: Forbidden
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 403
                 message: Forbidden
                 errors: []
-        '500':
+        "500":
           description: Internal Server Error
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ErrorResponseDto'
+                $ref: "#/components/schemas/ErrorResponseDto"
               example:
                 statusCode: 500
                 message: Internal Server Error
                 errors: []
-        '503':
+        "503":
           description: The Health Check is not successful
           content:
             application/json:
@@ -2133,7 +2208,7 @@ paths:
 info:
   title: Teebay API
   description: The Backend API for Teebay
-  version: '1.0'
+  version: "1.0"
   contact: {}
 tags: []
 servers: []
@@ -2161,7 +2236,7 @@ components:
         claim:
           example: ADMIN
           allOf:
-            - $ref: '#/components/schemas/EUserRole'
+            - $ref: "#/components/schemas/EUserRole"
         userProfileId:
           type: number
           example: 1
@@ -2206,7 +2281,7 @@ components:
           minLength: 8
           example: password123
         userProfile:
-          $ref: '#/components/schemas/UserProfileDto'
+          $ref: "#/components/schemas/UserProfileDto"
       required:
         - email
         - userProfile
@@ -2219,11 +2294,11 @@ components:
         createdAt:
           format: date-time
           type: string
-          example: '2024-01-15T12:00:00Z'
+          example: "2024-01-15T12:00:00Z"
         updatedAt:
           format: date-time
           type: string
-          example: '2024-01-15T12:00:00Z'
+          example: "2024-01-15T12:00:00Z"
         name:
           type: string
           example: ADMIN
@@ -2241,11 +2316,11 @@ components:
         createdAt:
           format: date-time
           type: string
-          example: '2024-01-15T12:00:00Z'
+          example: "2024-01-15T12:00:00Z"
         updatedAt:
           format: date-time
           type: string
-          example: '2024-01-15T12:00:00Z'
+          example: "2024-01-15T12:00:00Z"
         firstName:
           type: string
           example: John
@@ -2256,7 +2331,7 @@ components:
           type: string
           example: john.doe@example.com
         role:
-          $ref: '#/components/schemas/RoleResponse'
+          $ref: "#/components/schemas/RoleResponse"
       required:
         - id
         - createdAt
@@ -2277,13 +2352,13 @@ components:
         createdAt:
           format: date-time
           type: string
-          example: '2024-01-15T12:00:00Z'
+          example: "2024-01-15T12:00:00Z"
         updatedAt:
           format: date-time
           type: string
-          example: '2024-01-15T12:00:00Z'
+          example: "2024-01-15T12:00:00Z"
         userProfile:
-          $ref: '#/components/schemas/UserProfileResponse'
+          $ref: "#/components/schemas/UserProfileResponse"
       required:
         - id
         - email
@@ -2306,7 +2381,7 @@ components:
         state:
           example: ACTIVE
           allOf:
-            - $ref: '#/components/schemas/EUserState'
+            - $ref: "#/components/schemas/EUserState"
         roleId:
           type: number
           example: 1
@@ -2322,16 +2397,16 @@ components:
         createdAt:
           format: date-time
           type: string
-          example: '2024-01-15T12:00:00Z'
+          example: "2024-01-15T12:00:00Z"
         updatedAt:
           format: date-time
           type: string
-          example: '2024-01-15T12:00:00Z'
+          example: "2024-01-15T12:00:00Z"
         userProfile:
-          $ref: '#/components/schemas/UserProfileResponse'
+          $ref: "#/components/schemas/UserProfileResponse"
         state:
           allOf:
-            - $ref: '#/components/schemas/EUserState'
+            - $ref: "#/components/schemas/EUserState"
       required:
         - id
         - email
@@ -2367,9 +2442,9 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/SuperuserUserResponse'
+            $ref: "#/components/schemas/SuperuserUserResponse"
         meta:
-          $ref: '#/components/schemas/PaginationMetadataResponse'
+          $ref: "#/components/schemas/PaginationMetadataResponse"
       required:
         - data
         - meta
@@ -2377,7 +2452,7 @@ components:
       type: object
       properties:
         role:
-          $ref: '#/components/schemas/RoleResponse'
+          $ref: "#/components/schemas/RoleResponse"
         activeUsersCount:
           type: number
           example: 5
@@ -2412,11 +2487,11 @@ components:
         roles:
           type: array
           items:
-            $ref: '#/components/schemas/RolesWithUsersCount'
+            $ref: "#/components/schemas/RolesWithUsersCount"
         permissions:
           type: array
           items:
-            $ref: '#/components/schemas/PermissionResponse'
+            $ref: "#/components/schemas/PermissionResponse"
       required:
         - roles
         - permissions
@@ -2490,22 +2565,22 @@ components:
         createdAt:
           format: date-time
           type: string
-          example: '2024-01-15T12:00:00Z'
+          example: "2024-01-15T12:00:00Z"
         updatedAt:
           format: date-time
           type: string
-          example: '2024-01-15T12:00:00Z'
+          example: "2024-01-15T12:00:00Z"
         token:
           type: string
           example: token_abc_123
         status:
           example: ACTIVE
           allOf:
-            - $ref: '#/components/schemas/EVerificationRequestStatus'
+            - $ref: "#/components/schemas/EVerificationRequestStatus"
         type:
           example: EMAIL_VERIFICATION
           allOf:
-            - $ref: '#/components/schemas/EVerificationRequestType'
+            - $ref: "#/components/schemas/EVerificationRequestType"
         user:
           type: object
           properties:
@@ -2555,14 +2630,14 @@ components:
           type: number
         rentalPeriod:
           allOf:
-            - $ref: '#/components/schemas/ERentalPeriod'
+            - $ref: "#/components/schemas/ERentalPeriod"
         status:
           allOf:
-            - $ref: '#/components/schemas/EProductStatus'
+            - $ref: "#/components/schemas/EProductStatus"
         viewCount:
           type: number
         owner:
-          $ref: '#/components/schemas/User'
+          $ref: "#/components/schemas/User"
         createdAt:
           format: date-time
           type: string
@@ -2587,9 +2662,9 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/ProductResponse'
+            $ref: "#/components/schemas/ProductResponse"
         meta:
-          $ref: '#/components/schemas/PaginationMetadataResponse'
+          $ref: "#/components/schemas/PaginationMetadataResponse"
       required:
         - data
         - meta
@@ -2620,7 +2695,7 @@ components:
         rentalPeriod:
           example: DAY
           allOf:
-            - $ref: '#/components/schemas/ERentalPeriod'
+            - $ref: "#/components/schemas/ERentalPeriod"
       required:
         - title
         - description
@@ -2655,7 +2730,7 @@ components:
         rentalPeriod:
           example: DAY
           allOf:
-            - $ref: '#/components/schemas/ERentalPeriod'
+            - $ref: "#/components/schemas/ERentalPeriod"
     CreateSaleDto:
       type: object
       properties:
@@ -2681,11 +2756,11 @@ components:
           format: date-time
           type: string
         product:
-          $ref: '#/components/schemas/Product'
+          $ref: "#/components/schemas/Product"
         buyer:
-          $ref: '#/components/schemas/User'
+          $ref: "#/components/schemas/User"
         seller:
-          $ref: '#/components/schemas/User'
+          $ref: "#/components/schemas/User"
       required:
         - id
         - price
@@ -2700,9 +2775,9 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/SaleResponse'
+            $ref: "#/components/schemas/SaleResponse"
         meta:
-          $ref: '#/components/schemas/PaginationMetadataResponse'
+          $ref: "#/components/schemas/PaginationMetadataResponse"
       required:
         - data
         - meta
@@ -2714,10 +2789,10 @@ components:
           example: 1
         startDate:
           type: string
-          example: '2024-01-01'
+          example: "2024-01-01"
         endDate:
           type: string
-          example: '2024-01-02'
+          example: "2024-01-02"
       required:
         - productId
         - startDate
@@ -2742,11 +2817,11 @@ components:
           format: date-time
           type: string
         product:
-          $ref: '#/components/schemas/Product'
+          $ref: "#/components/schemas/Product"
         renter:
-          $ref: '#/components/schemas/User'
+          $ref: "#/components/schemas/User"
         owner:
-          $ref: '#/components/schemas/User'
+          $ref: "#/components/schemas/User"
       required:
         - id
         - rentPrice
@@ -2763,9 +2838,9 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/RentResponse'
+            $ref: "#/components/schemas/RentResponse"
         meta:
-          $ref: '#/components/schemas/PaginationMetadataResponse'
+          $ref: "#/components/schemas/PaginationMetadataResponse"
       required:
         - data
         - meta
@@ -2789,7 +2864,7 @@ components:
           type: string
           example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
         user:
-          $ref: '#/components/schemas/TokenizedUser'
+          $ref: "#/components/schemas/TokenizedUser"
       required:
         - accessToken
         - user
@@ -2821,7 +2896,7 @@ components:
           minLength: 8
           example: password123
         userProfile:
-          $ref: '#/components/schemas/SelfRegisterUserProfileDto'
+          $ref: "#/components/schemas/SelfRegisterUserProfileDto"
       required:
         - email
         - userProfile
