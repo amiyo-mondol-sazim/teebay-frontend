@@ -111,7 +111,7 @@ const getAnimationDelay = (index: number) => `${Math.min(index * 0.05, 0.5)}s`;
             :style="{ animationDelay: getAnimationDelay(index) }"
             class="animate-fade-in-up"
           >
-            <ProductCard :product="product" :is-owner="true" class="hover-card h-full" />
+            <ProductCardContainer :product="product" :is-owner="true" class="hover-card h-full" />
           </div>
         </TransitionGroup>
       </div>

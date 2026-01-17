@@ -66,7 +66,7 @@ const { data, isLoading, isError, error } = useProductsQuery(params);
         class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 animate-fade-in-up"
         style="animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards"
       >
-        <ProductCard
+        <ProductCardContainer
           v-for="product in data.data"
           :key="product.id"
           :product="product"

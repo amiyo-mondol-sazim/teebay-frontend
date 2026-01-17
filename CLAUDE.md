@@ -56,10 +56,20 @@ project/
 └── assets/                # Static assets, CSS, OpenAPI spec
 ```
 
-### Smart/Dumb Component Pattern
+### Smart/Dumb Component Pattern (STRICTLY ENFORCED)
 
-- **Containers** (`containers/`): Smart components that handle data fetching (useQuery), permissions, and business logic. Minimal styling.
-- **Components** (`components/`): Dumb UI-only components. No API calls, no global state. Pure presentation based on props and events.
+**ALL components MUST follow this pattern without exception.**
+
+- **Containers** (`containers/`): Smart components that handle data fetching (useQuery), permissions, business logic, state management, and event handlers. Minimal styling. NO presentation logic.
+- **Components** (`components/`): Dumb UI-only components. **STRICTLY** no API calls, no global state, no business logic. Pure presentation based on props and events only.
+
+**Rules:**
+- NEVER call `useQuery`, `useMutation`, or any API hooks in `components/`
+- NEVER use Pinia stores or global composables in `components/`
+- NEVER perform data transformation or business logic in `components/`
+- ALL data fetching and state management MUST be in `containers/`
+- `components/` receive data via props and emit events for user actions
+- If a component needs API data, create a container that fetches it and passes it down
 
 ### Auto-Import System
 
@@ -145,6 +155,7 @@ export const useCreateEntityMutation = () => {
 
 ## Coding Standards
 
+- **No Comments:** NEVER add comments to self-explanatory code. Comments should only explain complex context or business rules, not obvious functionality
 - **Date Handling:** Use `date-fns` or `dayjs` with timezone support (`date-fns-tz`). **NEVER** use native `Date`
 - **Styling:** Use Tailwind CSS with `rem`/`em` units (avoid `px`). Spacing divisible by 4
 - **Icons:** Use `<Icon name="ph:<name>" />` (Phosphor icons via @nuxt/icon) or `lucide-vue-next` icons
