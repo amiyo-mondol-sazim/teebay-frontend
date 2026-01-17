@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { components } from "~/common/typedefs/api-schema";
 import { PRODUCT_STATUS_CLASSES } from "./products.helper";
 
 interface Props {

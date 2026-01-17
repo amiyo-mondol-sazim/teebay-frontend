@@ -29,9 +29,9 @@ const fileProps = computed(() => {
     };
   }
   return {
-    url: selectedFile.value.url || selectedFile.value.image_url || "",
-    name: (selectedFile.value as any).image_filename || "Uploaded Image",
-    size: (selectedFile.value as any).image_byte_size || 0,
+    url: selectedFile.value.url || (selectedFile.value as { image_url?: string }).image_url || "",
+    name: (selectedFile.value as { image_filename?: string }).image_filename || "Uploaded Image",
+    size: (selectedFile.value as { image_byte_size?: number }).image_byte_size || 0,
   };
 });
 

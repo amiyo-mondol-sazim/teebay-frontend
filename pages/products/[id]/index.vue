@@ -15,6 +15,7 @@ if (!productId.value || isNaN(productId.value)) {
 
 <template>
   <div class="h-full w-full p-4 sm:p-6 lg:p-8">
+    <BackButton class="mb-4" />
     <ProductDetailsContainer :product-id="productId" />
   </div>
 </template>

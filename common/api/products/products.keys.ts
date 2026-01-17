@@ -5,4 +5,5 @@ export const productKeys = {
   list: () => [...productKeys.all, "list"],
   lists: (params: TGetProductsQuery) => [...productKeys.all, "list", params],
   detail: (id: number) => [...productKeys.all, "detail", id],
+  owner: (ownerId: number, params: TGetProductsQuery) => [...productKeys.all, "owner", ownerId, params],
 };

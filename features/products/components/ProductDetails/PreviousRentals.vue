@@ -1,7 +1,9 @@
 <script setup lang="ts">
 import { useIntersectionObserver } from "@vueuse/core";
-import { formatCreatedDate } from "./product-details.helper";
-import type { RentWithRenter } from "./product-details.types";
+import { FORMAT_CREATED_DATE } from "./product-details.helper";
+import type { TRentWithRenter } from "~/common/components/rent-calendar/rent-calendar.types";
+
+const PREVIOUS_RENTALS_HEIGHT = '21.875rem'; // 350px
 
 const props = defineProps<{ productId: number }>();
 
@@ -10,7 +12,7 @@ const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
 
 const rents = computed(
   () =>
-    (data.value?.pages.flatMap((page) => page.data) as RentWithRenter[]) || [],
+    (data.value?.pages.flatMap((page) => page.data) as TRentWithRenter[]) || [],
 );
 
 const loadMoreTrigger = ref<HTMLElement | null>(null);
@@ -23,14 +25,14 @@ useIntersectionObserver(loadMoreTrigger, ([entry]) => {
 </script>
 
 <template>
-  <div v-if="rents.length > 0 || isLoading" class="space-y-4 pt-4">
-    <div class="flex items-center justify-between">
+  <div class="space-y-4 pt-4 flex flex-col" :style="{ height: PREVIOUS_RENTALS_HEIGHT }">
+    <div class="flex items-center justify-between shrink-0">
       <h3 class="font-serif text-lg font-bold text-foreground">
         Previous Rentals
       </h3>
     </div>
 
-    <div class="space-y-3 max-h-60 overflow-y-auto pr-2 scrollbar-thin">
+    <UiScrollArea class="flex-1 min-h-0 pr-3 -mr-3">
       <div
         v-for="rent in rents"
         :key="rent.id"
@@ -38,8 +40,8 @@ useIntersectionObserver(loadMoreTrigger, ([entry]) => {
       >
         <div class="flex flex-col gap-1">
           <div class="font-medium text-foreground">
-            {{ formatCreatedDate(rent.startDate) }} -
-            {{ formatCreatedDate(rent.endDate) }}
+            {{ FORMAT_CREATED_DATE(rent.startDate) }} -
+            {{ FORMAT_CREATED_DATE(rent.endDate) }}
           </div>
           <div v-if="rent.renter" class="text-xs text-muted-foreground">
             Rented by {{ rent.renter.userProfile?.firstName }}
@@ -47,6 +49,19 @@ useIntersectionObserver(loadMoreTrigger, ([entry]) => {
           </div>
         </div>
         <div class="font-semibold text-primary">${{ rent.rentPrice }}</div>
+      </div>
+
+      <div
+        v-if="!isLoading && rents.length === 0"
+        class="flex flex-col items-center justify-center rounded-lg border border-dashed bg-muted/20 p-20 text-center"
+      >
+        <Icon
+          name="heroicons:calendar"
+          class="mb-2 h-10 w-10 text-muted-foreground"
+        />
+        <p class="text-sm font-medium text-muted-foreground">
+          No rental history yet
+        </p>
       </div>
 
       <div v-if="isLoading" class="flex flex-col gap-2">
@@ -67,6 +82,6 @@ useIntersectionObserver(loadMoreTrigger, ([entry]) => {
           class="h-4 w-4 animate-spin text-muted-foreground"
         />
       </div>
-    </div>
+    </UiScrollArea>
   </div>
 </template>

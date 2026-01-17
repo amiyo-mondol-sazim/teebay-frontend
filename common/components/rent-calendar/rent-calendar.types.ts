@@ -1,4 +1,4 @@
-export type RentWithRenter = {
+export type TRentWithRenter = {
   id: number;
   rentPrice: number;
   startDate: string;

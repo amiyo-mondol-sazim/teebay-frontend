@@ -1,5 +1,7 @@
 import tailwindcss from "@tailwindcss/vite";
 
+const FONT_WEIGHTS: (number | string)[] = [400, 500, 600, 700];
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2025-05-15",
@@ -33,16 +35,16 @@ export default defineNuxtConfig({
   fonts: {
     families: [
       {
-        name: "Figtree",
+        name: "JetBrains Mono",
         provider: "google",
         display: "swap",
-        weights: [500, 700],
+        weights: FONT_WEIGHTS,
       },
       {
-        name: "Plus Jakarta Sans",
+        name: "Inter",
         provider: "google",
         display: "swap",
-        weights: [400, 500, 600, 700, 800],
+        weights: FONT_WEIGHTS,
       },
     ],
   },

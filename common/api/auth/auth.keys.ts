@@ -1,4 +1,4 @@
-export const authQueryKeys = {
+export const authKeys = {
   all: ["auth"],
-  user: () => [...authQueryKeys.all, "user"],
+  user: () => [...authKeys.all, "user"],
 };

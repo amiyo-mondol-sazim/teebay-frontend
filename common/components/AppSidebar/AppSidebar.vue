@@ -3,9 +3,9 @@ import { NuxtLink } from "#components";
 import logo from "~/assets/images/logo.svg";
 import { useAuthActions } from "./AppSidebar.composables";
 import { getInitials } from "./AppSidebar.helpers";
-import type { AppSidebarProps } from "./AppSidebar.types";
+import type { TAppSidebarProps } from "./AppSidebar.types";
 
-defineProps<AppSidebarProps>();
+defineProps<TAppSidebarProps>();
 
 const { data: user } = useUserQuery();
 const { logout } = useAuthActions();

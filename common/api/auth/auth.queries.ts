@@ -1,5 +1,5 @@
 import { client } from "../client";
-import { authQueryKeys } from "./auth.keys";
+import { authKeys } from "./auth.keys";
 
 const getUser = async () => {
   const { data, error } = await client.GET("/api/v1/users/me");
@@ -10,5 +10,5 @@ const getUser = async () => {
 };
 
 export const useUserQuery = () => {
-  return useQuery({ queryKey: authQueryKeys.user(), queryFn: getUser });
+  return useQuery({ queryKey: authKeys.user(), queryFn: getUser });
 };

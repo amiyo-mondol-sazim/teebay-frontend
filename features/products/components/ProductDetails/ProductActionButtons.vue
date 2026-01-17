@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import { isActionButtonDisabled } from "./product-details.helper";
+import { IS_ACTION_BUTTON_DISABLED } from "./product-details.helper";
 
 interface Props {
   onBuy: () => void;
@@ -9,7 +9,7 @@ interface Props {
   isBuying?: boolean;
   isRenting?: boolean;
   isOwnProduct?: boolean;
-  productStatus: string;
+  productStatus: EProductStatus;
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const isDisabled = computed(() =>
-  isActionButtonDisabled(props.productStatus, props.isOwnProduct)
+  IS_ACTION_BUTTON_DISABLED(props.productStatus, props.isOwnProduct)
 );
 </script>
 
