@@ -2,7 +2,7 @@
 import { PRODUCT_STATUS_CLASSES } from "./products.helper";
 
 interface Props {
-  product: components["schemas"]["ProductResponse"];
+  product: TProductResponse;
 }
 
 const props = defineProps<Props>();

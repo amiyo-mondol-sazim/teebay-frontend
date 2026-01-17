@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { useIntersectionObserver } from "@vueuse/core";
-import { FORMAT_CREATED_DATE } from "./product-details.helper";
 import type { TRentWithRenter } from "~/common/components/rent-calendar/rent-calendar.types";
+import { FORMAT_CREATED_DATE } from "../../../../common/components/products/product-details.helper";
 
-const PREVIOUS_RENTALS_HEIGHT = '21.875rem'; // 350px
+const PREVIOUS_RENTALS_HEIGHT = "21.875rem"; // 350px
 
 const props = defineProps<{ productId: number }>();
 
@@ -25,7 +25,10 @@ useIntersectionObserver(loadMoreTrigger, ([entry]) => {
 </script>
 
 <template>
-  <div class="space-y-4 pt-4 flex flex-col" :style="{ height: PREVIOUS_RENTALS_HEIGHT }">
+  <div
+    class="space-y-4 pt-4 flex flex-col"
+    :style="{ height: PREVIOUS_RENTALS_HEIGHT }"
+  >
     <div class="flex items-center justify-between shrink-0">
       <h3 class="font-serif text-lg font-bold text-foreground">
         Previous Rentals

@@ -8,6 +8,8 @@ Teebay is a **Nuxt 3 SPA** (SSR disabled) built with **Feature-Driven Architectu
 
 **Tech Stack:** Nuxt 3, TypeScript, Tailwind CSS 4, Shadcn Vue, Pinia, TanStack Query (Vue Query), VeeValidate + Zod, Vitest.
 
+**Requirements:** Node.js >=22.16.0
+
 ## Common Commands
 
 ```bash
@@ -89,6 +91,12 @@ Nuxt auto-imports from:
 3. Create query keys in `common/api/*/*.keys.ts`
 4. Implement queries/mutations in `common/api/*/*.queries.ts` or `*.mutations.ts`
 
+**API Client Architecture:**
+- **OpenAPI Client:** Located in `common/api/client.ts`
+- **Response Middleware:** Automatically extracts `data` from wrapped API responses
+- **Auth Middleware:** Auto-includes tokens and handles 401 redirects
+- **Toast Notifications:** Built-in success/error toasts in mutations
+
 **Pattern:**
 ```typescript
 // keys.ts
@@ -105,6 +113,18 @@ export function useEntityList(params: Params) {
     queryFn: () => client.GET("/api/entities", { params }),
   });
 }
+
+// mutations.ts - with cache invalidation
+export const useCreateEntityMutation = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: createEntity,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: entityKeys.all });
+      toast.success("Entity created!");
+    },
+  });
+};
 ```
 
 ## Feature Implementation Rules
@@ -125,9 +145,9 @@ export function useEntityList(params: Params) {
 
 ## Coding Standards
 
-- **Date Handling:** Use `date-fns` or `dayjs`. **NEVER** use native `Date`
+- **Date Handling:** Use `date-fns` or `dayjs` with timezone support (`date-fns-tz`). **NEVER** use native `Date`
 - **Styling:** Use Tailwind CSS with `rem`/`em` units (avoid `px`). Spacing divisible by 4
-- **Icons:** Use `<Icon name="ph:<name>" />` or `lucide-vue-next` icons
+- **Icons:** Use `<Icon name="ph:<name>" />` (Phosphor icons via @nuxt/icon) or `lucide-vue-next` icons
 - **Forms:** Wrap inputs in `UiFormField` > `UiFormItem` > `UiFormControl`
 - **Conditionals:** Prefer ternary over short-circuit for side effects/rendering
 - **Composables:** Use arrow functions `export const useX = () => {}`
@@ -168,4 +188,21 @@ export function useEntityList(params: Params) {
 - **Colocation:** Keep `.types.ts`, `.helpers.ts`, `.test.ts` next to component files
 - **Type Safety:** Never edit `api-schema.ts` manually - it's auto-generated
 - **Reusability:** Check `features/shared` and existing features before building new components
-- **Node Version:** Requires Node.js >=22.16.0
+
+## Additional Patterns
+
+**Authentication:**
+- Token stored in localStorage under `ACCESS_TOKEN_STORAGE_KEY` constant
+- Cross-tab auth sync via `useAuthBroadcastListener` and `useAuthBroadcaster` composables
+- Automatic 401 handling redirects to login
+
+**Navigation:**
+- Centralized URL constants in `common/constants/` (e.g., `PAGE_URLS`)
+- Use typed constants for all navigation paths
+
+**File Upload:**
+- Use `DndImageUpload` component from `common/components/` for drag-and-drop image handling
+
+**Pagination:**
+- Use infinite query patterns from TanStack Query for paginated data
+- Reference existing implementations in products/my-products features
