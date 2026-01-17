@@ -1,9 +1,21 @@
 <script lang="ts" setup>
-import { useRegister, useRegisterForm } from "./RegisterForm.composables";
+import type { TRegisterInput } from "./RegisterForm.helpers";
+import { useRegisterForm } from "./RegisterForm.composables";
+
+interface Props {
+  isPending?: boolean;
+}
+
+withDefaults(defineProps<Props>(), {
+  isPending: false,
+});
+
+const emit = defineEmits<{
+  submit: [values: TRegisterInput];
+}>();
 
 const form = useRegisterForm();
-const { register, isPending } = useRegister();
-const onSubmit = form.handleSubmit((values) => register(values));
+const onSubmit = form.handleSubmit((values) => emit("submit", values));
 </script>
 
 <template>

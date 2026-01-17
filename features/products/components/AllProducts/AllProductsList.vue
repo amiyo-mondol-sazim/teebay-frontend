@@ -1,27 +1,24 @@
 <script setup lang="ts">
-const route = useRoute();
-const router = useRouter();
+import type { TProductResponse } from "~/common/typedefs/query";
 
-const page = computed({
-  get: () => Number(route.query.page) || 1,
-  set: (val) => {
-    router.push({
-      query: {
-        ...route.query,
-        page: val.toString(),
-      },
-    });
-  },
-});
+interface Props {
+  products: TProductResponse[];
+  pagination?: {
+    currentPage: number;
+    totalPages: number;
+    hasNextPage: boolean;
+    hasPreviousPage: boolean;
+  } | null;
+  isLoading: boolean;
+  isError: boolean;
+  error?: Error | null;
+}
 
-const limit = 12;
+defineProps<Props>();
 
-const params = computed(() => ({
-  page: page.value,
-  limit,
-}));
-
-const { data, isLoading, isError, error } = useProductsQuery(params);
+defineEmits<{
+  "page-change": [page: number];
+}>();
 </script>
 
 <template>
@@ -49,11 +46,12 @@ const { data, isLoading, isError, error } = useProductsQuery(params);
         v-for="n in 8"
         :key="n"
         class="h-72 animate-pulse rounded-xl bg-gray-100 dark:bg-gray-800"
+        :style="{ animationDelay: `${n * 0.1}s` }"
       ></div>
     </div>
 
     <div
-      v-else-if="!data?.data?.length"
+      v-else-if="!products?.length"
       class="flex h-64 flex-col items-center justify-center rounded-xl border border-dashed border-gray-300 bg-gray-50 dark:border-gray-700 dark:bg-gray-900/50"
     >
       <p class="text-gray-500 dark:text-gray-400">No products found</p>
@@ -61,30 +59,32 @@ const { data, isLoading, isError, error } = useProductsQuery(params);
 
     <div v-else>
       <div
-        class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 animate-fade-in-up"
+        style="animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards"
       >
-        <ProductCard
-          v-for="product in data.data"
+        <ProductCardContainer
+          v-for="product in products"
           :key="product.id"
           :product="product"
+          class="hover-card h-full"
         />
       </div>
 
       <div class="mt-8 flex items-center justify-center space-x-4">
         <UiButton
           variant="outline"
-          :disabled="(data?.meta?.currentPage ?? 1) <= 1"
-          @click="page--"
+          :disabled="!pagination || pagination.currentPage <= 1"
+          @click="$emit('page-change', (pagination?.currentPage ?? 1) - 1)"
         >
           Previous
         </UiButton>
         <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
-          Page {{ data?.meta?.currentPage }} of {{ data?.meta?.totalPages }}
+          Page {{ pagination?.currentPage ?? 1 }} of {{ pagination?.totalPages ?? 1 }}
         </span>
         <UiButton
           variant="outline"
-          :disabled="!data?.meta?.hasNextPage"
-          @click="page++"
+          :disabled="!pagination?.hasNextPage"
+          @click="$emit('page-change', (pagination?.currentPage ?? 1) + 1)"
         >
           Next
         </UiButton>

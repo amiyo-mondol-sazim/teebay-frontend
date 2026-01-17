@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { components } from "~/common/typedefs/api-schema";
+import { useIntersectionObserver } from "@vueuse/core";
 
 const { data: user, isLoading: isUserLoading } = useUserQuery();
 
@@ -7,15 +8,46 @@ const statusFilter = ref<TProductStatus | "ALL">("ALL" as const);
 
 const ownerId = computed(() => user.value?.id);
 
-const { data: allProductsData } = useOwnerProductsInfiniteQuery(
+const limit = 12;
+
+const {
+  data,
+  fetchNextPage,
+  hasNextPage,
+  isFetchingNextPage,
+  isLoading,
+  isError,
+  error,
+} = useOwnerProductsInfiniteQuery(
   computed(() => ownerId.value ?? 0),
-  { page: 1, limit: 1000 },
+  { page: 1, limit },
 );
 
+const products = computed(() => {
+  const allProducts = (data.value as components["schemas"]["ProductResponse"][]) || [];
+  if (statusFilter.value === "ALL") {
+    return allProducts;
+  }
+  return allProducts.filter((p) => p.status === statusFilter.value);
+});
+
 const allProducts = computed(
-  () =>
-    (allProductsData.value as components["schemas"]["ProductResponse"][]) || [],
+  () => (data.value as components["schemas"]["ProductResponse"][]) || [],
 );
+
+const loadMoreTrigger = ref<HTMLElement | null>(null);
+
+const setLoadMoreTrigger = (ref: Element | ComponentPublicInstance | null) => {
+  loadMoreTrigger.value = ref as HTMLElement | null;
+};
+
+useIntersectionObserver(loadMoreTrigger, ([entry]) => {
+  if (entry?.isIntersecting && hasNextPage.value && !isFetchingNextPage.value) {
+    fetchNextPage();
+  }
+});
+
+const getAnimationDelay = (index: number) => `${Math.min(index * 0.05, 0.5)}s`;
 </script>
 
 <template>
@@ -70,7 +102,15 @@ const allProducts = computed(
       <StatusFilter v-model="statusFilter" />
     </div>
 
-    <MyProductsList :owner-id="ownerId!" :status-filter="statusFilter" />
+    <MyProductsList
+      :products="products"
+      :is-loading="isLoading"
+      :is-error="isError"
+      :error="error"
+      :is-fetching-next-page="isFetchingNextPage"
+      :load-more-trigger-ref="setLoadMoreTrigger"
+      :get-animation-delay="getAnimationDelay"
+    />
   </div>
 
   <!-- Loading User State -->
