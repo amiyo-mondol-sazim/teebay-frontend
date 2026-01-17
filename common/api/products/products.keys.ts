@@ -1,0 +1,7 @@
+import type { TGetProductsQuery } from "~/common/typedefs/query";
+
+export const productKeys = {
+  all: ["products"],
+  list: () => [...productKeys.all, "list"],
+  lists: (params: TGetProductsQuery) => [...productKeys.all, "list", params],
+};

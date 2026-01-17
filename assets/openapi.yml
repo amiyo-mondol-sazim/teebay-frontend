@@ -2521,13 +2521,6 @@ components:
         - status
         - type
         - user
-    ProductsListResponse:
-      type: object
-      properties:
-        meta:
-          $ref: '#/components/schemas/PaginationMetadataResponse'
-      required:
-        - meta
     ERentalPeriod:
       type: string
       enum:
@@ -2588,6 +2581,18 @@ components:
         - viewCount
         - createdAt
         - updatedAt
+    ProductsListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductResponse'
+        meta:
+          $ref: '#/components/schemas/PaginationMetadataResponse'
+      required:
+        - data
+        - meta
     CreateProductDto:
       type: object
       properties:
@@ -2692,9 +2697,14 @@ components:
     SalesListResponse:
       type: object
       properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/SaleResponse'
         meta:
           $ref: '#/components/schemas/PaginationMetadataResponse'
       required:
+        - data
         - meta
     CreateRentDto:
       type: object
@@ -2750,9 +2760,14 @@ components:
     RentsListResponse:
       type: object
       properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/RentResponse'
         meta:
           $ref: '#/components/schemas/PaginationMetadataResponse'
       required:
+        - data
         - meta
     SignInDto:
       type: object
