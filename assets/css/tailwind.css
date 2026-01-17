@@ -9,10 +9,10 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  /* Typography: Geometric Sans for logic/UI, Elegant Serif for Storytelling */
-  --font-sans: "Plus Jakarta Sans", "Inter", system-ui, sans-serif;
-  --font-serif: "DM Serif Display", "Playfair Display", serif;
-  --font-display: "DM Serif Display", serif;
+  /* Typography: JetBrains Mono for a modern monospace aesthetic */
+  --font-sans: "JetBrains Mono", "Inter", monospace;
+  --font-serif: "Inter", sans-serif;
+  --font-display: "Inter", sans-serif;
 
   /* Animation Keyframes */
   @keyframes juggle {

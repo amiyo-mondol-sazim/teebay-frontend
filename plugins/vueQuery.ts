@@ -1,14 +1,15 @@
 import { defineNuxtPlugin, useState } from '#imports';
 import type { DehydratedState, VueQueryPluginOptions } from '@tanstack/vue-query';
 import { QueryClient, VueQueryPlugin, dehydrate, hydrate } from '@tanstack/vue-query';
+import { STALE_TIME } from '~/common/constants/api.constants';
 
 export default defineNuxtPlugin((nuxt) => {
-  const vueQueryState = useState<DehydratedState | null>('vue-query');
+  const vueQueryState = useState<DehydratedState | null>('vueQuery');
 
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 1 * 60 * 1000, // 1 minute
+        staleTime: STALE_TIME.SHORT,
         refetchOnWindowFocus: false,
       },
     },

@@ -1,8 +1,9 @@
-import { useQuery } from "@tanstack/vue-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/vue-query";
 import type { Ref } from "vue";
-import { computed } from "vue";
+import { computed, toValue } from "vue";
 import type { TGetProductsQuery } from "~/common/typedefs/query";
 import { getNextPage, getPreviousPage } from "~/common/utils/pagination";
+import { STALE_TIME } from "~/common/constants/api.constants";
 import { client } from "../client";
 import { productKeys } from "./products.keys";
 
@@ -54,6 +55,35 @@ export const useProductDetailQuery = (id: Ref<number>) => {
     queryKey: computed(() => productKeys.detail(id.value)),
     queryFn: () => getProductById(id.value),
     enabled: computed(() => !!id.value),
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: STALE_TIME.MEDIUM,
+  });
+};
+
+export const getProductsByOwner = async (ownerId: number, params: TGetProductsQuery) => {
+  const { data, error } = await client.GET("/api/v1/products/owner/{ownerId}", {
+    params: {
+      path: { ownerId },
+      query: params,
+    },
+  });
+  if (error || !data) {
+    throw new Error("Failed to fetch owner products");
+  }
+  return data;
+};
+
+export const useOwnerProductsInfiniteQuery = (
+  ownerId: MaybeRef<number>,
+  params: MaybeRef<TGetProductsQuery>
+) => {
+  return useInfiniteQuery({
+    queryKey: computed(() => productKeys.owner(toValue(ownerId), toValue(params))),
+    queryFn: ({ pageParam }) =>
+      getProductsByOwner(toValue(ownerId), { ...toValue(params), page: pageParam }),
+    getNextPageParam: getNextPage,
+    getPreviousPageParam: getPreviousPage,
+    select: (data) => data.pages.flatMap((page) => page.data),
+    initialPageParam: 1,
+    enabled: computed(() => !!toValue(ownerId)),
   });
 };

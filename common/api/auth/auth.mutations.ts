@@ -1,10 +1,10 @@
 import { toast } from "~/common/utils/toaster";
 import { removeAccessToken } from "~/common/utils/token";
-import type { LoginInput } from "~/features/auth/components/LoginForm/LoginForm.helpers";
-import type { RegisterInput } from "~/features/auth/components/RegisterForm/RegisterForm.helpers";
+import type { TLoginInput } from "~/features/auth/components/LoginForm/LoginForm.helpers";
+import type { TRegisterInput } from "~/features/auth/components/RegisterForm/RegisterForm.helpers";
 import { client } from "../client";
 
-const registerFn = async (input: RegisterInput) => {
+const registerFn = async (input: TRegisterInput) => {
   const { data, error } = await client.POST("/api/v1/auth/sign-up", {
     body: {
       userProfile: {
@@ -26,7 +26,7 @@ const registerFn = async (input: RegisterInput) => {
   return data;
 };
 
-const loginFn = async (input: LoginInput) => {
+const loginFn = async (input: TLoginInput) => {
   const { data, error } = await client.POST("/api/v1/auth/sign-in", {
     body: {
       email: input.email,

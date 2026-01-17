@@ -1,6 +1,6 @@
 import { useForm } from "vee-validate";
 import { useRegisterMutation } from "~/common/api/auth/auth.mutations";
-import { validationSchema, type RegisterInput } from "./RegisterForm.helpers";
+import { validationSchema, type TRegisterInput } from "./RegisterForm.helpers";
 
 export const useRegisterForm = () => {
   return useForm({
@@ -18,7 +18,7 @@ export const useRegisterForm = () => {
 export const useRegister = () => {
   const { mutate, isPending } = useRegisterMutation();
 
-  const register = (values: RegisterInput) => {
+  const register = (values: TRegisterInput) => {
     mutate({
       firstName: values.firstName,
       lastName: values.lastName,
