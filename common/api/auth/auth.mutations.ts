@@ -1,12 +1,40 @@
+import { toast } from "~/common/utils/toaster";
 import type { LoginInput } from "~/features/auth/components/LoginForm/LoginForm.helpers";
+import type { RegisterInput } from "~/features/auth/components/RegisterForm/RegisterForm.helpers";
 import { client } from "../client";
+
+const registerFn = async (input: RegisterInput) => {
+  const { data, error } = await client.POST("/api/v1/auth/sign-up", {
+    body: {
+      userProfile: {
+        firstName: input.firstName,
+        lastName: input.lastName,
+      },
+      email: input.email,
+      password: input.password,
+    },
+  });
+
+  if (error) {
+    throw new Error(error.message || "Registration failed");
+  }
+
+  if (!data) {
+    throw new Error("Failed to register");
+  }
+  return data;
+};
 
 const loginFn = async (input: LoginInput) => {
   const { data, error } = await client.POST("/api/v1/auth/sign-in", {
-    body: { email: input.email, password: input.password },
+    body: {
+      email: input.email,
+      password: input.password,
+    },
   });
+
   if (error) {
-    throw new Error((error as any)?.error || "Login failed");
+    throw new Error(error.message || "Login failed");
   }
 
   if (!data?.accessToken || !data?.user) {
@@ -44,4 +72,15 @@ export const useLogoutMutation = () => {
     },
   });
   return logoutMutation;
+};
+
+export const useRegisterMutation = () => {
+  const loginMutation = useMutation({
+    mutationFn: registerFn,
+    onSuccess: () => {
+      toast("Registration successful. Please log in.");
+      navigateTo("/auth/login");
+    },
+  });
+  return loginMutation;
 };

@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { useLogin, useLoginForm } from "./LoginForm.composables";
+import { useRegister, useRegisterForm } from "./RegisterForm.composables";
 
-const form = useLoginForm();
-const { login, isPending } = useLogin();
-const onSubmit = form.handleSubmit((values) => login(values));
+const form = useRegisterForm();
+const { register, isPending } = useRegister();
+const onSubmit = form.handleSubmit((values) => register(values));
 </script>
 
 <template>
@@ -14,40 +14,52 @@ const onSubmit = form.handleSubmit((values) => login(values));
       <div
         class="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary ring-1 ring-primary/20"
       >
-        <Icon name="lucide:log-in" class="size-6" />
+        <Icon name="lucide:user-plus" class="size-6" />
       </div>
       <UiCardTitle
         class="text-3xl font-serif font-medium tracking-tight text-foreground"
       >
-        Welcome Back
+        Create Account
       </UiCardTitle>
       <p class="text-base text-muted-foreground">
-        Enter your credentials to access your Teebay account.
+        Join Teebay today and start exploring.
       </p>
     </UiCardHeader>
     <form @submit="onSubmit">
       <UiCardContent class="space-y-5 px-8">
+        <div class="grid grid-cols-2 gap-4">
+          <FormTextfield
+            label="First Name"
+            name="firstName"
+            type="text"
+            placeholder="John"
+          />
+          <FormTextfield
+            label="Last Name"
+            name="lastName"
+            type="text"
+            placeholder="Doe"
+          />
+        </div>
         <FormTextfield
           label="Email"
           name="email"
           type="email"
           placeholder="name@example.com"
         />
-        <div class="space-y-1">
+        <div class="space-y-5">
           <FormTextfield
             label="Password"
             name="password"
             type="password"
             placeholder="••••••••"
           />
-          <div class="flex justify-end">
-            <NuxtLink
-              to="/auth/forgot-password"
-              class="text-sm font-medium text-primary hover:text-primary/80 transition-colors"
-            >
-              Forgot password?
-            </NuxtLink>
-          </div>
+          <FormTextfield
+            label="Confirm Password"
+            name="confirmPassword"
+            type="password"
+            placeholder="••••••••"
+          />
         </div>
       </UiCardContent>
       <UiCardFooter class="flex flex-col gap-4 px-8 pb-10 pt-6">
@@ -56,8 +68,8 @@ const onSubmit = form.handleSubmit((values) => login(values));
           class="w-full text-base font-medium shadow-lg shadow-primary/25 transition-all hover:scale-[1.02] active:scale-[0.98]"
           :disabled="isPending"
         >
-          <span v-if="!isPending">Sign in</span>
-          <span v-else>Signing in...</span>
+          <span v-if="!isPending">Create account</span>
+          <span v-else>Creating account...</span>
           <Icon
             v-if="!isPending"
             name="heroicons:arrow-right-20-solid"
@@ -66,12 +78,12 @@ const onSubmit = form.handleSubmit((values) => login(values));
         </UiButton>
 
         <div class="text-center text-sm text-muted-foreground">
-          Don't have an account?
+          Already have an account?
           <NuxtLink
-            to="/auth/register"
+            to="/auth/login"
             class="font-semibold text-primary hover:underline underline-offset-4"
           >
-            Sign up
+            Sign in
           </NuxtLink>
         </div>
       </UiCardFooter>

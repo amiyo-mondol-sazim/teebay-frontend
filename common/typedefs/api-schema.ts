@@ -4,289 +4,6 @@
  */
 
 export interface paths {
-    "/api/v1/auth/sign-in": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Sign in with email and password */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["LoginRequest"];
-                };
-            };
-            responses: {
-                /** @description Successful login */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["SignInResponse"];
-                    };
-                };
-                /** @description Invalid credentials */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/auth/google/sign-in": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Sign in with Google (OAuth flow) */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful login */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["SignInResponse"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/auth/google/token/sign-in": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Sign in with Google ID Token */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Successful login */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["SignInResponse"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/auth/sign-up": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Register a new user */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["SelfRegisterUserDto"];
-                };
-            };
-            responses: {
-                /** @description User registered successfully */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["UserResponse"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/auth/forgot-password": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Request a password reset email */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["ForgotPasswordDto"];
-                };
-            };
-            responses: {
-                /** @description Email sent successfully */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            message?: string;
-                        };
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/auth/reset-password/{token}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Reset password using token */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    token: string;
-                };
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["ResetPasswordDto"];
-                };
-            };
-            responses: {
-                /** @description Password reset successfully */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["UserResponse"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/auth/change-password": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** Change password for logged in user */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["ChangePasswordDto"];
-                };
-            };
-            responses: {
-                /** @description Password changed successfully */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["UserResponse"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/v1/users/me": {
         parameters: {
             query?: never;
@@ -294,27 +11,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get current logged in user details */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Current user details */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["TokenizedUser"];
-                    };
-                };
-            };
-        };
+        get: operations["me"];
         put?: never;
         post?: never;
         delete?: never;
@@ -330,57 +27,9 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get all users (SuperUser only) */
-        get: {
-            parameters: {
-                query?: {
-                    page?: number;
-                    limit?: number;
-                    state?: components["schemas"]["EUserState"];
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description List of users */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["SuperuserFindAllUserResponse"];
-                    };
-                };
-            };
-        };
+        get: operations["findAllUsers"];
         put?: never;
-        /** Create a new user (SuperUser only) */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["RegisterUserDto"];
-                };
-            };
-            responses: {
-                /** @description User created */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["UserResponse"];
-                    };
-                };
-            };
-        };
+        post: operations["createUser"];
         delete?: never;
         options?: never;
         head?: never;
@@ -400,33 +49,7 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        /** Update user (SuperUser only) */
-        patch: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: number;
-                };
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["UpdateUserAsSuperuserDto"];
-                };
-            };
-            responses: {
-                /** @description User updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["UserResponse"];
-                    };
-                };
-            };
-        };
+        patch: operations["updateUser"];
         trace?: never;
     };
     "/api/v1/roles": {
@@ -436,27 +59,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get all roles (SuperUser only) */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description List of roles */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["RoleResponse"][];
-                    };
-                };
-            };
-        };
+        get: operations["getAllRoles"];
         put?: never;
         post?: never;
         delete?: never;
@@ -472,27 +75,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get roles with user counts and permissions (Admin/SuperUser) */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Roles with permissions info */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["RolesWithUsersAndPermissionsResponse"];
-                    };
-                };
-            };
-        };
+        get: operations["getRolesUserCountPermissions"];
         put?: never;
         post?: never;
         delete?: never;
@@ -514,31 +97,7 @@ export interface paths {
         delete?: never;
         options?: never;
         head?: never;
-        /** Update role permissions (Admin/SuperUser) */
-        patch: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["UpdateRolesPermissionsDto"];
-                };
-            };
-            responses: {
-                /** @description Permissions updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": Record<string, never>;
-                    };
-                };
-            };
-        };
+        patch: operations["updateRolesPermissions"];
         trace?: never;
     };
     "/api/v1/user-profiles/me": {
@@ -548,57 +107,13 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get current user profile */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description User profile */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["UserProfileResponse"];
-                    };
-                };
-            };
-        };
+        get: operations["getUserProfile"];
         put?: never;
         post?: never;
         delete?: never;
         options?: never;
         head?: never;
-        /** Update current user profile */
-        patch: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": components["schemas"]["UpdateUserProfileDto"];
-                };
-            };
-            responses: {
-                /** @description Profile updated */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["UserProfileResponse"];
-                    };
-                };
-            };
-        };
+        patch: operations["updateUserProfile"];
         trace?: never;
     };
     "/api/v1/verification-requests/verify/{token}": {
@@ -610,31 +125,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** Verify a token */
-        post: {
-            parameters: {
-                query: {
-                    type: components["schemas"]["EVerificationRequestType"];
-                };
-                header?: never;
-                path: {
-                    token: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Verification successful */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["VerifyByTokenResponse"];
-                    };
-                };
-            };
-        };
+        post: operations["verify"];
         delete?: never;
         options?: never;
         head?: never;
@@ -648,33 +139,281 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Get verification request details */
-        get: {
-            parameters: {
-                query: {
-                    type: components["schemas"]["EVerificationRequestType"];
-                };
-                header?: never;
-                path: {
-                    token: string;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Verification request details */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["VerificationRequestResponse"];
-                    };
-                };
-            };
-        };
+        get: operations["findOneVerificationRequest"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/products": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getAll"];
+        put?: never;
+        post: operations["create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/products/owner/{ownerId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getByOwner"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/products/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getOneById"];
+        put?: never;
+        post?: never;
+        delete: operations["delete"];
+        options?: never;
+        head?: never;
+        patch: operations["update"];
+        trace?: never;
+    };
+    "/api/v1/products/{id}/views": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["incrementViews"];
+        trace?: never;
+    };
+    "/api/v1/sales/buy": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["buyProduct"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/sales/bought/{userId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getBoughtByUser"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/sales/sold/{userId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getSoldByUser"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/rents": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["createRent"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/rents/borrows/{userId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getBorrowsByUser"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/rents/lents/{userId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["getLentByUser"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/sign-in": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["signIn"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/google/sign-in": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["signInWithGoogle"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/google/token/sign-in": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["signInWithGoogleToken"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/sign-up": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["signUp"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/forgot-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["sendForgotPasswordEmail"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/reset-password/{token}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["resetPasswordByToken"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/change-password": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["changePassword"];
         delete?: never;
         options?: never;
         head?: never;
@@ -688,27 +427,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Simple health check */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Service is up */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "text/plain": string;
-                    };
-                };
-            };
-        };
+        get: operations["up"];
         put?: never;
         post?: never;
         delete?: never;
@@ -724,27 +443,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** Detailed health check */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Detailed health status */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": Record<string, never>;
-                    };
-                };
-            };
-        };
+        get: operations["check"];
         put?: never;
         post?: never;
         delete?: never;
@@ -759,158 +458,352 @@ export interface components {
     schemas: {
         /** @enum {string} */
         EUserRole: "SUPER_USER" | "ADMIN";
-        /** @enum {string} */
-        EUserState: "UNREGISTERED" | "ACTIVE" | "INACTIVE";
-        /** @enum {string} */
-        EVerificationRequestType: "EMAIL_VERIFICATION" | "RESET_PASSWORD";
-        /** @enum {string} */
-        EVerificationRequestStatus: "ACTIVE" | "EXPIRED";
-        Error: {
-            statusCode?: number;
-            message?: string;
-            error?: string;
-        };
-        NotFoundError: {
-            /** @example 404 */
-            statusCode?: number;
-            message?: string;
-            error?: string;
-        };
-        ParameterMissingError: {
-            /** @example 400 */
-            statusCode?: number;
-            message?: string[];
-            error?: string;
-        };
-        LoginRequest: {
-            /** Format: email */
-            email: string;
-            password: string;
-        };
-        SignInResponse: {
-            accessToken?: string;
-            user?: components["schemas"]["TokenizedUser"];
-        };
         TokenizedUser: {
-            id?: number;
-            claimId?: number;
-            claim?: components["schemas"]["EUserRole"];
-            userProfileId?: number;
-            email?: string;
-        };
-        SelfRegisterUserDto: {
-            /** Format: email */
+            /** @example 1 */
+            id: number;
+            /** @example 1 */
+            claimId: number;
+            /** @example ADMIN */
+            claim: components["schemas"]["EUserRole"];
+            /** @example 1 */
+            userProfileId: number;
+            /** @example user@example.com */
             email: string;
-            password: string;
-            userProfile: components["schemas"]["SelfRegisterUserProfileDto"];
         };
-        SelfRegisterUserProfileDto: {
+        UserProfileDto: {
+            /** @example John */
             firstName: string;
+            /** @example Doe */
             lastName: string;
-        };
-        UserResponse: {
-            id?: number;
-            email?: string;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-            userProfile?: components["schemas"]["UserProfileResponse"];
-        };
-        UserProfileResponse: {
-            id?: number;
-            firstName?: string;
-            lastName?: string;
-            email?: string;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-            role?: components["schemas"]["RoleResponse"];
-        };
-        RoleResponse: {
-            id?: number;
-            name?: string;
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-        };
-        ForgotPasswordDto: {
-            /** Format: email */
-            email: string;
-        };
-        ResetPasswordDto: {
-            password: string;
-        };
-        ChangePasswordDto: {
-            currentPassword: string;
-            newPassword: string;
+            /** @example 1 */
+            roleId: number;
         };
         RegisterUserDto: {
-            /** Format: email */
+            /**
+             * Format: email
+             * @example user@example.com
+             */
             email: string;
+            /** @example password123 */
             password?: string;
             userProfile: components["schemas"]["UserProfileDto"];
         };
-        UserProfileDto: {
-            firstName: string;
-            lastName: string;
-            roleId: number;
+        RoleResponse: {
+            /** @example 1 */
+            id: number;
+            /**
+             * Format: date-time
+             * @example 2024-01-15T12:00:00Z
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @example 2024-01-15T12:00:00Z
+             */
+            updatedAt: string;
+            /** @example ADMIN */
+            name: string;
         };
+        UserProfileResponse: {
+            /** @example 1 */
+            id: number;
+            /**
+             * Format: date-time
+             * @example 2024-01-15T12:00:00Z
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @example 2024-01-15T12:00:00Z
+             */
+            updatedAt: string;
+            /** @example John */
+            firstName: string;
+            /** @example Doe */
+            lastName: string;
+            /** @example john.doe@example.com */
+            email: string;
+            role: components["schemas"]["RoleResponse"];
+        };
+        UserResponse: {
+            /** @example 1 */
+            id: number;
+            /** @example user@example.com */
+            email: string;
+            /**
+             * Format: date-time
+             * @example 2024-01-15T12:00:00Z
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @example 2024-01-15T12:00:00Z
+             */
+            updatedAt: string;
+            userProfile: components["schemas"]["UserProfileResponse"];
+        };
+        /** @enum {string} */
+        EUserState: "UNREGISTERED" | "ACTIVE" | "INACTIVE";
         UpdateUserAsSuperuserDto: {
+            /** @example password123 */
             password?: string;
+            /** @example ACTIVE */
             state?: components["schemas"]["EUserState"];
+            /** @example 1 */
             roleId?: number;
         };
+        SuperuserUserResponse: {
+            /** @example 1 */
+            id: number;
+            /** @example user@example.com */
+            email: string;
+            /**
+             * Format: date-time
+             * @example 2024-01-15T12:00:00Z
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @example 2024-01-15T12:00:00Z
+             */
+            updatedAt: string;
+            userProfile: components["schemas"]["UserProfileResponse"];
+            state: components["schemas"]["EUserState"];
+        };
+        PaginationMetadataResponse: {
+            currentPage: number;
+            itemsPerPage: number;
+            totalItems: number;
+            totalPages: number;
+            hasNextPage: boolean;
+            hasPreviousPage: boolean;
+        };
         SuperuserFindAllUserResponse: {
-            data?: components["schemas"]["SuperuserUserResponse"][];
-            meta?: Record<string, never>;
-        };
-        SuperuserUserResponse: components["schemas"]["UserResponse"] & {
-            state?: components["schemas"]["EUserState"];
-        };
-        UpdateRolesPermissionsDto: {
-            roleId: number;
-            permissionsToRemoveIds: number[];
-            permissionsToAddIds: number[];
-        };
-        RolesWithUsersAndPermissionsResponse: {
-            roles?: components["schemas"]["RolesWithUsersCount"][];
-            permissions?: components["schemas"]["PermissionResponse"][];
+            data: components["schemas"]["SuperuserUserResponse"][];
+            meta: components["schemas"]["PaginationMetadataResponse"];
         };
         RolesWithUsersCount: {
-            role?: components["schemas"]["RoleResponse"];
-            activeUsersCount?: number;
-            inactiveUsersCount?: number;
+            role: components["schemas"]["RoleResponse"];
+            /** @example 5 */
+            activeUsersCount: number;
+            /** @example 2 */
+            inactiveUsersCount: number;
         };
         PermissionResponse: {
-            id?: number;
-            name?: string;
+            id: number;
             /** Format: date-time */
-            createdAt?: string;
+            createdAt: string;
             /** Format: date-time */
-            updatedAt?: string;
+            updatedAt: string;
+            name: string;
+        };
+        RolesWithUsersAndPermissionsResponse: {
+            roles: components["schemas"]["RolesWithUsersCount"][];
+            permissions: components["schemas"]["PermissionResponse"][];
+        };
+        UpdateRolesPermissionsDto: {
+            /** @example 1 */
+            roleId: number;
+            permissionsToRemoveIds: number[][];
+            permissionsToAddIds: number[][];
         };
         UpdateUserProfileDto: {
+            /** @example John */
             firstName?: string;
+            /** @example Doe */
             lastName?: string;
         };
         VerifyByTokenResponse: {
-            message?: string;
+            /** @example Verification successful */
+            message: string;
         };
+        /** @enum {string} */
+        EVerificationRequestStatus: "ACTIVE" | "EXPIRED";
+        /** @enum {string} */
+        EVerificationRequestType: "EMAIL_VERIFICATION" | "RESET_PASSWORD";
         VerificationRequestResponse: {
-            id?: number;
-            token?: string;
-            status?: components["schemas"]["EVerificationRequestStatus"];
-            type?: components["schemas"]["EVerificationRequestType"];
-            /** Format: date-time */
-            createdAt?: string;
-            /** Format: date-time */
-            updatedAt?: string;
-            user?: {
-                id?: number;
+            /** @example 1 */
+            id: number;
+            /**
+             * Format: date-time
+             * @example 2024-01-15T12:00:00Z
+             */
+            createdAt: string;
+            /**
+             * Format: date-time
+             * @example 2024-01-15T12:00:00Z
+             */
+            updatedAt: string;
+            /** @example token_abc_123 */
+            token: string;
+            /** @example ACTIVE */
+            status: components["schemas"]["EVerificationRequestStatus"];
+            /** @example EMAIL_VERIFICATION */
+            type: components["schemas"]["EVerificationRequestType"];
+            user: {
+                id: number;
             };
+        };
+        ProductsListResponse: {
+            meta: components["schemas"]["PaginationMetadataResponse"];
+        };
+        /** @enum {string} */
+        ERentalPeriod: "DAY" | "WEEK" | "MONTH";
+        /** @enum {string} */
+        EProductStatus: "AVAILABLE" | "SOLD" | "RENTED";
+        User: Record<string, never>;
+        ProductResponse: {
+            id: number;
+            title: string;
+            description: string;
+            categories: string[];
+            purchasePrice: number;
+            rentPrice: number;
+            rentalPeriod: components["schemas"]["ERentalPeriod"];
+            status: components["schemas"]["EProductStatus"];
+            viewCount: number;
+            owner?: components["schemas"]["User"];
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+        };
+        CreateProductDto: {
+            /** @example Product title */
+            title: string;
+            /** @example Product description */
+            description: string;
+            /** @example [
+             *       "category1",
+             *       "category2"
+             *     ] */
+            categories: string[];
+            /** @example 100 */
+            purchasePrice: number;
+            /** @example 10 */
+            rentPrice: number;
+            /** @example DAY */
+            rentalPeriod: components["schemas"]["ERentalPeriod"];
+        };
+        UpdateProductDto: {
+            /** @example Product title */
+            title?: string;
+            /** @example Product description */
+            description?: string;
+            /** @example [
+             *       "category1",
+             *       "category2"
+             *     ] */
+            categories?: string[];
+            /** @example 100 */
+            purchasePrice?: number;
+            /** @example 10 */
+            rentPrice?: number;
+            /** @example DAY */
+            rentalPeriod?: components["schemas"]["ERentalPeriod"];
+        };
+        CreateSaleDto: {
+            /** @example 1 */
+            productId: number;
+        };
+        Product: Record<string, never>;
+        SaleResponse: {
+            id: number;
+            price: number;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            product: components["schemas"]["Product"];
+            buyer: components["schemas"]["User"];
+            seller: components["schemas"]["User"];
+        };
+        SalesListResponse: {
+            meta: components["schemas"]["PaginationMetadataResponse"];
+        };
+        CreateRentDto: {
+            /** @example 1 */
+            productId: number;
+            /** @example 2024-01-01 */
+            startDate: string;
+            /** @example 2024-01-02 */
+            endDate: string;
+        };
+        RentResponse: {
+            id: number;
+            rentPrice: number;
+            /** Format: date-time */
+            startDate: string;
+            /** Format: date-time */
+            endDate: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            product: components["schemas"]["Product"];
+            renter: components["schemas"]["User"];
+            owner: components["schemas"]["User"];
+        };
+        RentsListResponse: {
+            meta: components["schemas"]["PaginationMetadataResponse"];
+        };
+        SignInDto: {
+            /**
+             * Format: email
+             * @example user@example.com
+             */
+            email: string;
+            /** @example password123 */
+            password: string;
+        };
+        SignInResponse: {
+            /** @example eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9... */
+            accessToken: string;
+            user: components["schemas"]["TokenizedUser"];
+        };
+        SelfRegisterUserProfileDto: {
+            /** @example John */
+            firstName: string;
+            /** @example Doe */
+            lastName: string;
+        };
+        SelfRegisterUserDto: {
+            /**
+             * Format: email
+             * @example user@example.com
+             */
+            email: string;
+            /** @example password123 */
+            password?: string;
+            userProfile: components["schemas"]["SelfRegisterUserProfileDto"];
+        };
+        ForgotPasswordDto: {
+            /**
+             * Format: email
+             * @example user@example.com
+             */
+            email: string;
+        };
+        SendForgotPasswordEmailResponse: {
+            /** @example Password reset email sent successfully */
+            message: string;
+        };
+        ResetPasswordDto: {
+            /** @example password123 */
+            password: string;
+        };
+        ChangePasswordDto: {
+            /** @example password123 */
+            currentPassword: string;
+            /** @example password123 */
+            newPassword: string;
+        };
+        ErrorResponseDto: {
+            /** @example 400 */
+            statusCode: number;
+            errors: string[][];
+            /** @example Bad Request */
+            message: string;
         };
     };
     responses: never;
@@ -920,4 +813,2671 @@ export interface components {
     pathItems: never;
 }
 export type $defs = Record<string, never>;
-export type operations = Record<string, never>;
+export interface operations {
+    me: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TokenizedUser"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    findAllUsers: {
+        parameters: {
+            query: {
+                state?: components["schemas"]["EUserState"];
+                page: number;
+                limit: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SuperuserFindAllUserResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    createUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RegisterUserDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    updateUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateUserAsSuperuserDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    getAllRoles: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RoleResponse"][];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    getRolesUserCountPermissions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RolesWithUsersAndPermissionsResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    updateRolesPermissions: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateRolesPermissionsDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    getUserProfile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserProfileResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    updateUserProfile: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateUserProfileDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserProfileResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    verify: {
+        parameters: {
+            query: {
+                type: string;
+            };
+            header?: never;
+            path: {
+                token: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VerifyByTokenResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    findOneVerificationRequest: {
+        parameters: {
+            query: {
+                type: string;
+            };
+            header?: never;
+            path: {
+                token: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VerificationRequestResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    getAll: {
+        parameters: {
+            query: {
+                page: number;
+                limit: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductsListResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateProductDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    getByOwner: {
+        parameters: {
+            query: {
+                page: number;
+                limit: number;
+            };
+            header?: never;
+            path: {
+                ownerId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductsListResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    getOneById: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateProductDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    incrementViews: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ProductResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    buyProduct: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateSaleDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SaleResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    getBoughtByUser: {
+        parameters: {
+            query: {
+                page: number;
+                limit: number;
+            };
+            header?: never;
+            path: {
+                userId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SalesListResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    getSoldByUser: {
+        parameters: {
+            query: {
+                page: number;
+                limit: number;
+            };
+            header?: never;
+            path: {
+                userId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SalesListResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    createRent: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateRentDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RentResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    getBorrowsByUser: {
+        parameters: {
+            query: {
+                page: number;
+                limit: number;
+            };
+            header?: never;
+            path: {
+                userId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RentsListResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    getLentByUser: {
+        parameters: {
+            query: {
+                page: number;
+                limit: number;
+            };
+            header?: never;
+            path: {
+                userId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RentsListResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    signIn: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SignInDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SignInResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    signInWithGoogle: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SignInResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    signInWithGoogleToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SignInResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    signUp: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SelfRegisterUserDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    sendForgotPasswordEmail: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ForgotPasswordDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SendForgotPasswordEmailResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    resetPasswordByToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                token: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ResetPasswordDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    changePassword: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ChangePasswordDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": Record<string, never>;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    up: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
+    check: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The Health Check is successful */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example ok */
+                        status?: string;
+                        /** @example {
+                         *       "database": {
+                         *         "status": "up"
+                         *       }
+                         *     } */
+                        info?: {
+                            [key: string]: {
+                                status: string;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                        } | null;
+                        /** @example {} */
+                        error?: {
+                            [key: string]: {
+                                status: string;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                        } | null;
+                        /** @example {
+                         *       "database": {
+                         *         "status": "up"
+                         *       }
+                         *     } */
+                        details?: {
+                            [key: string]: {
+                                status: string;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                        };
+                    };
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description The Health Check is not successful */
+            503: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        /** @example error */
+                        status?: string;
+                        /** @example {
+                         *       "database": {
+                         *         "status": "up"
+                         *       }
+                         *     } */
+                        info?: {
+                            [key: string]: {
+                                status: string;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                        } | null;
+                        /** @example {
+                         *       "redis": {
+                         *         "status": "down",
+                         *         "message": "Could not connect"
+                         *       }
+                         *     } */
+                        error?: {
+                            [key: string]: {
+                                status: string;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                        } | null;
+                        /** @example {
+                         *       "database": {
+                         *         "status": "up"
+                         *       },
+                         *       "redis": {
+                         *         "status": "down",
+                         *         "message": "Could not connect"
+                         *       }
+                         *     } */
+                        details?: {
+                            [key: string]: {
+                                status: string;
+                            } & {
+                                [key: string]: unknown;
+                            };
+                        };
+                    };
+                };
+            };
+        };
+    };
+}

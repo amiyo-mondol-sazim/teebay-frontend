@@ -3,3 +3,4 @@ node_modules
 .nuxt
 docs
 .output
+__pycache__

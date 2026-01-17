@@ -1,320 +1,2455 @@
-openapi: 3.1.1
+openapi: 3.0.0
+paths:
+  /api/v1/users/me:
+    get:
+      operationId: me
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenizedUser'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Users
+  /api/v1/users:
+    post:
+      operationId: createUser
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterUserDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Users
+    get:
+      operationId: findAllUsers
+      parameters:
+        - name: state
+          required: false
+          in: query
+          schema:
+            $ref: '#/components/schemas/EUserState'
+        - name: page
+          required: true
+          in: query
+          schema:
+            minimum: 1
+            default: 1
+            type: number
+        - name: limit
+          required: true
+          in: query
+          schema:
+            minimum: 1
+            default: 10
+            type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuperuserFindAllUserResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Users
+  /api/v1/users/{id}:
+    patch:
+      operationId: updateUser
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserAsSuperuserDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Users
+  /api/v1/roles:
+    get:
+      operationId: getAllRoles
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RoleResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Roles
+  /api/v1/roles/users-permissions:
+    get:
+      operationId: getRolesUserCountPermissions
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RolesWithUsersAndPermissionsResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Roles
+  /api/v1/roles/update-permissions:
+    patch:
+      operationId: updateRolesPermissions
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateRolesPermissionsDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Roles
+  /api/v1/user-profiles/me:
+    get:
+      operationId: getUserProfile
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfileResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - UserProfiles
+    patch:
+      operationId: updateUserProfile
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserProfileDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfileResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - UserProfiles
+  /api/v1/verification-requests/verify/{token}:
+    post:
+      operationId: verify
+      parameters:
+        - name: token
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: type
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyByTokenResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      tags:
+        - VerificationRequests
+  /api/v1/verification-requests/{token}:
+    get:
+      operationId: findOneVerificationRequest
+      parameters:
+        - name: token
+          required: true
+          in: path
+          schema:
+            type: string
+        - name: type
+          required: true
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerificationRequestResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      tags:
+        - VerificationRequests
+  /api/v1/products:
+    get:
+      operationId: getAll
+      parameters:
+        - name: page
+          required: true
+          in: query
+          schema:
+            type: number
+        - name: limit
+          required: true
+          in: query
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductsListResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Products
+    post:
+      operationId: create
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateProductDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Products
+  /api/v1/products/owner/{ownerId}:
+    get:
+      operationId: getByOwner
+      parameters:
+        - name: ownerId
+          required: true
+          in: path
+          schema:
+            type: number
+        - name: page
+          required: true
+          in: query
+          schema:
+            type: number
+        - name: limit
+          required: true
+          in: query
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductsListResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Products
+  /api/v1/products/{id}:
+    get:
+      operationId: getOneById
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Products
+    patch:
+      operationId: update
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateProductDto'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Products
+    delete:
+      operationId: delete
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Products
+  /api/v1/products/{id}/views:
+    patch:
+      operationId: incrementViews
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Products
+  /api/v1/sales/buy:
+    post:
+      operationId: buyProduct
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateSaleDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaleResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Sales
+  /api/v1/sales/bought/{userId}:
+    get:
+      operationId: getBoughtByUser
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: number
+        - name: page
+          required: true
+          in: query
+          schema:
+            type: number
+        - name: limit
+          required: true
+          in: query
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesListResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Sales
+  /api/v1/sales/sold/{userId}:
+    get:
+      operationId: getSoldByUser
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: number
+        - name: page
+          required: true
+          in: query
+          schema:
+            type: number
+        - name: limit
+          required: true
+          in: query
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesListResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Sales
+  /api/v1/rents:
+    post:
+      operationId: createRent
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRentDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Rents
+  /api/v1/rents/borrows/{userId}:
+    get:
+      operationId: getBorrowsByUser
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: number
+        - name: page
+          required: true
+          in: query
+          schema:
+            type: number
+        - name: limit
+          required: true
+          in: query
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentsListResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Rents
+  /api/v1/rents/lents/{userId}:
+    get:
+      operationId: getLentByUser
+      parameters:
+        - name: userId
+          required: true
+          in: path
+          schema:
+            type: number
+        - name: page
+          required: true
+          in: query
+          schema:
+            type: number
+        - name: limit
+          required: true
+          in: query
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RentsListResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Rents
+  /api/v1/auth/sign-in:
+    post:
+      operationId: signIn
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignInDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignInResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Auth
+  /api/v1/auth/google/sign-in:
+    post:
+      operationId: signInWithGoogle
+      parameters: []
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignInResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Auth
+  /api/v1/auth/google/token/sign-in:
+    post:
+      operationId: signInWithGoogleToken
+      parameters: []
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignInResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Auth
+  /api/v1/auth/sign-up:
+    post:
+      operationId: signUp
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SelfRegisterUserDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Auth
+  /api/v1/auth/forgot-password:
+    post:
+      operationId: sendForgotPasswordEmail
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForgotPasswordDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendForgotPasswordEmailResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Auth
+  /api/v1/auth/reset-password/{token}:
+    post:
+      operationId: resetPasswordByToken
+      parameters:
+        - name: token
+          required: true
+          in: path
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ResetPasswordDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Auth
+  /api/v1/auth/change-password:
+    post:
+      operationId: changePassword
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      tags:
+        - Auth
+  /api/v1/health:
+    get:
+      operationId: up
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      tags:
+        - Health
+  /api/v1/health/check:
+    get:
+      operationId: check
+      parameters: []
+      responses:
+        '200':
+          description: The Health Check is successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: ok
+                  info:
+                    type: object
+                    example:
+                      database:
+                        status: up
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+                    nullable: true
+                  error:
+                    type: object
+                    example: {}
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+                    nullable: true
+                  details:
+                    type: object
+                    example:
+                      database:
+                        status: up
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+        '503':
+          description: The Health Check is not successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: error
+                  info:
+                    type: object
+                    example:
+                      database:
+                        status: up
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+                    nullable: true
+                  error:
+                    type: object
+                    example:
+                      redis:
+                        status: down
+                        message: Could not connect
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+                    nullable: true
+                  details:
+                    type: object
+                    example:
+                      database:
+                        status: up
+                      redis:
+                        status: down
+                        message: Could not connect
+                    additionalProperties:
+                      type: object
+                      required:
+                        - status
+                      properties:
+                        status:
+                          type: string
+                      additionalProperties: true
+      tags:
+        - Health
 info:
-  title: Teebay APIs
-  description: Teebay APIs
-  version: 1.0.0
-servers:
-  - url: "{base_url}"
-    variables:
-      base_url:
-        default: http://localhost:5000
-        description: Base URL for the API
-security:
-  - bearerAuth: []
+  title: Teebay API
+  description: The Backend API for Teebay
+  version: '1.0'
+  contact: {}
+tags: []
+servers: []
 components:
   securitySchemes:
-    bearerAuth:
-      type: http
+    bearer:
       scheme: bearer
       bearerFormat: JWT
+      type: http
   schemas:
     EUserRole:
       type: string
       enum:
         - SUPER_USER
         - ADMIN
+    TokenizedUser:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        claimId:
+          type: number
+          example: 1
+        claim:
+          example: ADMIN
+          allOf:
+            - $ref: '#/components/schemas/EUserRole'
+        userProfileId:
+          type: number
+          example: 1
+        email:
+          type: string
+          example: user@example.com
+      required:
+        - id
+        - claimId
+        - claim
+        - userProfileId
+        - email
+    UserProfileDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+          minLength: 2
+          maxLength: 255
+          example: John
+        lastName:
+          type: string
+          minLength: 2
+          maxLength: 255
+          example: Doe
+        roleId:
+          type: number
+          example: 1
+      required:
+        - firstName
+        - lastName
+        - roleId
+    RegisterUserDto:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        password:
+          type: string
+          minLength: 8
+          example: password123
+        userProfile:
+          $ref: '#/components/schemas/UserProfileDto'
+      required:
+        - email
+        - userProfile
+    RoleResponse:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        createdAt:
+          format: date-time
+          type: string
+          example: '2024-01-15T12:00:00Z'
+        updatedAt:
+          format: date-time
+          type: string
+          example: '2024-01-15T12:00:00Z'
+        name:
+          type: string
+          example: ADMIN
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - name
+    UserProfileResponse:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        createdAt:
+          format: date-time
+          type: string
+          example: '2024-01-15T12:00:00Z'
+        updatedAt:
+          format: date-time
+          type: string
+          example: '2024-01-15T12:00:00Z'
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: Doe
+        email:
+          type: string
+          example: john.doe@example.com
+        role:
+          $ref: '#/components/schemas/RoleResponse'
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - firstName
+        - lastName
+        - email
+        - role
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        email:
+          type: string
+          example: user@example.com
+        createdAt:
+          format: date-time
+          type: string
+          example: '2024-01-15T12:00:00Z'
+        updatedAt:
+          format: date-time
+          type: string
+          example: '2024-01-15T12:00:00Z'
+        userProfile:
+          $ref: '#/components/schemas/UserProfileResponse'
+      required:
+        - id
+        - email
+        - createdAt
+        - updatedAt
+        - userProfile
     EUserState:
       type: string
       enum:
         - UNREGISTERED
         - ACTIVE
         - INACTIVE
-    EVerificationRequestType:
-      type: string
-      enum:
-        - EMAIL_VERIFICATION
-        - RESET_PASSWORD
-    EVerificationRequestStatus:
-      type: string
-      enum:
-        - ACTIVE
-        - EXPIRED
-
-    Error:
-      type: object
-      properties:
-        statusCode:
-          type: number
-        message:
-          type: string
-        error:
-          type: string
-    NotFoundError:
-      type: object
-      properties:
-        statusCode:
-          type: number
-          example: 404
-        message:
-          type: string
-        error:
-          type: string
-    ParameterMissingError:
-      type: object
-      properties:
-        statusCode:
-          type: number
-          example: 400
-        message:
-          type: array
-          items:
-            type: string
-        error:
-          type: string
-
-    LoginRequest:
-      type: object
-      required:
-        - email
-        - password
-      properties:
-        email:
-          type: string
-          format: email
-        password:
-          type: string
-    SignInResponse:
-      type: object
-      properties:
-        accessToken:
-          type: string
-        user:
-          $ref: "#/components/schemas/TokenizedUser"
-    TokenizedUser:
-      type: object
-      properties:
-        id:
-          type: number
-        claimId:
-          type: number
-        claim:
-          $ref: "#/components/schemas/EUserRole"
-        userProfileId:
-          type: number
-        email:
-          type: string
-    SelfRegisterUserDto:
-      type: object
-      required:
-        - email
-        - password
-        - userProfile
-      properties:
-        email:
-          type: string
-          format: email
-        password:
-          type: string
-          minLength: 8
-        userProfile:
-          $ref: "#/components/schemas/SelfRegisterUserProfileDto"
-    SelfRegisterUserProfileDto:
-      type: object
-      required:
-        - firstName
-        - lastName
-      properties:
-        firstName:
-          type: string
-          minLength: 2
-          maxLength: 255
-        lastName:
-          type: string
-          minLength: 2
-          maxLength: 255
-    UserResponse:
-      type: object
-      properties:
-        id:
-          type: number
-        email:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        userProfile:
-          $ref: "#/components/schemas/UserProfileResponse"
-    UserProfileResponse:
-      type: object
-      properties:
-        id:
-          type: number
-        firstName:
-          type: string
-        lastName:
-          type: string
-        email:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-        role:
-          $ref: "#/components/schemas/RoleResponse"
-    RoleResponse:
-      type: object
-      properties:
-        id:
-          type: number
-        name:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-    ForgotPasswordDto:
-      type: object
-      required:
-        - email
-      properties:
-        email:
-          type: string
-          format: email
-    ResetPasswordDto:
-      type: object
-      required:
-        - password
-      properties:
-        password:
-          type: string
-          minLength: 8
-    ChangePasswordDto:
-      type: object
-      required:
-        - currentPassword
-        - newPassword
-      properties:
-        currentPassword:
-          type: string
-        newPassword:
-          type: string
-          minLength: 8
-
-    RegisterUserDto:
-      type: object
-      required:
-        - email
-        - userProfile
-      properties:
-        email:
-          type: string
-          format: email
-        password:
-          type: string
-          minLength: 8
-        userProfile:
-          $ref: "#/components/schemas/UserProfileDto"
-    UserProfileDto:
-      type: object
-      required:
-        - firstName
-        - lastName
-        - roleId
-      properties:
-        firstName:
-          type: string
-          minLength: 2
-          maxLength: 255
-        lastName:
-          type: string
-          minLength: 2
-          maxLength: 255
-        roleId:
-          type: number
     UpdateUserAsSuperuserDto:
       type: object
       properties:
         password:
           type: string
+          minLength: 8
+          example: password123
         state:
-          $ref: "#/components/schemas/EUserState"
+          example: ACTIVE
+          allOf:
+            - $ref: '#/components/schemas/EUserState'
         roleId:
           type: number
+          example: 1
+    SuperuserUserResponse:
+      type: object
+      properties:
+        id:
+          type: number
+          example: 1
+        email:
+          type: string
+          example: user@example.com
+        createdAt:
+          format: date-time
+          type: string
+          example: '2024-01-15T12:00:00Z'
+        updatedAt:
+          format: date-time
+          type: string
+          example: '2024-01-15T12:00:00Z'
+        userProfile:
+          $ref: '#/components/schemas/UserProfileResponse'
+        state:
+          allOf:
+            - $ref: '#/components/schemas/EUserState'
+      required:
+        - id
+        - email
+        - createdAt
+        - updatedAt
+        - userProfile
+        - state
+    PaginationMetadataResponse:
+      type: object
+      properties:
+        currentPage:
+          type: number
+        itemsPerPage:
+          type: number
+        totalItems:
+          type: number
+        totalPages:
+          type: number
+        hasNextPage:
+          type: boolean
+        hasPreviousPage:
+          type: boolean
+      required:
+        - currentPage
+        - itemsPerPage
+        - totalItems
+        - totalPages
+        - hasNextPage
+        - hasPreviousPage
     SuperuserFindAllUserResponse:
       type: object
       properties:
         data:
           type: array
           items:
-            $ref: "#/components/schemas/SuperuserUserResponse"
+            $ref: '#/components/schemas/SuperuserUserResponse'
         meta:
-          type: object
-    SuperuserUserResponse:
-      allOf:
-        - $ref: "#/components/schemas/UserResponse"
-        - type: object
-          properties:
-            state:
-              $ref: "#/components/schemas/EUserState"
-
-    UpdateRolesPermissionsDto:
-      type: object
+          $ref: '#/components/schemas/PaginationMetadataResponse'
       required:
-        - roleId
-        - permissionsToRemoveIds
-        - permissionsToAddIds
+        - data
+        - meta
+    RolesWithUsersCount:
+      type: object
       properties:
-        roleId:
+        role:
+          $ref: '#/components/schemas/RoleResponse'
+        activeUsersCount:
           type: number
-        permissionsToRemoveIds:
-          type: array
-          items:
-            type: number
-        permissionsToAddIds:
-          type: array
-          items:
-            type: number
+          example: 5
+        inactiveUsersCount:
+          type: number
+          example: 2
+      required:
+        - role
+        - activeUsersCount
+        - inactiveUsersCount
+    PermissionResponse:
+      type: object
+      properties:
+        id:
+          type: number
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        name:
+          type: string
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - name
     RolesWithUsersAndPermissionsResponse:
       type: object
       properties:
         roles:
           type: array
           items:
-            $ref: "#/components/schemas/RolesWithUsersCount"
+            $ref: '#/components/schemas/RolesWithUsersCount'
         permissions:
           type: array
           items:
-            $ref: "#/components/schemas/PermissionResponse"
-    RolesWithUsersCount:
+            $ref: '#/components/schemas/PermissionResponse'
+      required:
+        - roles
+        - permissions
+    UpdateRolesPermissionsDto:
       type: object
       properties:
-        role:
-          $ref: "#/components/schemas/RoleResponse"
-        activeUsersCount:
+        roleId:
           type: number
-        inactiveUsersCount:
-          type: number
-    PermissionResponse:
-      type: object
-      properties:
-        id:
-          type: number
-        name:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
-
+          example: 1
+        permissionsToRemoveIds:
+          type: array
+          items:
+            required: true
+            example:
+              - 1
+              - 2
+            type: array
+            items:
+              type: number
+        permissionsToAddIds:
+          type: array
+          items:
+            required: true
+            example:
+              - 3
+              - 4
+            type: array
+            items:
+              type: number
+      required:
+        - roleId
+        - permissionsToRemoveIds
+        - permissionsToAddIds
     UpdateUserProfileDto:
       type: object
       properties:
@@ -322,391 +2457,416 @@ components:
           type: string
           minLength: 2
           maxLength: 255
+          example: John
         lastName:
           type: string
           minLength: 2
           maxLength: 255
-
+          example: Doe
     VerifyByTokenResponse:
       type: object
       properties:
         message:
           type: string
+          example: Verification successful
+      required:
+        - message
+    EVerificationRequestStatus:
+      type: string
+      enum:
+        - ACTIVE
+        - EXPIRED
+    EVerificationRequestType:
+      type: string
+      enum:
+        - EMAIL_VERIFICATION
+        - RESET_PASSWORD
     VerificationRequestResponse:
       type: object
       properties:
         id:
           type: number
+          example: 1
+        createdAt:
+          format: date-time
+          type: string
+          example: '2024-01-15T12:00:00Z'
+        updatedAt:
+          format: date-time
+          type: string
+          example: '2024-01-15T12:00:00Z'
         token:
           type: string
+          example: token_abc_123
         status:
-          $ref: "#/components/schemas/EVerificationRequestStatus"
+          example: ACTIVE
+          allOf:
+            - $ref: '#/components/schemas/EVerificationRequestStatus'
         type:
-          $ref: "#/components/schemas/EVerificationRequestType"
-        createdAt:
-          type: string
-          format: date-time
-        updatedAt:
-          type: string
-          format: date-time
+          example: EMAIL_VERIFICATION
+          allOf:
+            - $ref: '#/components/schemas/EVerificationRequestType'
         user:
           type: object
           properties:
             id:
               type: number
-
-paths:
-  /api/v1/auth/sign-in:
-    post:
-      summary: Sign in with email and password
-      tags: [Auth]
-      security: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/LoginRequest"
-      responses:
-        "200":
-          description: Successful login
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SignInResponse"
-        "401":
-          description: Invalid credentials
-
-  /api/v1/auth/google/sign-in:
-    post:
-      summary: Sign in with Google (OAuth flow)
-      tags: [Auth]
-      security: []
-      responses:
-        "200":
-          description: Successful login
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SignInResponse"
-
-  /api/v1/auth/google/token/sign-in:
-    post:
-      summary: Sign in with Google ID Token
-      tags: [Auth]
-      security: []
-      responses:
-        "200":
-          description: Successful login
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SignInResponse"
-
-  /api/v1/auth/sign-up:
-    post:
-      summary: Register a new user
-      tags: [Auth]
-      security: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/SelfRegisterUserDto"
-      responses:
-        "201":
-          description: User registered successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserResponse"
-
-  /api/v1/auth/forgot-password:
-    post:
-      summary: Request a password reset email
-      tags: [Auth]
-      security: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ForgotPasswordDto"
-      responses:
-        "201":
-          description: Email sent successfully
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  message:
-                    type: string
-
-  /api/v1/auth/reset-password/{token}:
-    post:
-      summary: Reset password using token
-      tags: [Auth]
-      security: []
-      parameters:
-        - in: path
-          name: token
-          required: true
-          schema:
+          required:
+            - id
+      required:
+        - id
+        - createdAt
+        - updatedAt
+        - token
+        - status
+        - type
+        - user
+    ProductsListResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/PaginationMetadataResponse'
+      required:
+        - meta
+    ERentalPeriod:
+      type: string
+      enum:
+        - DAY
+        - WEEK
+        - MONTH
+    EProductStatus:
+      type: string
+      enum:
+        - AVAILABLE
+        - SOLD
+        - RENTED
+    User:
+      type: object
+      properties: {}
+    ProductResponse:
+      type: object
+      properties:
+        id:
+          type: number
+        title:
+          type: string
+        description:
+          type: string
+        categories:
+          type: array
+          items:
             type: string
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ResetPasswordDto"
-      responses:
-        "201":
-          description: Password reset successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserResponse"
-
-  /api/v1/auth/change-password:
-    post:
-      summary: Change password for logged in user
-      tags: [Auth]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/ChangePasswordDto"
-      responses:
-        "201":
-          description: Password changed successfully
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserResponse"
-
-  /api/v1/users/me:
-    get:
-      summary: Get current logged in user details
-      tags: [Users]
-      responses:
-        "200":
-          description: Current user details
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/TokenizedUser"
-
-  /api/v1/users:
-    get:
-      summary: Get all users (SuperUser only)
-      tags: [Users]
-      parameters:
-        - in: query
-          name: page
-          schema:
-            type: number
-        - in: query
-          name: limit
-          schema:
-            type: number
-        - in: query
-          name: state
-          schema:
-            $ref: "#/components/schemas/EUserState"
-      responses:
-        "200":
-          description: List of users
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/SuperuserFindAllUserResponse"
-    post:
-      summary: Create a new user (SuperUser only)
-      tags: [Users]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/RegisterUserDto"
-      responses:
-        "201":
-          description: User created
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserResponse"
-
-  /api/v1/users/{id}:
-    patch:
-      summary: Update user (SuperUser only)
-      tags: [Users]
-      parameters:
-        - in: path
-          name: id
-          required: true
-          schema:
-            type: number
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UpdateUserAsSuperuserDto"
-      responses:
-        "200":
-          description: User updated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserResponse"
-
-  /api/v1/roles:
-    get:
-      summary: Get all roles (SuperUser only)
-      tags: [Roles]
-      responses:
-        "200":
-          description: List of roles
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/RoleResponse"
-
-  /api/v1/roles/users-permissions:
-    get:
-      summary: Get roles with user counts and permissions (Admin/SuperUser)
-      tags: [Roles]
-      responses:
-        "200":
-          description: Roles with permissions info
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/RolesWithUsersAndPermissionsResponse"
-
-  /api/v1/roles/update-permissions:
-    patch:
-      summary: Update role permissions (Admin/SuperUser)
-      tags: [Roles]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UpdateRolesPermissionsDto"
-      responses:
-        "200":
-          description: Permissions updated
-          content:
-            application/json:
-              schema:
-                type: object
-
-  /api/v1/user-profiles/me:
-    get:
-      summary: Get current user profile
-      tags: [User Profiles]
-      responses:
-        "200":
-          description: User profile
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserProfileResponse"
-    patch:
-      summary: Update current user profile
-      tags: [User Profiles]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/UpdateUserProfileDto"
-      responses:
-        "200":
-          description: Profile updated
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/UserProfileResponse"
-
-  /api/v1/verification-requests/verify/{token}:
-    post:
-      summary: Verify a token
-      tags: [Verification]
-      security: []
-      parameters:
-        - in: path
-          name: token
-          required: true
-          schema:
+        purchasePrice:
+          type: number
+        rentPrice:
+          type: number
+        rentalPeriod:
+          allOf:
+            - $ref: '#/components/schemas/ERentalPeriod'
+        status:
+          allOf:
+            - $ref: '#/components/schemas/EProductStatus'
+        viewCount:
+          type: number
+        owner:
+          $ref: '#/components/schemas/User'
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+      required:
+        - id
+        - title
+        - description
+        - categories
+        - purchasePrice
+        - rentPrice
+        - rentalPeriod
+        - status
+        - viewCount
+        - createdAt
+        - updatedAt
+    CreateProductDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Product title
+        description:
+          type: string
+          example: Product description
+        categories:
+          example:
+            - category1
+            - category2
+          type: array
+          items:
             type: string
-        - in: query
-          name: type
-          required: true
-          schema:
-            $ref: "#/components/schemas/EVerificationRequestType"
-      responses:
-        "200":
-          description: Verification successful
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/VerifyByTokenResponse"
-
-  /api/v1/verification-requests/{token}:
-    get:
-      summary: Get verification request details
-      tags: [Verification]
-      security: []
-      parameters:
-        - in: path
-          name: token
-          required: true
-          schema:
+        purchasePrice:
+          type: number
+          minimum: 0
+          example: 100
+        rentPrice:
+          type: number
+          minimum: 0
+          example: 10
+        rentalPeriod:
+          example: DAY
+          allOf:
+            - $ref: '#/components/schemas/ERentalPeriod'
+      required:
+        - title
+        - description
+        - categories
+        - purchasePrice
+        - rentPrice
+        - rentalPeriod
+    UpdateProductDto:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Product title
+        description:
+          type: string
+          example: Product description
+        categories:
+          example:
+            - category1
+            - category2
+          type: array
+          items:
             type: string
-        - in: query
-          name: type
-          required: true
-          schema:
-            $ref: "#/components/schemas/EVerificationRequestType"
-      responses:
-        "200":
-          description: Verification request details
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/VerificationRequestResponse"
-
-  /api/v1/health:
-    get:
-      summary: Simple health check
-      tags: [Health]
-      security: []
-      responses:
-        "200":
-          description: Service is up
-          content:
-            text/plain:
-              schema:
-                type: string
-                example: OK
-
-  /api/v1/health/check:
-    get:
-      summary: Detailed health check
-      tags: [Health]
-      security: []
-      responses:
-        "200":
-          description: Detailed health status
-          content:
-            application/json:
-              schema:
-                type: object
+        purchasePrice:
+          type: number
+          minimum: 0
+          example: 100
+        rentPrice:
+          type: number
+          minimum: 0
+          example: 10
+        rentalPeriod:
+          example: DAY
+          allOf:
+            - $ref: '#/components/schemas/ERentalPeriod'
+    CreateSaleDto:
+      type: object
+      properties:
+        productId:
+          type: number
+          example: 1
+      required:
+        - productId
+    Product:
+      type: object
+      properties: {}
+    SaleResponse:
+      type: object
+      properties:
+        id:
+          type: number
+        price:
+          type: number
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        product:
+          $ref: '#/components/schemas/Product'
+        buyer:
+          $ref: '#/components/schemas/User'
+        seller:
+          $ref: '#/components/schemas/User'
+      required:
+        - id
+        - price
+        - createdAt
+        - updatedAt
+        - product
+        - buyer
+        - seller
+    SalesListResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/PaginationMetadataResponse'
+      required:
+        - meta
+    CreateRentDto:
+      type: object
+      properties:
+        productId:
+          type: number
+          example: 1
+        startDate:
+          type: string
+          example: '2024-01-01'
+        endDate:
+          type: string
+          example: '2024-01-02'
+      required:
+        - productId
+        - startDate
+        - endDate
+    RentResponse:
+      type: object
+      properties:
+        id:
+          type: number
+        rentPrice:
+          type: number
+        startDate:
+          format: date-time
+          type: string
+        endDate:
+          format: date-time
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+        updatedAt:
+          format: date-time
+          type: string
+        product:
+          $ref: '#/components/schemas/Product'
+        renter:
+          $ref: '#/components/schemas/User'
+        owner:
+          $ref: '#/components/schemas/User'
+      required:
+        - id
+        - rentPrice
+        - startDate
+        - endDate
+        - createdAt
+        - updatedAt
+        - product
+        - renter
+        - owner
+    RentsListResponse:
+      type: object
+      properties:
+        meta:
+          $ref: '#/components/schemas/PaginationMetadataResponse'
+      required:
+        - meta
+    SignInDto:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        password:
+          type: string
+          example: password123
+      required:
+        - email
+        - password
+    SignInResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+        user:
+          $ref: '#/components/schemas/TokenizedUser'
+      required:
+        - accessToken
+        - user
+    SelfRegisterUserProfileDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+          minLength: 2
+          maxLength: 255
+          example: John
+        lastName:
+          type: string
+          minLength: 2
+          maxLength: 255
+          example: Doe
+      required:
+        - firstName
+        - lastName
+    SelfRegisterUserDto:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@example.com
+        password:
+          type: string
+          minLength: 8
+          example: password123
+        userProfile:
+          $ref: '#/components/schemas/SelfRegisterUserProfileDto'
+      required:
+        - email
+        - userProfile
+    ForgotPasswordDto:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          example: user@example.com
+      required:
+        - email
+    SendForgotPasswordEmailResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: Password reset email sent successfully
+      required:
+        - message
+    ResetPasswordDto:
+      type: object
+      properties:
+        password:
+          type: string
+          minLength: 8
+          example: password123
+      required:
+        - password
+    ChangePasswordDto:
+      type: object
+      properties:
+        currentPassword:
+          type: string
+          example: password123
+        newPassword:
+          type: string
+          minLength: 8
+          example: password123
+      required:
+        - currentPassword
+        - newPassword
+    ErrorResponseDto:
+      type: object
+      properties:
+        statusCode:
+          type: number
+          example: 400
+        errors:
+          type: array
+          items:
+            required: true
+            example: []
+            type: array
+            items:
+              type: string
+        message:
+          type: string
+          example: Bad Request
+      required:
+        - statusCode
+        - errors
+        - message
