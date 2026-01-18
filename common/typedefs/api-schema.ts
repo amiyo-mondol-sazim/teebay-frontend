@@ -661,9 +661,10 @@ export interface components {
             };
         };
         /** @enum {string} */
-        ERentalPeriod: "DAY" | "WEEK" | "MONTH";
-        /** @enum {string} */
         EProductStatus: "AVAILABLE" | "SOLD" | "RENTED";
+        Object: Record<string, never>;
+        /** @enum {string} */
+        ERentalPeriod: "DAY" | "WEEK" | "MONTH";
         User: Record<string, never>;
         ProductResponse: {
             id: number;
@@ -1690,10 +1691,16 @@ export interface operations {
     };
     getAll: {
         parameters: {
-            query: {
-                page: number;
-                limit: number;
+            query?: {
+                page?: number;
+                limit?: number;
+                status?: components["schemas"]["EProductStatus"];
+                minPurchasePrice?: number;
+                maxPurchasePrice?: number;
+                minRentPrice?: number;
+                maxRentPrice?: number;
                 categories?: string;
+                _priceRangeValidation?: components["schemas"]["Object"];
             };
             header?: never;
             path?: never;

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { components } from "~/common/typedefs/api-schema";
 import { useIntersectionObserver } from "@vueuse/core";
+import type { components } from "~/common/typedefs/api-schema";
 
 const { data: user, isLoading: isUserLoading } = useUserQuery();
 
@@ -24,7 +24,8 @@ const {
 );
 
 const products = computed(() => {
-  const allProducts = (data.value as components["schemas"]["ProductResponse"][]) || [];
+  const allProducts =
+    (data.value as components["schemas"]["ProductResponse"][]) || [];
   if (statusFilter.value === "ALL") {
     return allProducts;
   }
@@ -84,7 +85,7 @@ const getAnimationDelay = (index: number) => `${Math.min(index * 0.05, 0.5)}s`;
             </p>
           </div>
 
-          <NuxtLink to="/products/add">
+          <NuxtLink to="/add-product">
             <UiButton size="lg" class="shadow-lg shadow-primary/20">
               <Icon name="ph:plus" class="mr-2 h-5 w-5" />
               Add Product
@@ -116,7 +117,7 @@ const getAnimationDelay = (index: number) => `${Math.min(index * 0.05, 0.5)}s`;
   <!-- Loading User State -->
   <div
     v-else-if="isUserLoading"
-    class="flex min-h-[400px] items-center justify-center"
+    class="flex min-h-[25rem] items-center justify-center"
   >
     <div class="flex flex-col items-center gap-4">
       <div class="juggle-loader" />

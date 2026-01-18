@@ -9,3 +9,13 @@ export enum EProductStatus {
   SOLD = "SOLD",
   RENTED = "RENTED",
 }
+
+export enum ESalesTab {
+  BOUGHT = "bought",
+  SOLD = "sold",
+}
+
+export enum ERentsTab {
+  BORROWS = "borrows",
+  LENTS = "lents",
+}

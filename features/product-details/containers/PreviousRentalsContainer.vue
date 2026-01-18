@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useIntersectionObserver } from "@vueuse/core";
-import type { TRentWithRenter } from "~/common/components/rent-calendar/rent-calendar.types";
+import type { TRentWithRenter } from "~/features/product-details/rent-calendar.types";
 
 interface Props {
   productId: number;
@@ -13,8 +13,7 @@ const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
 
 const rents = computed(
   () =>
-    (data.value?.pages.flatMap((page) => page.data) as TRentWithRenter[]) ||
-    [],
+    (data.value?.pages.flatMap((page) => page.data) as TRentWithRenter[]) || [],
 );
 
 const loadMoreTrigger = ref<HTMLElement | null>(null);
