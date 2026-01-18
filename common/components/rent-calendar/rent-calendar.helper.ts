@@ -61,12 +61,6 @@ export const validateRentalDates = (
 
 export type TRentalDateErrors = ReturnType<typeof validateRentalDates>;
 
-/**
- * Calculate rental duration in days from start and end dates
- * @param startDate - Start date string
- * @param endDate - End date string
- * @returns Number of days, or null if invalid
- */
 export const calculateRentalDuration = (
   startDate: string,
   endDate: string,
@@ -81,20 +75,10 @@ export const calculateRentalDuration = (
   return end.diff(start, "day") + 1;
 };
 
-/**
- * Format rental duration for display
- * @param days - Number of days
- * @returns Formatted duration string (e.g., "1 day", "5 days")
- */
 export const formatRentalDuration = (days: number): string => {
   return days === 1 ? "1 day" : `${days} days`;
 };
 
-/**
- * Format date for display in locale format
- * @param dateString - ISO date string
- * @returns Formatted date string
- */
 export const formatDateForDisplay = (dateString: string): string => {
   if (!dateString) return "Select date";
   return dayjs(dateString).format("MMM DD, YYYY");

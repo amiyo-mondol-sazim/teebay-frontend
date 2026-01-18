@@ -2,7 +2,6 @@ import tailwindcss from "@tailwindcss/vite";
 
 const FONT_WEIGHTS: (number | string)[] = [400, 500, 600, 700];
 
-// https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: "2025-05-15",
   ssr: false,

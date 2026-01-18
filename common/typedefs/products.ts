@@ -1,7 +1,3 @@
-/**
- * Product-related type definitions
- */
-
 export type TCreateProductInput = {
   title: string;
   description: string;

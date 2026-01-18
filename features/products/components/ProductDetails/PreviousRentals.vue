@@ -2,7 +2,7 @@
 import type { TRentWithRenter } from "~/common/components/rent-calendar/rent-calendar.types";
 import { FORMAT_CREATED_DATE } from "../../../../common/components/products/product-details.helper";
 
-const PREVIOUS_RENTALS_HEIGHT = "21.875rem"; // 350px
+const PREVIOUS_RENTALS_HEIGHT = "21.875rem";
 
 interface Props {
   rents: TRentWithRenter[];
