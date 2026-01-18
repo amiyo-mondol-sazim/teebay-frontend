@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { PRODUCT_STATUS_CLASSES } from "~/common/components/products/products.helper";
 import type { TProductResponse } from "~/common/typedefs/query";
-import { FORMAT_CREATED_DATE } from "./product-details.helper";
+import { FORMAT_CREATED_DATE } from "../../../features/product-details/product-details.helper";
 
 interface Props {
   product: TProductResponse;

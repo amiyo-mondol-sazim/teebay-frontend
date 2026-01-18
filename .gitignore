@@ -4,3 +4,4 @@ node_modules
 docs
 .output
 __pycache__
+*.py

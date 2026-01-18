@@ -10,6 +10,11 @@ export const navItems = [
     icon: "ph:package",
   },
   {
+    name: "My Sales",
+    path: PAGE_URLS.SALES,
+    icon: "ph:currency-dollar",
+  },
+  {
     name: "Add Products",
     path: PAGE_URLS.ADD_PRODUCTS,
     icon: "ph:plus-circle",

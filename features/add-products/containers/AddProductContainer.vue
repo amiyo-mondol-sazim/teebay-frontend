@@ -5,7 +5,6 @@ import type { TCreateProductInput } from "~/common/typedefs/products";
 const { mutate: createProduct, isPending } = useCreateProductMutation();
 
 const handleSubmit = (values: TCreateProductInput) => {
-  console.log(values);
   createProduct(values);
 };
 

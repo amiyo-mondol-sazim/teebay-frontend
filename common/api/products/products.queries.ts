@@ -57,7 +57,7 @@ export const useProductDetailQuery = (id: Ref<number>) => {
   });
 };
 
-export const getProductsByOwner = async (ownerId: number, params: TGetProductsQuery) => {
+export const getProductsByOwner = async (ownerId: number, params: { page: number; limit: number }) => {
   const { data, error } = await client.GET("/api/v1/products/owner/{ownerId}", {
     params: {
       path: { ownerId },
@@ -72,7 +72,7 @@ export const getProductsByOwner = async (ownerId: number, params: TGetProductsQu
 
 export const useOwnerProductsInfiniteQuery = (
   ownerId: MaybeRef<number>,
-  params: MaybeRef<TGetProductsQuery>
+  params: MaybeRef<{ page: number; limit: number }>
 ) => {
   return useInfiniteQuery({
     queryKey: computed(() => productKeys.owner(toValue(ownerId), toValue(params))),

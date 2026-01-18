@@ -27,7 +27,6 @@ const handleAddCategory = () => {
 
 <template>
   <div class="space-y-3">
-    <!-- Display tags -->
     <div v-if="categories.length > 0" class="flex flex-wrap gap-2">
       <UiBadge
         v-for="(category, index) in categories"
@@ -47,7 +46,6 @@ const handleAddCategory = () => {
       </UiBadge>
     </div>
 
-    <!-- Input field with add button -->
     <div class="flex items-center gap-2">
       <FormTextfield
         v-model="categoryInput"
@@ -69,7 +67,6 @@ const handleAddCategory = () => {
       </UiButton>
     </div>
 
-    <!-- Helper text -->
     <p class="text-xs text-muted-foreground">
       {{ categories.length }}/{{ MAX_CATEGORIES }} categories
     </p>
