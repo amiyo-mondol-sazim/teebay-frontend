@@ -55,7 +55,7 @@ defineProps<Props>();
 
     <div
       v-else-if="!products.length"
-      class="flex min-h-[400px] flex-col items-center justify-center rounded-2xl border border-dashed border-muted-foreground/25 bg-muted/30 p-12 text-center"
+      class="flex min-h-[25rem] flex-col items-center justify-center rounded-2xl border border-dashed border-muted-foreground/25 bg-muted/30 p-12 text-center"
     >
       <div
         class="mb-6 flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10"

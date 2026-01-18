@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { navItems } from "../AppShell/AppShell.helpers";
+import { NAV_ITEMS } from "../AppShell/AppShell.helpers";
 import { useAuthActions } from "./AppSidebar.composables";
 import { getInitials } from "./AppSidebar.helpers";
 import AppSidebar from "./AppSidebar.vue";
@@ -18,7 +18,7 @@ const handleLogout = () => {
 
 <template>
   <AppSidebar
-    :nav-items="navItems"
+    :nav-items="NAV_ITEMS"
     :user-name="userName"
     :user-email="userEmail"
     :user-initials="userInitials"

@@ -1,4 +1,4 @@
-export const navItems = [
+export const NAV_ITEMS = [
   {
     name: "Home",
     path: PAGE_URLS.HOME,
@@ -10,13 +10,18 @@ export const navItems = [
     icon: "ph:package",
   },
   {
+    name: "Add Products",
+    path: PAGE_URLS.ADD_PRODUCTS,
+    icon: "ph:plus-circle",
+  },
+  {
     name: "My Sales",
     path: PAGE_URLS.SALES,
     icon: "ph:currency-dollar",
   },
   {
-    name: "Add Products",
-    path: PAGE_URLS.ADD_PRODUCTS,
-    icon: "ph:plus-circle",
+    name: "My Rents",
+    path: PAGE_URLS.RENTS,
+    icon: "ph:currency-dollar",
   },
 ];

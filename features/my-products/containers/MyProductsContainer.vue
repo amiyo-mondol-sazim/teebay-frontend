@@ -117,7 +117,7 @@ const getAnimationDelay = (index: number) => `${Math.min(index * 0.05, 0.5)}s`;
   <!-- Loading User State -->
   <div
     v-else-if="isUserLoading"
-    class="flex min-h-[400px] items-center justify-center"
+    class="flex min-h-[25rem] items-center justify-center"
   >
     <div class="flex flex-col items-center gap-4">
       <div class="juggle-loader" />

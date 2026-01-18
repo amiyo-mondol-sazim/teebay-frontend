@@ -17,7 +17,7 @@ const isOwner = computed(() => {
 
 <template>
   <div class="container mx-auto min-h-screen px-4 py-8">
-    <div v-if="isLoading || isLoadingUser" class="flex min-h-[400px] items-center justify-center">
+    <div v-if="isLoading || isLoadingUser" class="flex min-h-[25rem] items-center justify-center">
       <div class="flex items-center gap-3 text-muted-foreground">
         <Icon name="heroicons:arrow-path" class="h-5 w-5 animate-spin" />
         <span class="text-sm">Loading product...</span>
