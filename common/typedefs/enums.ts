@@ -14,3 +14,8 @@ export enum ESalesTab {
   BOUGHT = "bought",
   SOLD = "sold",
 }
+
+export enum ERentsTab {
+  BORROWS = "borrows",
+  LENTS = "lents",
+}

@@ -7,6 +7,17 @@ const userId = computed(() => user.value?.id);
 const activeTab = ref<ESalesTab>(ESalesTab.BOUGHT);
 const limit = 12;
 
+const salesTabConfig = [
+  { value: ESalesTab.BOUGHT, label: 'Bought', icon: 'ph:shopping-cart' },
+  { value: ESalesTab.SOLD, label: 'Sold', icon: 'ph:currency-dollar' }
+];
+
+const salesEmptyStateConfig = computed(() => ({
+  icon: activeTab.value === ESalesTab.BOUGHT ? 'ph:shopping-cart' : 'ph:currency-dollar',
+  title: `No ${activeTab.value} items yet`,
+  description: activeTab.value === ESalesTab.BOUGHT ? 'Start shopping' : 'Make your first sale'
+}));
+
 const {
   data: boughtData,
   fetchNextPage: fetchNextBoughtPage,
@@ -98,17 +109,27 @@ useIntersectionObserver(loadMoreTrigger, ([entry]) => {
       </p>
     </div>
 
-    <SalesTabs v-model="activeTab" />
+    <TransactionTabs v-model="activeTab" :tabs="salesTabConfig" />
 
-    <SalesList
-      :sales="currentData ?? []"
-      :type="activeTab"
+    <TransactionList
+      :items="currentData ?? []"
       :is-loading="currentLoading"
       :is-error="currentIsError"
       :error="currentError"
       :is-fetching-next-page="currentIsFetchingNextPage"
       :load-more-trigger-ref="setLoadMoreTrigger"
-    />
+      :empty-state="salesEmptyStateConfig"
+    >
+      <template #default="slotProps">
+        <TransactionCard
+          v-for="item in slotProps.items as TSaleResponse[]"
+          :key="item.id"
+          :transaction="item"
+          type="sale"
+          :tab="activeTab"
+        />
+      </template>
+    </TransactionList>
   </div>
 
   <div
