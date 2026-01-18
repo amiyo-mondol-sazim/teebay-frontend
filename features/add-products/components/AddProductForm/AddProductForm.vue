@@ -60,7 +60,7 @@ const onSubmit = form.handleSubmit((values) => {
           :max-length="1000"
         />
 
-        <CategoryInput v-model:categories="categories" />
+        <CategorySelector v-model:categories="categories" />
 
         <div class="grid grid-cols-2 gap-4">
           <FormTextfield

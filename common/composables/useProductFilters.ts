@@ -1,7 +1,7 @@
 import type { ComputedRef, Ref } from "vue";
 import { computed, ref } from "vue";
-import type { TProductStatus } from "~/common/typedefs/query";
-import type { TProductStatusFilter } from "../../features/all-products/AllProducts.types";
+import type { TProductStatus } from "~/common/typedefs/query.ts";
+import type { TProductStatusFilter } from "~/features/all-products/AllProducts.types";
 
 type ApiQueryParams = {
   status?: TProductStatus;
