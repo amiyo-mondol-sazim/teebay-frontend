@@ -674,20 +674,58 @@ paths:
       operationId: getAll
       parameters:
         - name: page
-          required: true
+          required: false
           in: query
           schema:
+            minimum: 1
+            default: 1
             type: number
         - name: limit
-          required: true
+          required: false
           in: query
           schema:
+            minimum: 1
+            default: 10
+            type: number
+        - name: status
+          required: false
+          in: query
+          schema:
+            $ref: "#/components/schemas/EProductStatus"
+        - name: minPurchasePrice
+          required: false
+          in: query
+          schema:
+            minimum: 0
+            type: number
+        - name: maxPurchasePrice
+          required: false
+          in: query
+          schema:
+            minimum: 0
+            type: number
+        - name: minRentPrice
+          required: false
+          in: query
+          schema:
+            minimum: 0
+            type: number
+        - name: maxRentPrice
+          required: false
+          in: query
+          schema:
+            minimum: 0
             type: number
         - name: categories
           required: false
           in: query
           schema:
             type: string
+        - name: _priceRangeValidation
+          required: false
+          in: query
+          schema:
+            $ref: "#/components/schemas/Object"
       responses:
         "200":
           description: ""
@@ -2596,18 +2634,21 @@ components:
         - status
         - type
         - user
-    ERentalPeriod:
-      type: string
-      enum:
-        - DAY
-        - WEEK
-        - MONTH
     EProductStatus:
       type: string
       enum:
         - AVAILABLE
         - SOLD
         - RENTED
+    Object:
+      type: object
+      properties: {}
+    ERentalPeriod:
+      type: string
+      enum:
+        - DAY
+        - WEEK
+        - MONTH
     User:
       type: object
       properties: {}

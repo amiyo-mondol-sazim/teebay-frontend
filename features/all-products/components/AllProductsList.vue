@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { TProductResponse } from "~/common/typedefs/query";
+import type { TProductStatusFilter } from "./AllProducts.types";
 
 interface Props {
   products: TProductResponse[];
@@ -12,24 +13,31 @@ interface Props {
   isLoading: boolean;
   isError: boolean;
   error?: Error | null;
+  status: TProductStatusFilter;
+  categories: string[];
+  activeFilterCount: number;
 }
 
 defineProps<Props>();
 
 defineEmits<{
   "page-change": [page: number];
+  "update:status": [value: TProductStatusFilter];
+  "update:categories": [value: string[]];
+  "clear-all": [];
 }>();
 </script>
 
 <template>
-  <div class="space-y-6">
-    <div class="flex items-center justify-between">
-      <h2
-        class="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-50"
-      >
-        All Products
-      </h2>
-    </div>
+  <div class="space-y-8">
+    <ProductFiltersPanel
+      :status="status"
+      :categories="categories"
+      :active-filter-count="activeFilterCount"
+      @update:status="$emit('update:status', $event)"
+      @update:categories="$emit('update:categories', $event)"
+      @clear-all="$emit('clear-all')"
+    />
 
     <div
       v-if="isError"
@@ -54,13 +62,29 @@ defineEmits<{
       v-else-if="!products?.length"
       class="flex h-64 flex-col items-center justify-center rounded-xl border border-dashed border-gray-300 bg-gray-50 dark:border-gray-700 dark:bg-gray-900/50"
     >
-      <p class="text-gray-500 dark:text-gray-400">No products found</p>
+      <p class="text-gray-500 dark:text-gray-400">
+        {{
+          activeFilterCount > 0
+            ? "No products match your filters"
+            : "No products found"
+        }}
+      </p>
+      <UiButton
+        v-if="activeFilterCount > 0"
+        variant="outline"
+        class="mt-4"
+        @click="$emit('clear-all')"
+      >
+        Clear all filters
+      </UiButton>
     </div>
 
     <div v-else>
       <div
         class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 animate-fade-in-up"
-        style="animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards"
+        style="
+          animation: fade-in-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        "
       >
         <ProductCardContainer
           v-for="product in products"
@@ -79,7 +103,8 @@ defineEmits<{
           Previous
         </UiButton>
         <span class="text-sm font-medium text-gray-700 dark:text-gray-300">
-          Page {{ pagination?.currentPage ?? 1 }} of {{ pagination?.totalPages ?? 1 }}
+          Page {{ pagination?.currentPage ?? 1 }} of
+          {{ pagination?.totalPages ?? 1 }}
         </span>
         <UiButton
           variant="outline"

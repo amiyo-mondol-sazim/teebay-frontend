@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { TRentWithRenter } from "~/common/components/rent-calendar/rent-calendar.types";
-import { FORMAT_CREATED_DATE } from "../../../../common/components/products/product-details.helper";
+import type { TRentWithRenter } from "../rent-calendar.types";
+import { FORMAT_CREATED_DATE } from "../product-details.helper";
 
 const PREVIOUS_RENTALS_HEIGHT = "21.875rem";
 
@@ -8,7 +8,10 @@ interface Props {
   rents: TRentWithRenter[];
   isLoading: boolean;
   isFetchingNextPage: boolean;
-  loadMoreTriggerRef: (ref: Element | ComponentPublicInstance | null, refs: Record<string, Element | ComponentPublicInstance | null>) => void;
+  loadMoreTriggerRef: (
+    ref: Element | ComponentPublicInstance | null,
+    refs: Record<string, Element | ComponentPublicInstance | null>,
+  ) => void;
 }
 
 defineProps<Props>();
