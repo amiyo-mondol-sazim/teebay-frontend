@@ -5,5 +5,5 @@ export type TAppNavItem = {
 };
 
 export type TAppSidebarProps = {
-  navItems: TAppNavItem[];
+  NAV_ITEMS: TAppNavItem[];
 };

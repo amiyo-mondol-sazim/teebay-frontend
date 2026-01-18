@@ -134,7 +134,7 @@ useIntersectionObserver(loadMoreTrigger, ([entry]) => {
 
   <div
     v-else-if="isUserLoading"
-    class="flex min-h-[400px] items-center justify-center"
+    class="flex min-h-[25rem] items-center justify-center"
   >
     <div class="juggle-loader" />
   </div>

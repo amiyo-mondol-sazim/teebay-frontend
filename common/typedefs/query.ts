@@ -13,4 +13,4 @@ export type TSalesListResponse = components["schemas"]["SalesListResponse"];
 export type TSaleResponse = components["schemas"]["SaleResponse"];
 export type TRentResponse = components["schemas"]["RentResponse"];
 export type TTransactionResponse = TSaleResponse | TRentResponse;
-export type ETransactionType = 'sale' | 'rent';
+export type TTransactionType = "sale" | "rent";

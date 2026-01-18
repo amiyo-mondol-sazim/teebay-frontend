@@ -46,16 +46,21 @@ defineProps<Props>();
     <!-- Empty state -->
     <div
       v-else-if="!items.length"
-      class="min-h-[300px] flex flex-col items-center justify-center rounded-2xl border border-dashed border-muted-foreground/25 bg-muted/30 p-12 text-center"
+      class="min-h-[18.75rem] flex flex-col items-center justify-center rounded-2xl border border-dashed border-muted-foreground/25 bg-muted/30 p-12 text-center"
     >
       <div
         class="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10"
       >
-        <Icon :name="emptyState?.icon || 'ph:circle-dashed'" class="h-8 w-8 text-primary" />
+        <Icon
+          :name="emptyState?.icon || 'ph:circle-dashed'"
+          class="h-8 w-8 text-primary"
+        />
       </div>
-      <h3 class="text-lg font-semibold">{{ emptyState?.title || 'No items yet' }}</h3>
+      <h3 class="text-lg font-semibold">
+        {{ emptyState?.title || "No items yet" }}
+      </h3>
       <p class="mt-2 text-sm text-muted-foreground">
-        {{ emptyState?.description || 'Get started by adding your first item' }}
+        {{ emptyState?.description || "Get started by adding your first item" }}
       </p>
     </div>
 

@@ -1,27 +1,27 @@
 <script setup lang="ts">
-import { formatDistanceToNow, format } from "date-fns";
+import { format, formatDistanceToNow } from "date-fns";
+import { ERentsTab, ESalesTab } from "~/common/typedefs/enums";
 import type {
-  TTransactionResponse,
-  ETransactionType,
-  TSaleResponse,
   TRentResponse,
+  TSaleResponse,
+  TTransactionResponse,
+  TTransactionType,
 } from "~/common/typedefs/query";
-import { ESalesTab, ERentsTab } from "~/common/typedefs/enums";
 
 interface Props {
   transaction: TTransactionResponse;
-  type: ETransactionType;
+  type: TTransactionType;
   tab: ESalesTab | ERentsTab;
 }
 
 const props = defineProps<Props>();
 
 const isSale = (tx: TTransactionResponse): tx is TSaleResponse => {
-  return 'price' in tx && 'buyer' in tx && 'seller' in tx;
+  return "price" in tx && "buyer" in tx && "seller" in tx;
 };
 
 const isRent = (tx: TTransactionResponse): tx is TRentResponse => {
-  return 'rentPrice' in tx && 'startDate' in tx && 'endDate' in tx;
+  return "rentPrice" in tx && "startDate" in tx && "endDate" in tx;
 };
 
 const counterpartyName = computed(() => {
@@ -49,14 +49,14 @@ const productId = computed(() => {
 });
 
 const formatDate = (dateString: string) => {
-  return format(new Date(dateString), 'MMM d, yyyy');
+  return format(new Date(dateString), "MMM d, yyyy");
 };
 
 const counterpartyIcon = computed(() => {
-  if (props.type === 'sale') {
-    return props.tab === ESalesTab.BOUGHT ? 'ph:user' : 'ph:user';
+  if (props.type === "sale") {
+    return props.tab === ESalesTab.BOUGHT ? "ph:user" : "ph:user";
   } else {
-    return props.tab === ERentsTab.BORROWS ? 'ph:user' : 'ph:user';
+    return props.tab === ERentsTab.BORROWS ? "ph:user" : "ph:user";
   }
 });
 </script>
@@ -73,7 +73,9 @@ const counterpartyIcon = computed(() => {
             <span class="font-medium">{{ counterpartyName }}</span>
           </div>
 
-          <div class="flex items-center gap-2 text-2xl font-bold text-foreground">
+          <div
+            class="flex items-center gap-2 text-2xl font-bold text-foreground"
+          >
             <Icon name="ph:currency-dollar" class="h-5 w-5 text-primary" />
             <span>{{ amount }}</span>
           </div>
@@ -82,21 +84,34 @@ const counterpartyIcon = computed(() => {
             <div class="flex items-center gap-2 text-xs text-muted-foreground">
               <Icon name="ph:calendar-blank" class="h-3.5 w-3.5" />
               <span v-if="isRent(transaction)">
-                {{ formatDate(transaction.startDate) }} - {{ formatDate(transaction.endDate) }}
+                {{ formatDate(transaction.startDate) }} -
+                {{ formatDate(transaction.endDate) }}
               </span>
             </div>
             <div class="flex items-center gap-2 text-xs text-muted-foreground">
               <Icon name="ph:clock" class="h-3.5 w-3.5" />
               <span v-if="isRent(transaction)">
-                Rented {{ formatDistanceToNow(new Date(transaction.createdAt), { addSuffix: true }) }}
+                Rented
+                {{
+                  formatDistanceToNow(new Date(transaction.createdAt), {
+                    addSuffix: true,
+                  })
+                }}
               </span>
             </div>
           </div>
 
-          <div v-else class="flex items-center gap-2 text-xs text-muted-foreground">
+          <div
+            v-else
+            class="flex items-center gap-2 text-xs text-muted-foreground"
+          >
             <Icon name="ph:calendar" class="h-3.5 w-3.5" />
             <span v-if="isSale(transaction)">
-              {{ formatDistanceToNow(new Date(transaction.createdAt), { addSuffix: true }) }}
+              {{
+                formatDistanceToNow(new Date(transaction.createdAt), {
+                  addSuffix: true,
+                })
+              }}
             </span>
           </div>
         </div>

@@ -1,8 +1,9 @@
 <script lang="ts" setup>
 import logo from "~/assets/images/logo.svg";
-import type { TAppSidebarProps } from "./AppSidebar.types";
+import type { TAppNavItem, TAppSidebarProps } from "./AppSidebar.types";
 
-interface Props extends TAppSidebarProps {
+interface Props extends Omit<TAppSidebarProps, "NAV_ITEMS"> {
+  navItems: TAppNavItem[];
   userName: string;
   userEmail: string;
   userInitials: string;

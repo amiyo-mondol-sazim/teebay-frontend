@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useIntersectionObserver } from "@vueuse/core";
-import type { TRentResponse } from "~/common/typedefs/query";
 import { ERentsTab } from "~/common/typedefs/enums";
+import type { TRentResponse } from "~/common/typedefs/query";
 
 const { data: user, isLoading: isUserLoading } = useUserQuery();
 const userId = computed(() => user.value?.id);
@@ -89,16 +89,17 @@ useIntersectionObserver(loadMoreTrigger, ([entry]) => {
 });
 
 const rentsTabConfig = [
-  { value: ERentsTab.BORROWS, label: 'Borrows', icon: 'ph:hand-bag' },
-  { value: ERentsTab.LENTS, label: 'Lents', icon: 'ph:house' }
+  { value: ERentsTab.BORROWS, label: "Borrows", icon: "ph:hand-bag" },
+  { value: ERentsTab.LENTS, label: "Lents", icon: "ph:house" },
 ];
 
 const rentsEmptyStateConfig = computed(() => ({
-  icon: activeTab.value === ERentsTab.BORROWS ? 'ph:hand-bag' : 'ph:house',
+  icon: activeTab.value === ERentsTab.BORROWS ? "ph:hand-bag" : "ph:house",
   title: `No ${activeTab.value} yet`,
-  description: activeTab.value === ERentsTab.BORROWS
-    ? 'Browse products to rent'
-    : 'List your items for rent'
+  description:
+    activeTab.value === ERentsTab.BORROWS
+      ? "Browse products to rent"
+      : "List your items for rent",
 }));
 </script>
 
@@ -138,7 +139,7 @@ const rentsEmptyStateConfig = computed(() => ({
 
   <div
     v-else-if="isUserLoading"
-    class="flex min-h-[400px] items-center justify-center"
+    class="flex min-h-[25rem] items-center justify-center"
   >
     <div class="juggle-loader" />
   </div>
