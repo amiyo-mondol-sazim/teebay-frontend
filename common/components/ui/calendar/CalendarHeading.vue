@@ -7,7 +7,6 @@ import { cn } from '~/common/utils/css';
 const props = defineProps<CalendarHeadingProps & { class?: HTMLAttributes['class'] }>();
 
 defineSlots<{
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   default: (props: { headingValue: string }) => any;
 }>();
 
