@@ -1,53 +1,20 @@
 <script setup lang="ts">
-
-const route = useRoute();
-const router = useRouter();
-
-const page = computed({
-  get: () => Number(route.query.page) || 1,
-  set: (val) => {
-    router.push({
-      query: {
-        page: val.toString(),
-      },
-    });
-  },
-});
-
-const limit = 12;
+import { useAllProductsData } from "./AllProducts.composables";
 
 const {
+  normalizedProducts,
+  pagination,
+  isLoading,
+  isError,
+  error,
   status,
   categories,
   activeFilterCount,
-  queryParams: filterParams,
   setStatus,
   setCategories,
-  clearAll,
-} = useProductFilters();
-
-const params = computed(() => ({
-  page: page.value,
-  limit,
-  ...filterParams.value,
-}));
-
-const { data, isLoading, isError, error } = useProductsQuery(params);
-
-const normalizedProducts = computed(() => data.value?.data ?? []);
-const pagination = computed(() => data.value?.meta);
-
-const handlePageChange = (newPage: number) => {
-  page.value = newPage;
-};
-
-const handleClearAllFilters = () => {
-  clearAll();
-};
-
-watch([status, categories], () => {
-  page.value = 1;
-});
+  handlePageChange,
+  handleClearAllFilters,
+} = useAllProductsData();
 </script>
 
 <template>
@@ -61,8 +28,8 @@ watch([status, categories], () => {
     :categories="categories"
     :active-filter-count="activeFilterCount"
     @page-change="handlePageChange"
-    @update:status="(val) => setStatus(val)"
-    @update:categories="(val) => setCategories(val)"
+    @update:status="setStatus"
+    @update:categories="setCategories"
     @clear-all="handleClearAllFilters"
   />
 </template>

@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { TProductStatusFilter } from "../AllProducts.types";
-import { STATUS_LABELS } from "~/common/utils/constants";
+import { getStatusLabel } from "./ProductFilters.helpers";
+
 interface Props {
-  status: TProductStatusFilter;
+  status: EProductStatusFilter;
   categories: string[];
 }
 
@@ -14,11 +14,7 @@ defineEmits<{
   "clear-all": [];
 }>();
 
-const statusLabel = computed(() => {
-  const s = props.status;
-  if (s === "ALL") return "";
-  return STATUS_LABELS[s] || "";
-});
+const statusLabel = computed(() => getStatusLabel(props));
 </script>
 
 <template>
@@ -29,7 +25,7 @@ const statusLabel = computed(() => {
       >
 
       <UiBadge
-        v-if="props.status !== 'ALL'"
+        v-if="props.status !== EProductStatusFilter.ALL"
         variant="secondary"
         class="group active-filter-badge cursor-pointer transition-all hover:bg-destructive/10 hover:text-destructive"
         @click="$emit('remove-status')"

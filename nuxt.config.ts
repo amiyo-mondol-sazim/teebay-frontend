@@ -29,6 +29,9 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   vite: {
     plugins: [tailwindcss()],
+    server: {
+      allowedHosts: ["jimena-chameleonic-yuk.ngrok-free.dev"],
+    },
   },
   css: ["~/assets/css/tailwind.css"],
   fonts: {

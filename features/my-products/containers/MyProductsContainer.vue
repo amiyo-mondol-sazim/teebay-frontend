@@ -1,16 +1,11 @@
 <script setup lang="ts">
-import { useIntersectionObserver } from "@vueuse/core";
-import type { components } from "~/common/typedefs/api-schema";
-
-const { data: user, isLoading: isUserLoading } = useUserQuery();
-
-const statusFilter = ref<TProductStatus | "ALL">("ALL" as const);
-
-const ownerId = computed(() => user.value?.id);
-
-const limit = 12;
+import { getAnimationDelay } from "./MyProductsContainer.helpers";
+import { useFilteredProducts, useInfiniteScroll, useMyProductsState } from "./MyProductsContainer.composables";
 
 const {
+  isUserLoading,
+  statusFilter,
+  ownerId,
   data,
   fetchNextPage,
   hasNextPage,
@@ -18,37 +13,13 @@ const {
   isLoading,
   isError,
   error,
-} = useOwnerProductsInfiniteQuery(
-  computed(() => ownerId.value ?? 0),
-  { page: 1, limit },
-);
+} = useMyProductsState();
 
-const products = computed(() => {
-  const allProducts =
-    (data.value as components["schemas"]["ProductResponse"][]) || [];
-  if (statusFilter.value === "ALL") {
-    return allProducts;
-  }
-  return allProducts.filter((p) => p.status === statusFilter.value);
-});
+const { products, allProducts } = useFilteredProducts(data, statusFilter);
 
-const allProducts = computed(
-  () => (data.value as components["schemas"]["ProductResponse"][]) || [],
-);
+const { loadMoreTrigger, setLoadMoreTrigger } = useLoadMoreTrigger();
 
-const loadMoreTrigger = ref<HTMLElement | null>(null);
-
-const setLoadMoreTrigger = (ref: Element | ComponentPublicInstance | null) => {
-  loadMoreTrigger.value = ref as HTMLElement | null;
-};
-
-useIntersectionObserver(loadMoreTrigger, ([entry]) => {
-  if (entry?.isIntersecting && hasNextPage.value && !isFetchingNextPage.value) {
-    fetchNextPage();
-  }
-});
-
-const getAnimationDelay = (index: number) => `${Math.min(index * 0.05, 0.5)}s`;
+useInfiniteScroll(loadMoreTrigger, hasNextPage, isFetchingNextPage, fetchNextPage);
 </script>
 
 <template>
@@ -114,7 +85,6 @@ const getAnimationDelay = (index: number) => `${Math.min(index * 0.05, 0.5)}s`;
     />
   </div>
 
-  <!-- Loading User State -->
   <div
     v-else-if="isUserLoading"
     class="flex min-h-[25rem] items-center justify-center"

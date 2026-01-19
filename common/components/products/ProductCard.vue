@@ -96,7 +96,10 @@ const emit = defineEmits<{
       </div>
     </div>
 
-    <UiAlertDialog :open="showDeleteDialog" @update:open="emit('delete-cancel')">
+    <UiAlertDialog
+      :open="showDeleteDialog"
+      @update:open="emit('delete-cancel')"
+    >
       <UiAlertDialogContent>
         <UiAlertDialogHeader>
           <UiAlertDialogTitle>Delete this product?</UiAlertDialogTitle>
@@ -106,7 +109,9 @@ const emit = defineEmits<{
             Cancel
           </UiAlertDialogCancel>
           <UiAlertDialogAction variant="destructive" as-child>
-            <UiButton :disabled="isDeleting" @click="emit('delete-action')">Delete</UiButton>
+            <UiButton :disabled="isDeleting" @click="emit('delete-action')"
+              >Delete</UiButton
+            >
           </UiAlertDialogAction>
         </UiAlertDialogFooter>
       </UiAlertDialogContent>

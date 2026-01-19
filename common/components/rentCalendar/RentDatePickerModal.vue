@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { TProductResponse } from "~/common/typedefs/query";
 
 import RentCostPreview from "./RentCostPreview.vue";
 import RentDateSelector from "./RentDateSelector.vue";

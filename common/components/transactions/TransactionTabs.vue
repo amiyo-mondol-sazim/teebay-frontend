@@ -1,5 +1,5 @@
 <script setup lang="ts">
-interface TabOption {
+export interface ITabOption {
   value: string;
   label: string;
   icon: string;
@@ -7,7 +7,7 @@ interface TabOption {
 
 interface Props {
   modelValue: string;
-  tabs: TabOption[];
+  tabs: ITabOption[];
 }
 
 interface Emits {

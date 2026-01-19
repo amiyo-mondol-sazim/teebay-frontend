@@ -1,47 +1,15 @@
 <script setup lang="ts">
-import type { TProductStatusFilter } from "../AllProducts.types";
+import { PRODUCT_STATUS_FILTER_OPTIONS } from "../../AllProducts.types";
 
 const props = defineProps<{
-  modelValue: TProductStatusFilter;
+  modelValue: EProductStatusFilter;
 }>();
 
 const emit = defineEmits<{
-  (e: "update:modelValue", value: TProductStatusFilter): void;
+  (e: "update:modelValue", value: EProductStatusFilter): void;
 }>();
 
-const filters = computed<
-  Array<{
-    value: TProductStatusFilter;
-    label: string;
-    icon: string;
-    color: string;
-  }>
->(() => [
-  {
-    value: "ALL",
-    label: "All",
-    icon: "ph:squares-four",
-    color: "hover:border-primary/50 hover:bg-primary/5",
-  },
-  {
-    value: "AVAILABLE",
-    label: "Available",
-    icon: "ph:check-circle",
-    color: "hover:border-success/50 hover:bg-success/5",
-  },
-  {
-    value: "RENTED",
-    label: "Rented",
-    icon: "ph:clock",
-    color: "hover:border-chart-3/50 hover:bg-chart-3/5",
-  },
-  {
-    value: "SOLD",
-    label: "Sold",
-    icon: "ph:currency-dollar",
-    color: "hover:border-chart-2/50 hover:bg-chart-2/5",
-  },
-]);
+const filters = computed(() => PRODUCT_STATUS_FILTER_OPTIONS);
 
 const selectedFilter = computed({
   get: () => props.modelValue,

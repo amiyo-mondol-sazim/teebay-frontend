@@ -10,37 +10,17 @@ const props = withDefaults(defineProps<Props>(), {
   isOwner: false,
 });
 
-const router = useRouter();
-const showDeleteDialog = ref(false);
-
-const deleteMutation = useDeleteProductMutation();
-
-const navigateToDetail = () => {
-  router.push(`/products/${props.product.id}`);
-};
-
-const navigateToEdit = () => {
-  router.push(`/products/${props.product.id}/edit`);
-};
-
-const confirmDelete = () => {
-  showDeleteDialog.value = true;
-};
-
-const handleDelete = async () => {
-  await deleteMutation.mutateAsync(props.product.id);
-  showDeleteDialog.value = false;
-};
-
-const handleDeleteCancel = () => {
-  showDeleteDialog.value = false;
-};
-
-const isMobile = ref(false);
-
-onMounted(() => {
-  isMobile.value = window.innerWidth < 1024;
-});
+const { navigateToDetail, navigateToEdit } = useProductCardNavigation(
+  toRef(props, "product"),
+);
+const {
+  showDeleteDialog,
+  isDeleting,
+  confirmDelete,
+  handleDelete,
+  handleDeleteCancel,
+} = useProductDelete(toRef(() => props.product.id));
+const { isMobile } = useMobileDetection();
 </script>
 
 <template>
@@ -49,7 +29,7 @@ onMounted(() => {
     :is-owner="isOwner"
     :show-delete-dialog="showDeleteDialog"
     :is-mobile="isMobile"
-    :is-deleting="deleteMutation.isPending.value"
+    :is-deleting="isDeleting"
     @click="navigateToDetail"
     @edit-click="navigateToEdit"
     @delete-confirm="confirmDelete"

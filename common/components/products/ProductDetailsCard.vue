@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { PRODUCT_STATUS_CLASSES } from "~/common/components/products/products.helper";
-import type { TProductResponse } from "~/common/typedefs/query";
-import { FORMAT_CREATED_DATE } from "../../../features/product-details/product-details.helper";
+import { PRODUCT_STATUS_CLASSES } from "./products.helper";
 
 interface Props {
   product: TProductResponse;
@@ -61,7 +59,7 @@ const props = withDefaults(defineProps<Props>(), {
 
           <div class="flex items-center gap-2 text-muted-foreground">
             <Icon name="heroicons:calendar" class="h-4 w-4" />
-            <span>Created on {{ FORMAT_CREATED_DATE(product.createdAt) }}</span>
+            <span>Created on {{ formatDate(product.createdAt) }}</span>
           </div>
 
           <ProductPriceDisplay :product="product" />

@@ -6,11 +6,12 @@ import {
   getRentPricePerDay,
   validateRentalDates,
   type TRentalDateErrors,
-} from "../components/rent-calendar/rent-calendar.helper";
+  type RentalPeriod,
+} from "../components/rentCalendar/rentCalendar.helper";
 
 interface UseRentDateStateOptions {
   rentPrice: number;
-  rentalPeriod: string;
+  rentalPeriod: RentalPeriod;
 }
 
 interface UseRentDateStateReturn {

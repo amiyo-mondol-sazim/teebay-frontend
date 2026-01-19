@@ -1,50 +1,11 @@
 <script setup lang="ts">
-import type { TProductResponse } from "~/common/typedefs/query";
+import { useProductStats } from "./MyProducts.composables";
 
 const props = defineProps<{
   products: TProductResponse[];
 }>();
 
-const stats = computed(() => {
-  const products = props.products || [];
-  return {
-    total: products.length,
-    available: products.filter((p) => p.status === "AVAILABLE").length,
-    rented: products.filter((p) => p.status === "RENTED").length,
-    sold: products.filter((p) => p.status === "SOLD").length,
-  };
-});
-
-const statItems = computed(() => [
-  {
-    label: "Total",
-    value: stats.value.total,
-    icon: "ph:package",
-    color: "text-primary",
-    bgColor: "bg-primary/10",
-  },
-  {
-    label: "Available",
-    value: stats.value.available,
-    icon: "ph:check-circle",
-    color: "text-success",
-    bgColor: "bg-success/10",
-  },
-  {
-    label: "Rented",
-    value: stats.value.rented,
-    icon: "ph:clock",
-    color: "text-chart-3",
-    bgColor: "bg-chart-3/10",
-  },
-  {
-    label: "Sold",
-    value: stats.value.sold,
-    icon: "ph:currency-dollar",
-    color: "text-chart-2",
-    bgColor: "bg-chart-2/10",
-  },
-]);
+const { statItems } = useProductStats(() => props.products);
 </script>
 
 <template>

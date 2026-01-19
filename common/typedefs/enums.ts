@@ -19,3 +19,8 @@ export enum ERentsTab {
   BORROWS = "borrows",
   LENTS = "lents",
 }
+
+export enum ETransaction {
+  Sale = "sale",
+  Rent = "rent",
+}

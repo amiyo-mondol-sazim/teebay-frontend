@@ -1,16 +1,11 @@
 <script lang="ts" setup>
 import type { TCreateProductInput } from "~/common/typedefs/products";
 import { useAddProductForm } from "./AddProductForm.composables";
+import { rentalPeriodOptions } from "./AddProductForm.constants";
 
 defineProps<{
   isPending?: boolean;
 }>();
-
-const rentalPeriodOptions = [
-  { label: "Day", value: "DAY" },
-  { label: "Week", value: "WEEK" },
-  { label: "Month", value: "MONTH" },
-];
 
 const emit = defineEmits<{
   (e: "submit", values: TCreateProductInput): void;

@@ -3,5 +3,6 @@
   "extends": "./.nuxt/tsconfig.json",
   "compilerOptions": {
     "noUncheckedIndexedAccess": true
-  }
+  },
+  "ignore": ["node_modules", ".nuxt", "dist", ".output"]
 }

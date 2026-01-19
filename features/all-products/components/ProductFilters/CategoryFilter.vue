@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { AVAILABLE_CATEGORIES } from "~/common/utils/constants";
+import { toggleCategory } from "./ProductFilters.helpers";
 
 interface Props {
   modelValue: string[];
@@ -11,12 +11,8 @@ const emit = defineEmits<{
   "update:modelValue": [value: string[]];
 }>();
 
-const toggleCategory = (category: string) => {
-  const currentValue = props.modelValue || [];
-  const newValue = currentValue.includes(category)
-    ? currentValue.filter((c) => c !== category)
-    : [...currentValue, category];
-  emit("update:modelValue", newValue);
+const handleToggle = (category: string) => {
+  toggleCategory(category, props.modelValue || [], (value) => emit("update:modelValue", value));
 };
 </script>
 
@@ -53,7 +49,7 @@ const toggleCategory = (category: string) => {
             'hover:bg-accent/5',
             modelValue.includes(category) && 'bg-accent/10',
           ]"
-          @click="toggleCategory(category)"
+          @click="handleToggle(category)"
         >
           <UiCheckbox :model-value="(modelValue || []).includes(category)" />
           <span>{{ category }}</span>

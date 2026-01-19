@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useIntersectionObserver } from "@vueuse/core";
-import type { TRentWithRenter } from "~/features/product-details/rent-calendar.types";
+import type { TRentWithRenter } from "../renter.types";
 
 interface Props {
   productId: number;

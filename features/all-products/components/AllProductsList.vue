@@ -1,7 +1,4 @@
 <script setup lang="ts">
-import type { TProductResponse } from "~/common/typedefs/query";
-import type { TProductStatusFilter } from "./AllProducts.types";
-
 interface Props {
   products: TProductResponse[];
   pagination?: {
@@ -13,7 +10,7 @@ interface Props {
   isLoading: boolean;
   isError: boolean;
   error?: Error | null;
-  status: TProductStatusFilter;
+  status: EProductStatusFilter;
   categories: string[];
   activeFilterCount: number;
 }
@@ -22,7 +19,7 @@ defineProps<Props>();
 
 defineEmits<{
   "page-change": [page: number];
-  "update:status": [value: TProductStatusFilter];
+  "update:status": [value: EProductStatusFilter];
   "update:categories": [value: string[]];
   "clear-all": [];
 }>();
@@ -34,7 +31,7 @@ defineEmits<{
       :status="status"
       :categories="categories"
       :active-filter-count="activeFilterCount"
-      @update:status="$emit('update:status', $event)"
+      @update:status="$emit('update:status', $event as EProductStatusFilter)"
       @update:categories="$emit('update:categories', $event)"
       @clear-all="$emit('clear-all')"
     />

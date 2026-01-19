@@ -3,6 +3,15 @@ definePageMeta({
   middleware: "auth",
   layout: "default",
 });
+useHead({
+  title: "Products | Teebay",
+  meta: [
+    {
+      name: "description",
+      content: "Track your borrows and lents history",
+    },
+  ],
+});
 </script>
 
 <template>

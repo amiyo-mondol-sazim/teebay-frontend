@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import type { TProductResponse } from "~/common/typedefs/query";
-
 interface Props {
   products: TProductResponse[];
   isLoading: boolean;
   isError: boolean;
   error?: Error | null;
   isFetchingNextPage: boolean;
-  loadMoreTriggerRef: (ref: Element | ComponentPublicInstance | null, refs: Record<string, Element | ComponentPublicInstance | null>) => void;
+  loadMoreTriggerRef: (
+    ref: Element | ComponentPublicInstance | null,
+    refs: Record<string, Element | ComponentPublicInstance | null>,
+  ) => void;
   getAnimationDelay: (index: number) => string;
 }
 
@@ -84,12 +85,19 @@ defineProps<Props>();
             :style="{ animationDelay: getAnimationDelay(index) }"
             class="animate-fade-in-up"
           >
-            <ProductCardContainer :product="product" :is-owner="true" class="hover-card h-full" />
+            <ProductCardContainer
+              :product="product"
+              :is-owner="true"
+              class="hover-card h-full"
+            />
           </div>
         </TransitionGroup>
       </div>
 
-      <div :ref="loadMoreTriggerRef" class="flex h-12 items-center justify-center">
+      <div
+        :ref="loadMoreTriggerRef"
+        class="flex h-12 items-center justify-center"
+      >
         <div
           v-if="isFetchingNextPage"
           class="flex items-center gap-3 text-muted-foreground"

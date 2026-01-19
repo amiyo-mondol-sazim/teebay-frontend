@@ -4,6 +4,7 @@ type PaginatedResponse = {
     hasPreviousPage: boolean;
     currentPage: number;
   };
+  data: unknown;
 };
 
 export function getNextPage<T extends PaginatedResponse>(lastPage: T) {

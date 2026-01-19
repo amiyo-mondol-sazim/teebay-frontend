@@ -1,16 +1,16 @@
-import dayjs from "dayjs";
+export type TRentalPeriod = ERentalPeriod;
 
 export const getRentPricePerDay = (
   rentPrice: number,
-  rentalPeriod: string,
+  rentalPeriod: TRentalPeriod,
 ): number => {
-  let rentPriceDividedByDay = rentPrice;
   if (rentalPeriod === ERentalPeriod.WEEK) {
-    rentPriceDividedByDay = rentPrice / 7;
-  } else if (rentalPeriod === ERentalPeriod.MONTH) {
-    rentPriceDividedByDay = rentPrice / 30;
+    return rentPrice / 7;
   }
-  return rentPriceDividedByDay;
+  if (rentalPeriod === ERentalPeriod.MONTH) {
+    return rentPrice / 30;
+  }
+  return rentPrice;
 };
 
 export const calculateRentalCost = (
@@ -20,12 +20,15 @@ export const calculateRentalCost = (
 ): number => {
   if (!startDate || !endDate) return 0;
 
-  const start = dayjs(startDate);
-  const end = dayjs(endDate);
+  if (
+    !isValidDate(startDate) ||
+    !isValidDate(endDate) ||
+    isDateAfter(startDate, endDate)
+  ) {
+    return 0;
+  }
 
-  if (!start.isValid() || !end.isValid() || start.isAfter(end)) return 0;
-
-  const days = end.diff(start, "day") + 1;
+  const days = getDateDiff(endDate, startDate) + 1;
   return days * rentPrice;
 };
 
@@ -34,26 +37,21 @@ export const validateRentalDates = (
   endDate: string,
 ): { startDate?: string; endDate?: string } => {
   const errors: { startDate?: string; endDate?: string } = {};
-  const today = dayjs().startOf("day");
 
   if (!startDate) {
     errors.startDate = "Start date is required";
-  } else if (dayjs(startDate).isBefore(today)) {
+  } else if (isDatePast(startDate)) {
     errors.startDate = "Start date cannot be in the past";
   }
 
   if (!endDate) {
     errors.endDate = "End date is required";
-  } else if (dayjs(endDate).isBefore(today)) {
+  } else if (isDatePast(endDate)) {
     errors.endDate = "End date cannot be in the past";
   }
 
-  if (startDate && endDate) {
-    const start = dayjs(startDate);
-    const end = dayjs(endDate);
-    if (start.isAfter(end)) {
-      errors.endDate = "End date must be after start date";
-    }
+  if (startDate && endDate && isDateAfter(startDate, endDate)) {
+    errors.endDate = "End date must be after start date";
   }
 
   return errors;
@@ -67,12 +65,15 @@ export const calculateRentalDuration = (
 ): number | null => {
   if (!startDate || !endDate) return null;
 
-  const start = dayjs(startDate);
-  const end = dayjs(endDate);
+  if (
+    !isValidDate(startDate) ||
+    !isValidDate(endDate) ||
+    isDateAfter(startDate, endDate)
+  ) {
+    return null;
+  }
 
-  if (!start.isValid() || !end.isValid() || start.isAfter(end)) return null;
-
-  return end.diff(start, "day") + 1;
+  return getDateDiff(endDate, startDate) + 1;
 };
 
 export const formatRentalDuration = (days: number): string => {
@@ -81,5 +82,5 @@ export const formatRentalDuration = (days: number): string => {
 
 export const formatDateForDisplay = (dateString: string): string => {
   if (!dateString) return "Select date";
-  return dayjs(dateString).format("MMM DD, YYYY");
+  return formatDate(dateString, "MMM dd, yyyy");
 };

@@ -1,5 +1,14 @@
 <script lang="ts" setup>
-definePageMeta({ layout: 'auth', middleware: 'guest' });
+definePageMeta({ layout: "auth", middleware: "guest" });
+useHead({
+  title: "Login | Teebay",
+  meta: [
+    {
+      name: "description",
+      content: "Login to your account",
+    },
+  ],
+});
 </script>
 <template>
   <main>

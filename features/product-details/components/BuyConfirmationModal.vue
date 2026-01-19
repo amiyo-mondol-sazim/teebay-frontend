@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { TProductResponse } from "~/common/typedefs/query";
 
 interface Props {
   product: TProductResponse;

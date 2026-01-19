@@ -5,7 +5,7 @@ definePageMeta({
 });
 
 useHead({
-  title: "My Rents",
+  title: "My Rents | Teebay",
   meta: [
     {
       name: "description",

@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import type { TRentWithRenter } from "../rent-calendar.types";
-import { FORMAT_CREATED_DATE } from "../product-details.helper";
-
+import type { TRentWithRenter } from "../renter.types";
 const PREVIOUS_RENTALS_HEIGHT = "21.875rem";
 
 interface Props {
@@ -36,8 +34,8 @@ defineProps<Props>();
       >
         <div class="flex flex-col gap-1">
           <div class="font-medium text-foreground">
-            {{ FORMAT_CREATED_DATE(rent.startDate) }} -
-            {{ FORMAT_CREATED_DATE(rent.endDate) }}
+            {{ formatDate(rent.startDate) }} -
+            {{ formatDate(rent.endDate) }}
           </div>
           <div v-if="rent.renter" class="text-xs text-muted-foreground">
             Rented by {{ rent.renter.userProfile?.firstName }}

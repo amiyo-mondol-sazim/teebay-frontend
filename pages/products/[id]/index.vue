@@ -1,8 +1,17 @@
 <script setup lang="ts">
-
 definePageMeta({
   middleware: "auth",
   layout: "default",
+});
+
+useHead({
+  title: "Product Details | Teebay",
+  meta: [
+    {
+      name: "description",
+      content: "Displays the details of a specific product",
+    },
+  ],
 });
 
 const route = useRoute();

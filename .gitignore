@@ -5,3 +5,4 @@ docs
 .output
 __pycache__
 *.py
+dist

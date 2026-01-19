@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { IS_ACTION_BUTTON_DISABLED } from "../product-details.helper";
+import { isProductSoldOrOwned } from "./ProductDetails.helper";
 
 interface Props {
   onBuy: () => void;
@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const isDisabled = computed(() =>
-  IS_ACTION_BUTTON_DISABLED(props.productStatus, props.isOwnProduct),
+  isProductSoldOrOwned(props.productStatus, props.isOwnProduct),
 );
 </script>
 

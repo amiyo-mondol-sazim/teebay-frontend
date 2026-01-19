@@ -25,8 +25,16 @@ export const AVAILABLE_CATEGORIES = [
   "Other",
 ] as const;
 
-export const STATUS_LABELS: Record<TProductStatus, string> = {
-  AVAILABLE: "Available",
-  RENTED: "Rented",
-  SOLD: "Sold",
+export enum EProductStatusFilter {
+  ALL = "ALL",
+  AVAILABLE = "AVAILABLE",
+  RENTED = "RENTED",
+  SOLD = "SOLD",
+}
+
+export const STATUS_LABELS: Record<EProductStatusFilter, string> = {
+  [EProductStatusFilter.ALL]: "All",
+  [EProductStatusFilter.AVAILABLE]: "Available",
+  [EProductStatusFilter.RENTED]: "Rented",
+  [EProductStatusFilter.SOLD]: "Sold",
 };

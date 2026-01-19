@@ -6,3 +6,11 @@ export const PRODUCT_STATUS_CLASSES: Record<EProductStatus, string> = {
   [EProductStatus.RENTED]:
     "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400",
 };
+
+export function getProductDetailUrl(productId: number): string {
+  return `/products/${productId}`;
+}
+
+export function getProductEditUrl(productId: number): string {
+  return `/products/${productId}/edit`;
+}

@@ -1,7 +1,7 @@
 import type { ComputedRef, Ref } from "vue";
 import { computed, ref } from "vue";
-import type { TProductStatus } from "~/common/typedefs/query.ts";
-import type { TProductStatusFilter } from "~/features/all-products/AllProducts.types";
+import type { TProductStatus } from "~/common/typedefs/api";
+import { EProductStatusFilter } from "~/common/utils/constants";
 
 type ApiQueryParams = {
   status?: TProductStatus;
@@ -9,33 +9,33 @@ type ApiQueryParams = {
 };
 
 interface UseProductFiltersReturn {
-  status: Ref<TProductStatusFilter>;
+  status: Ref<EProductStatusFilter>;
   categories: Ref<string[]>;
   activeFilterCount: ComputedRef<number>;
   queryParams: ComputedRef<ApiQueryParams>;
 
-  setStatus: (value: TProductStatusFilter) => void;
+  setStatus: (value: EProductStatusFilter) => void;
   setCategories: (value: string[]) => void;
   clearAll: () => void;
 }
 
 export function useProductFilters(): UseProductFiltersReturn {
-  const status = ref<TProductStatusFilter>("ALL");
+  const status = ref<EProductStatusFilter>(EProductStatusFilter.ALL);
   const categories = ref<string[]>([]);
 
   const activeFilterCount = computed(() => {
     let count = 0;
-    if (status.value !== "ALL") count++;
+    if (status.value !== EProductStatusFilter.ALL) count++;
     count += categories.value.length;
     return count;
   });
 
   const queryParams = computed<ApiQueryParams>(() => ({
-    ...(status.value !== "ALL" && { status: status.value as TProductStatus }),
+    ...(status.value !== EProductStatusFilter.ALL && { status: status.value as TProductStatus }),
     ...(categories.value.length && { categories: categories.value.join(",") }),
   }));
 
-  const setStatus = (value: TProductStatusFilter) => {
+  const setStatus = (value: EProductStatusFilter) => {
     status.value = value;
   };
 
@@ -44,7 +44,7 @@ export function useProductFilters(): UseProductFiltersReturn {
   };
 
   const clearAll = () => {
-    status.value = "ALL";
+    status.value = EProductStatusFilter.ALL;
     categories.value = [];
   };
 

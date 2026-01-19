@@ -1,9 +1,5 @@
 <script setup lang="ts">
-interface EmptyState {
-  icon: string;
-  title: string;
-  description: string;
-}
+import type { IEmptyState } from "./transactions.types";
 
 interface Props {
   items: unknown[];
@@ -12,7 +8,7 @@ interface Props {
   error?: Error | null;
   isFetchingNextPage: boolean;
   loadMoreTriggerRef: (ref: Element | ComponentPublicInstance | null) => void;
-  emptyState?: EmptyState;
+  emptyState?: IEmptyState;
 }
 
 defineProps<Props>();
@@ -20,7 +16,6 @@ defineProps<Props>();
 
 <template>
   <div class="space-y-4">
-    <!-- Loading state -->
     <div v-if="isLoading" class="space-y-4">
       <div
         v-for="n in 6"
@@ -29,7 +24,6 @@ defineProps<Props>();
       />
     </div>
 
-    <!-- Error state -->
     <div
       v-else-if="isError"
       class="rounded-xl border border-destructive/20 bg-destructive/5 p-6"
@@ -43,7 +37,6 @@ defineProps<Props>();
       </div>
     </div>
 
-    <!-- Empty state -->
     <div
       v-else-if="!items.length"
       class="min-h-[18.75rem] flex flex-col items-center justify-center rounded-2xl border border-dashed border-muted-foreground/25 bg-muted/30 p-12 text-center"
@@ -64,7 +57,6 @@ defineProps<Props>();
       </p>
     </div>
 
-    <!-- Items list -->
     <div v-else class="space-y-3">
       <TransitionGroup
         enter-active-class="transition-all duration-300 ease-out"
@@ -75,7 +67,6 @@ defineProps<Props>();
       </TransitionGroup>
     </div>
 
-    <!-- Load more trigger -->
     <div
       :ref="loadMoreTriggerRef"
       class="flex h-12 items-center justify-center"

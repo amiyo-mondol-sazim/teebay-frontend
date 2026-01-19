@@ -1,5 +1,11 @@
 <script setup lang="ts">
 import { AVAILABLE_CATEGORIES } from "~/common/utils/constants";
+import { MAX_CATEGORIES } from "./CategorySelector.constants";
+import {
+  isCategoryDisabled,
+  isCategorySelected,
+  toggleCategory,
+} from "./CategorySelector.helpers";
 
 const props = defineProps<{
   categories: string[];
@@ -9,31 +15,11 @@ const emit = defineEmits<{
   (e: "update:categories", value: string[]): void;
 }>();
 
-const MAX_CATEGORIES = 10;
-
-const toggleCategory = (category: string) => {
-  const index = props.categories.indexOf(category);
-  let newCategories: string[];
-
-  if (index > -1) {
-    newCategories = props.categories.filter((_, i) => i !== index);
-  } else {
-    if (props.categories.length < MAX_CATEGORIES) {
-      newCategories = [...props.categories, category];
-    } else {
-      return;
-    }
+const handleToggleCategory = (category: string) => {
+  const newCategories = toggleCategory(props.categories, category);
+  if (newCategories !== null) {
+    emit("update:categories", newCategories);
   }
-
-  emit("update:categories", newCategories);
-};
-
-const isCategorySelected = (category: string): boolean => {
-  return props.categories.includes(category);
-};
-
-const isCategoryDisabled = (category: string): boolean => {
-  return !props.categories.includes(category) && props.categories.length >= MAX_CATEGORIES;
 };
 </script>
 
@@ -52,17 +38,20 @@ const isCategoryDisabled = (category: string): boolean => {
         :key="category"
         class="flex flex-row items-center space-x-2"
       >
-        <div class="flex flex-row items-center space-x-2 cursor-pointer" @click="toggleCategory(category)">
+        <div
+          class="flex flex-row items-center space-x-2 cursor-pointer"
+          @click="handleToggleCategory(category)"
+        >
           <UiCheckbox
             :id="category"
-            :checked="isCategorySelected(category)"
-            :disabled="isCategoryDisabled(category)"
+            :checked="isCategorySelected(props.categories, category)"
+            :disabled="isCategoryDisabled(props.categories, category)"
           />
           <UiLabel
             :for="category"
             class="font-normal cursor-pointer text-sm"
             :class="{
-              'text-muted-foreground': isCategoryDisabled(category),
+              'text-muted-foreground': isCategoryDisabled(props.categories, category),
             }"
             @click.stop
           >
