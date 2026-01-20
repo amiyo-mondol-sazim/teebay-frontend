@@ -4,7 +4,9 @@ import "vue-sonner/style.css";
 
 <template>
   <div>
-    <slot />
+    <AppShell>
+      <slot />
+    </AppShell>
     <UiToaster />
   </div>
 </template>
