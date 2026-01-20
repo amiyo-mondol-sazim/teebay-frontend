@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import 'vue-sonner/style.css';
+import "vue-sonner/style.css";
 </script>
 
 <template>
   <div>
-    <AppShell>
-      <slot />
-    </AppShell>
+    <slot />
     <UiToaster />
   </div>
 </template>

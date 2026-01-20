@@ -106,16 +106,17 @@ project/
 
 **ALL components MUST follow this pattern without exception.**
 
-- **Containers** (`containers/`): Smart components that handle data fetching (useQuery), permissions, business logic, state management, and event handlers. Minimal styling. NO presentation logic.
-- **Components** (`components/`): Dumb UI-only components. **STRICTLY** no API calls, no global state, no business logic. Pure presentation based on props and events only.
+- **Containers** (`containers/`): Pure wrapper components that contain only a single child component. **NO logic, NO composables, NO props passing**. Styling/layout is allowed.
+- **Components** (`components/`): Smart components that call composables, handle business logic, and manage presentation. They can call composables, use API hooks, and handle UI state.
 
 **Rules:**
-- NEVER call `useQuery`, `useMutation`, or any API hooks in `components/`
-- NEVER use Pinia stores or global composables in `components/`
-- NEVER perform data transformation or business logic in `components/`
-- ALL data fetching and state management MUST be in `containers/`
-- `components/` receive data via props and emit events for user actions
-- If a component needs API data, create a container that fetches it and passes it down
+- Containers MUST contain only a single child component - no logic, no composables
+- Containers CAN have styling and layout classes
+- Components CAN call `useQuery`, `useMutation`, and API hooks
+- Components CAN use Pinia stores and global composables
+- Components CAN perform business logic and data transformation
+- All logic lives in components via composables
+- Containers are for layout/organization purposes (e.g., centering, max-width, animations)
 
 ### Auto-Import System
 
