@@ -25,7 +25,13 @@ const props = withDefaults(defineProps<Props>(), {
       <div
         class="aspect-video rounded-lg bg-muted flex items-center justify-center md:sticky md:top-6 md:self-stretch md:aspect-auto"
       >
-        <span class="text-muted-foreground">Image Placeholder</span>
+        <NuxtImg
+          v-if="product.imageUrl"
+          :src="product.imageUrl"
+          :alt="product.title"
+          class="w-full h-full object-cover rounded-lg"
+        />
+        <span v-else class="text-muted-foreground">Image Placeholder</span>
       </div>
 
       <div class="flex flex-col h-full">
