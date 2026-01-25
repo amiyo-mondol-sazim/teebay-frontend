@@ -4,6 +4,22 @@
  */
 
 export interface paths {
+    "/api/v1/file-uploads": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["getPresignedUrl"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/users/me": {
         parameters: {
             query?: never;
@@ -473,6 +489,24 @@ export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
         /** @enum {string} */
+        EAllowedMimeTypes: "application/pdf" | "image/png" | "image/jpg" | "image/jpeg" | "image/webp";
+        PresignedUrlFile: {
+            type: components["schemas"]["EAllowedMimeTypes"];
+            /** @example 5242880 */
+            maxSize: number;
+            name: string;
+        };
+        PresignedUrlFileDto: {
+            files: components["schemas"]["PresignedUrlFile"][];
+        };
+        PresignedUrlResponse: {
+            type: components["schemas"]["EAllowedMimeTypes"];
+            /** @example 5242880 */
+            maxSize: number;
+            name: string;
+            signedUrl: string;
+        };
+        /** @enum {string} */
         EUserRole: "SUPER_USER" | "ADMIN";
         TokenizedUser: {
             /** @example 1 */
@@ -676,6 +710,7 @@ export interface components {
             rentalPeriod: components["schemas"]["ERentalPeriod"];
             status: components["schemas"]["EProductStatus"];
             viewCount: number;
+            imageUrl?: string;
             owner?: components["schemas"]["User"];
             /** Format: date-time */
             createdAt: string;
@@ -702,6 +737,8 @@ export interface components {
             rentPrice: number;
             /** @example DAY */
             rentalPeriod: components["schemas"]["ERentalPeriod"];
+            /** @example http://localhost:4566/project-dev-bucket/products/abc-123.jpg */
+            imageUrl?: string;
         };
         UpdateProductDto: {
             /** @example Product title */
@@ -719,6 +756,8 @@ export interface components {
             rentPrice?: number;
             /** @example DAY */
             rentalPeriod?: components["schemas"]["ERentalPeriod"];
+            /** @example http://localhost:4566/project-dev-bucket/products/abc-123.jpg */
+            imageUrl?: string;
         };
         CreateSaleDto: {
             /** @example 1 */
@@ -834,6 +873,85 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    getPresignedUrl: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PresignedUrlFileDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PresignedUrlResponse"][];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 400,
+                     *       "message": "Bad Request",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 401,
+                     *       "message": "Unauthorized",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 403,
+                     *       "message": "Forbidden",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+            /** @description Internal Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    /** @example {
+                     *       "statusCode": 500,
+                     *       "message": "Internal Server Error",
+                     *       "errors": []
+                     *     } */
+                    "application/json": components["schemas"]["ErrorResponseDto"];
+                };
+            };
+        };
+    };
     me: {
         parameters: {
             query?: never;

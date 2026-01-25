@@ -5,6 +5,7 @@ export type TCreateProductInput = {
   purchasePrice: number;
   rentPrice: number;
   rentalPeriod: "DAY" | "WEEK" | "MONTH";
+  imageUrl?: string;
 };
 
 export type TUpdateProductInput = {
@@ -14,4 +15,5 @@ export type TUpdateProductInput = {
   purchasePrice: number;
   rentPrice: number;
   rentalPeriod: "DAY" | "WEEK" | "MONTH";
+  imageUrl?: string;
 };

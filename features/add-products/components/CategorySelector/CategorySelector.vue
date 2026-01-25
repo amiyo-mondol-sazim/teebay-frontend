@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { AVAILABLE_CATEGORIES } from "~/common/utils/constants";
 import { MAX_CATEGORIES } from "./CategorySelector.constants";
 import {
   isCategoryDisabled,
