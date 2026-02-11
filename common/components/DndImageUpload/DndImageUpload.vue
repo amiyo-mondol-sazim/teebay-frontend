@@ -29,9 +29,15 @@ const fileProps = computed(() => {
     };
   }
   return {
-    url: selectedFile.value.url || (selectedFile.value as { image_url?: string }).image_url || "",
-    name: (selectedFile.value as { image_filename?: string }).image_filename || "Uploaded Image",
-    size: (selectedFile.value as { image_byte_size?: number }).image_byte_size || 0,
+    url:
+      selectedFile.value.url ||
+      (selectedFile.value as { image_url?: string }).image_url ||
+      "",
+    name:
+      (selectedFile.value as { image_filename?: string }).image_filename ||
+      "Uploaded Image",
+    size:
+      (selectedFile.value as { image_byte_size?: number }).image_byte_size || 0,
   };
 });
 
@@ -142,7 +148,7 @@ function handleFileInputChange(e: Event) {
       </div>
       <div>
         <p class="text-sm font-semibold">Upload Image</p>
-        <p class="mt-1 text-xs text-gray-100">Drag and drop image to upload</p>
+        <p class="mt-1 text-xs text-gray-900">Drag and drop image to upload</p>
       </div>
     </div>
   </div>

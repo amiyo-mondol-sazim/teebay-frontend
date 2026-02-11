@@ -33,8 +33,7 @@ const selectedFilter = computed({
           'hover:shadow-md click-active',
           selectedFilter === filter.value
             ? 'border-primary bg-primary text-primary-foreground shadow-md shadow-primary/20'
-            : 'border-border bg-card text-foreground/70 hover:text-foreground',
-          filter.color,
+            : ['border-border bg-card text-foreground/70 hover:text-foreground', filter.color],
         ]"
         @click="selectedFilter = filter.value"
       >

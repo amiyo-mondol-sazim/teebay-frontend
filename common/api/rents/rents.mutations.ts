@@ -11,7 +11,7 @@ export const rentProduct = async (input: {
 }) => {
   const { data, error } = await client.POST("/api/v1/rents", { body: input });
   if (error || !data) {
-    throw new Error(error?.message || "Failed to rent product");
+    throw { message: error?.message || "Failed to rent product", statusCode: error?.statusCode };
   }
   return data;
 };
@@ -27,8 +27,8 @@ export const useCreateRentMutation = () => {
       });
       toast.success("Product rented successfully!");
     },
-    onError: () => {
-      toast.error("Failed to rent product. Please try again.");
+    onError: (error: any) => {
+      toast.error(error.message || "Failed to rent product. Please try again.");
     },
   });
 };
