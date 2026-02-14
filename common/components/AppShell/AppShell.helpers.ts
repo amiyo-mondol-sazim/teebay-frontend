@@ -26,4 +26,9 @@ export const NAV_ITEMS: TAppNavItem[] = [
     path: PAGE_URLS.RENTS,
     icon: "ph:swap",
   },
+  {
+    name: "Conversations",
+    path: PAGE_URLS.CONVERSATIONS,
+    icon: "ph:chat-circle-dots",
+  },
 ];

@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useCreateConversationMutation } from "~/common/api/conversations/conversations.mutations";
+import { PAGE_URLS } from "~/common/utils/constants";
 
 interface Props {
   productId: number;
@@ -16,6 +18,7 @@ const {
 const buyMutation = useBuyProductMutation();
 const rentMutation = useCreateRentMutation();
 const incrementViewsMutation = useIncrementViewsMutation();
+const conversationMutation = useCreateConversationMutation();
 
 onMounted(() => {
   if (props.productId) {
@@ -25,11 +28,12 @@ onMounted(() => {
 
 const { data: user } = useUserQuery();
 const isOwnProduct = computed(
-  () => product.value?.owner?.id === user.value?.id
+  () => product.value?.owner?.id === user.value?.id,
 );
 
 const isBuying = computed(() => buyMutation.isPending.value);
 const isRenting = computed(() => rentMutation.isPending.value);
+const isMessaging = computed(() => conversationMutation.isPending.value);
 
 const buyModalOpen = ref(false);
 const rentModalOpen = ref(false);
@@ -40,6 +44,23 @@ const handleBuy = () => {
 
 const handleRent = () => {
   rentModalOpen.value = true;
+};
+
+const handleMessageOwner = () => {
+  if (!product.value?.owner?.id) {
+    return;
+  }
+  conversationMutation.mutate(
+    {
+      participantId: product.value.owner.id,
+      productId: product.value.id,
+    },
+    {
+      onSuccess: (data) => {
+        navigateTo(`${PAGE_URLS.CONVERSATIONS}?conversationId=${data.id}`);
+      },
+    },
+  );
 };
 
 const handleBuyConfirm = () => {
@@ -88,8 +109,10 @@ const handleRentCancel = () => {
       :product="product"
       :on-buy="handleBuy"
       :on-rent="handleRent"
+      :on-message="handleMessageOwner"
       :is-buying="isBuying"
       :is-renting="isRenting"
+      :is-messaging="isMessaging"
       :is-own-product="isOwnProduct"
     />
 

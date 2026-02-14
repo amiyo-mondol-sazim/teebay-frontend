@@ -5,14 +5,17 @@ interface Props {
   product: TProductResponse;
   onBuy: () => void;
   onRent: () => void;
+  onMessage: () => void;
   isBuying?: boolean;
   isRenting?: boolean;
+  isMessaging?: boolean;
   isOwnProduct?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   isBuying: false,
   isRenting: false,
+  isMessaging: false,
   isOwnProduct: false,
 });
 </script>
@@ -79,8 +82,10 @@ const props = withDefaults(defineProps<Props>(), {
           <ProductActionButtons
             :on-buy="onBuy"
             :on-rent="onRent"
+            :on-message="onMessage"
             :is-buying="props.isBuying"
             :is-renting="props.isRenting"
+            :is-messaging="props.isMessaging"
             :is-own-product="props.isOwnProduct"
             :product-status="product.status as EProductStatus"
           />

@@ -5,6 +5,7 @@ export const PAGE_URLS = {
   ADD_PRODUCTS: "/add-product",
   SALES: "/sales",
   RENTS: "/rents",
+  CONVERSATIONS: "/conversations",
 };
 
 export const DEFAULT_OFFER_IMAGE_URL = "/images/offer-placeholder.svg";
