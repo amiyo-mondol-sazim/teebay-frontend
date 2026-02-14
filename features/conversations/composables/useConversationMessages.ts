@@ -4,7 +4,8 @@ import type { components } from "~/common/typedefs/api-schema";
 
 type MessageResponse = components["schemas"]["MessageResponse"];
 
-export function useConversationMessages(conversationId: number) {
+export function useConversationMessages(conversationId: Ref<number | null>) {
+  console.log(conversationId.value);
   const messages = ref<MessageResponse[]>([]);
   const ws = ref<WebSocket | null>(null);
   const config = useRuntimeConfig();
@@ -12,16 +13,18 @@ export function useConversationMessages(conversationId: number) {
   const sendMessageMutation = useSendMessage();
 
   const sendMessage = (content: string) => {
+    console.log("Sending message", conversationId.value);
     sendMessageMutation.mutate({
-      conversationId,
+      conversationId: conversationId.value ?? 0,
       content,
     });
   };
 
   const connectWebSocket = () => {
     if (ws.value?.readyState === WebSocket.OPEN) return;
+    if (!conversationId.value) return;
 
-    const wsUrl = `${config.public.wsUrl}/conversations/${conversationId}`;
+    const wsUrl = `${config.public.wsUrl}/conversations/${conversationId.value}`;
     ws.value = new WebSocket(wsUrl);
 
     ws.value.addEventListener("message", (event) => {
@@ -33,7 +36,7 @@ export function useConversationMessages(conversationId: number) {
   };
 
   watch(
-    () => conversationId,
+    () => conversationId.value,
     (newId) => {
       if (ws.value) {
         ws.value.close();

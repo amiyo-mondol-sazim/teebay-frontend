@@ -4,7 +4,7 @@ import ConversationMessages from "~/features/conversations/components/Conversati
 </script>
 
 <template>
-  <div class="flex h-[calc(100vh-4rem)]">
+  <div class="flex min-h-screen">
     <div class="w-full md:w-[20%] border-r">
       <ConversationList />
     </div>

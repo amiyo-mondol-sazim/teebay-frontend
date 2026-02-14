@@ -1,4 +1,4 @@
-import { ref, onMounted, onUnmounted } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 
 const checkMobile = () => {
   if (typeof window !== "undefined") {
@@ -7,11 +7,11 @@ const checkMobile = () => {
   return false;
 };
 
-export const useConversationsState = () => {
-  const activeConversationId = ref<number | null>(null);
-  const isMobileListVisible = ref(true);
-  const isMobile = ref(false);
+export const activeConversationId = ref<number | null>(null);
+export const isMobileListVisible = ref(true);
+export const isMobile = ref(false);
 
+export const useConversationsState = () => {
   const handleResize = () => {
     isMobile.value = checkMobile();
   };

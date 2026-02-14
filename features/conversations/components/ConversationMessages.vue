@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { nextTick, ref, watch } from "vue";
+import { computed, nextTick, ref, watch } from "vue";
+import { useUserQuery } from "~/common/api/auth/auth.queries";
 import { useConversationMessages } from "~/features/conversations/composables/useConversationMessages";
 import { useConversationsState } from "~/features/conversations/composables/useConversationsState";
 import MessageBubble from "./MessageBubble.vue";
@@ -10,12 +11,18 @@ const {
   data: messages,
   sendMessage,
   isLoading,
-} = useConversationMessages(activeConversationId.value ?? 0);
+} = useConversationMessages(activeConversationId);
 const messageContent = ref("");
 const scrollArea = ref<HTMLElement>();
-const currentUserEmail = "user@example.com";
+
+const { data: user } = useUserQuery();
+const currentUserEmail = computed(() => user.value?.email);
 
 const handleSend = () => {
+  console.log(
+    "Sending message Conversation Messages",
+    activeConversationId.value,
+  );
   if (messageContent.value.trim()) {
     sendMessage(messageContent.value);
     messageContent.value = "";
@@ -63,7 +70,7 @@ watch(
       />
     </div>
     <div class="p-4 border-t">
-      <div class="flex gap-2">
+      <div class="flex gap-2 items-center">
         <UiTextarea
           v-model="messageContent"
           placeholder="Type a message..."
@@ -71,7 +78,7 @@ watch(
           @keydown.enter.prevent="handleSend"
         />
         <UiButton size="icon" @click="handleSend">
-          <Icon name="ph:paper-plane-right" />
+          <Icon name="ph:paper-plane" />
         </UiButton>
       </div>
     </div>
