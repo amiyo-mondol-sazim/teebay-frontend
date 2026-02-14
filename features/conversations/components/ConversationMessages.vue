@@ -52,6 +52,22 @@ watch(
       Select a conversation to start messaging
     </p>
   </div>
+  <div
+    v-else-if="props.conversationId && !isLoading && (!messages || !messages.data || messages.data.length === 0)"
+    class="flex flex-col items-center justify-center h-full p-8 text-center"
+  >
+    <Icon
+      name="ph:warning-circle"
+      class="w-16 h-16 text-destructive mb-4"
+    />
+    <h3 class="text-lg font-semibold mb-2">Conversation not found</h3>
+    <p class="text-muted-foreground mb-6 max-w-md">
+      This conversation doesn't exist or you don't have access to it.
+    </p>
+    <UiButton as="NuxtLink" to="/conversations">
+      Back to conversations
+    </UiButton>
+  </div>
   <div v-else class="flex flex-col h-full">
     <div ref="scrollArea" class="flex-1 overflow-y-auto p-4 space-y-4">
       <div v-if="isLoading" class="flex justify-center p-4">
