@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 import ConversationsContainer from "~/features/conversations/containers/ConversationsContainer.vue";
-import { useConversationsListQuery } from "~/common/api/conversations/conversations.queries";
 import { useQueryClient } from "@tanstack/vue-query";
 
 definePageMeta({
