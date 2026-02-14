@@ -1,17 +1,22 @@
 <script setup lang="ts">
-import { computed, nextTick, ref, watch } from "vue";
+import { computed, nextTick, ref, toRef, watch } from "vue";
 import { useUserQuery } from "~/common/api/auth/auth.queries";
 import { useConversationMessages } from "~/features/conversations/composables/useConversationMessages";
-import { useConversationsState } from "~/features/conversations/composables/useConversationsState";
 import MessageBubble from "./MessageBubble.vue";
 
-const { activeConversationId, handleShowList } = useConversationsState();
+interface Props {
+  conversationId: number | null;
+}
+
+const props = defineProps<Props>();
+
+const conversationIdRef = toRef(props, "conversationId");
 
 const {
   data: messages,
   sendMessage,
   isLoading,
-} = useConversationMessages(activeConversationId);
+} = useConversationMessages(conversationIdRef);
 const messageContent = ref("");
 const scrollArea = ref<HTMLElement>();
 
@@ -19,10 +24,6 @@ const { data: user } = useUserQuery();
 const currentUserEmail = computed(() => user.value?.email);
 
 const handleSend = () => {
-  console.log(
-    "Sending message Conversation Messages",
-    activeConversationId.value,
-  );
   if (messageContent.value.trim()) {
     sendMessage(messageContent.value);
     messageContent.value = "";
@@ -44,7 +45,7 @@ watch(
 
 <template>
   <div
-    v-if="!activeConversationId"
+    v-if="!props.conversationId"
     class="flex items-center justify-center h-full p-8 text-center"
   >
     <p class="text-muted-foreground">
@@ -52,18 +53,12 @@ watch(
     </p>
   </div>
   <div v-else class="flex flex-col h-full">
-    <div class="p-4 border-b md:hidden">
-      <UiButton variant="ghost" size="sm" @click="handleShowList">
-        <Icon name="ph:arrow-left" class="mr-2" />
-        Back
-      </UiButton>
-    </div>
     <div ref="scrollArea" class="flex-1 overflow-y-auto p-4 space-y-4">
       <div v-if="isLoading" class="flex justify-center p-4">
         <Icon name="ph:spinner" class="animate-spin h-6 w-6" />
       </div>
       <MessageBubble
-        v-for="message in messages"
+        v-for="message in messages?.data"
         :key="message.id"
         :message="message"
         :is-from-current-user="message.sender.email === currentUserEmail"
