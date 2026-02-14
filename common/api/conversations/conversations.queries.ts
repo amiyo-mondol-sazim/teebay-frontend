@@ -17,3 +17,29 @@ export function useConversationsListQuery() {
     queryFn: getConversations,
   });
 }
+
+async function getMessages(conversationId: number) {
+  const { data, error } = await client.GET(
+    "/api/v1/conversations/{conversationId}/messages",
+    {
+      params: {
+        path: {
+          conversationId: conversationId,
+        },
+      },
+    },
+  );
+
+  if (error || !data) {
+    toast.error("Failed to fetch messages");
+    throw error;
+  }
+  return data;
+}
+
+export function useMessagesListQuery(conversationId: number) {
+  return useQuery({
+    queryKey: conversationKeys.messages(conversationId.toString()),
+    queryFn: () => getMessages(conversationId),
+  });
+}

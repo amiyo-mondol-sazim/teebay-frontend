@@ -1,11 +1,9 @@
 import { computed, onUnmounted, ref, watch } from "vue";
-import { useSendMessage } from "~/common/api/conversations/conversations.mutations";
 import type { components } from "~/common/typedefs/api-schema";
 
 type MessageResponse = components["schemas"]["MessageResponse"];
 
 export function useConversationMessages(conversationId: Ref<number | null>) {
-  console.log(conversationId.value);
   const messages = ref<MessageResponse[]>([]);
   const ws = ref<WebSocket | null>(null);
   const config = useRuntimeConfig();
@@ -13,7 +11,6 @@ export function useConversationMessages(conversationId: Ref<number | null>) {
   const sendMessageMutation = useSendMessage();
 
   const sendMessage = (content: string) => {
-    console.log("Sending message", conversationId.value);
     sendMessageMutation.mutate({
       conversationId: conversationId.value ?? 0,
       content,
