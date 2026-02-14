@@ -1,18 +1,32 @@
 import { computed, onUnmounted, ref, watch } from "vue";
+import { useQueryClient } from "@tanstack/vue-query";
 import type { components } from "~/common/typedefs/api-schema";
+
+import { conversationKeys } from "~/common/api/conversations/conversations.keys";
+import { useMessagesListQuery } from "~/common/api/conversations/conversations.queries";
 
 type MessageResponse = components["schemas"]["MessageResponse"];
 
 export function useConversationMessages(conversationId: Ref<number | null>) {
-  const messages = ref<MessageResponse[]>([]);
+  const queryClient = useQueryClient();
   const ws = ref<WebSocket | null>(null);
   const config = useRuntimeConfig();
 
+  const conversationIdValue = computed(() => conversationId.value ?? 0);
+  const isConversationIdValid = computed(
+    () => conversationId.value !== null && conversationId.value !== 0,
+  );
+
+  const messagesQuery = useMessagesListQuery(
+    conversationIdValue,
+    isConversationIdValid,
+  );
   const sendMessageMutation = useSendMessage();
 
   const sendMessage = (content: string) => {
+    if (!conversationId.value) return;
     sendMessageMutation.mutate({
-      conversationId: conversationId.value ?? 0,
+      conversationId: conversationId.value,
       content,
     });
   };
@@ -26,8 +40,13 @@ export function useConversationMessages(conversationId: Ref<number | null>) {
 
     ws.value.addEventListener("message", (event) => {
       const data = JSON.parse(event.data);
-      if (data.type === "newMessage") {
-        messages.value.push(data.message);
+      if (data.type === "newMessage" && conversationId.value) {
+        queryClient.setQueryData(
+          conversationKeys.messages(conversationId.value.toString()),
+          (old: MessageResponse[] | undefined) => {
+            return old ? [...old, data.message] : [data.message];
+          }
+        );
       }
     });
   };
@@ -39,7 +58,6 @@ export function useConversationMessages(conversationId: Ref<number | null>) {
         ws.value.close();
         ws.value = null;
       }
-      messages.value = [];
       if (newId) {
         connectWebSocket();
       }
@@ -52,8 +70,10 @@ export function useConversationMessages(conversationId: Ref<number | null>) {
   });
 
   return {
-    data: computed(() => messages.value),
+    data: messagesQuery.data,
     sendMessage,
-    isLoading: computed(() => sendMessageMutation.isPending.value),
+    isLoading: messagesQuery.isLoading,
+    isSending: sendMessageMutation.isPending,
+    error: messagesQuery.error,
   };
 }

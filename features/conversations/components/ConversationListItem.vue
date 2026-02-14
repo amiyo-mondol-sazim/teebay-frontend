@@ -8,8 +8,13 @@ interface Props {
 
 const props = defineProps<Props>();
 
+const { data: user } = useUserQuery();
+
 const participantName = computed(() => {
-  return props.conversation.participant2?.email ?? "Unknown";
+  if (props.conversation.participant1.email == user.value?.email) {
+    return props.conversation.participant2.email.split("@")[0];
+  }
+  return props.conversation.participant1.email.split("@")[0];
 });
 
 const productTitle = computed(() => {
