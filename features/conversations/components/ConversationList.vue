@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { useConversationsListQuery } from "~/common/api/conversations/conversations.queries";
-import { useConversationsState } from "~/features/conversations/composables/useConversationsState";
 import ConversationListItem from "./ConversationListItem.vue";
 
-const { activeConversationId, handleSelectConversation } =
-  useConversationsState();
+const router = useRouter();
+
+interface Props {
+  conversationId: number | null;
+}
+
+const props = defineProps<Props>();
 
 const { data: conversations, isLoading, error } = useConversationsListQuery();
 
@@ -29,8 +33,8 @@ const conversationList = computed(() => {
         v-for="conversation in conversationList"
         :key="conversation.id"
         :conversation="conversation"
-        :is-active="conversation.id === activeConversationId"
-        @click="handleSelectConversation(conversation.id)"
+        :is-active="conversation.id === props.conversationId"
+        @click="router.push('/conversations?conversationId=' + conversation.id)"
       />
     </div>
   </div>
