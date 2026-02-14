@@ -836,6 +836,7 @@ paths:
                 errors: []
       security:
         - bearer: []
+      summary: Get all products with filters
       tags:
         - Products
     post:
@@ -896,6 +897,7 @@ paths:
                 errors: []
       security:
         - bearer: []
+      summary: Create a new product
       tags:
         - Products
   /api/v1/products/owner/{ownerId}:
@@ -905,6 +907,7 @@ paths:
         - name: ownerId
           required: true
           in: path
+          description: Owner user ID
           schema:
             type: number
         - name: page
@@ -966,6 +969,7 @@ paths:
                 errors: []
       security:
         - bearer: []
+      summary: Get products by owner ID
       tags:
         - Products
   /api/v1/products/{id}:
@@ -975,6 +979,7 @@ paths:
         - name: id
           required: true
           in: path
+          description: Product ID
           schema:
             type: number
       responses:
@@ -1026,6 +1031,7 @@ paths:
                 errors: []
       security:
         - bearer: []
+      summary: Get a product by ID
       tags:
         - Products
     patch:
@@ -1034,6 +1040,7 @@ paths:
         - name: id
           required: true
           in: path
+          description: Product ID
           schema:
             type: number
       requestBody:
@@ -1091,6 +1098,7 @@ paths:
                 errors: []
       security:
         - bearer: []
+      summary: Update a product
       tags:
         - Products
     delete:
@@ -1099,6 +1107,7 @@ paths:
         - name: id
           required: true
           in: path
+          description: Product ID
           schema:
             type: number
       responses:
@@ -1146,6 +1155,7 @@ paths:
                 errors: []
       security:
         - bearer: []
+      summary: Delete a product
       tags:
         - Products
   /api/v1/products/{id}/views:
@@ -1155,6 +1165,7 @@ paths:
         - name: id
           required: true
           in: path
+          description: Product ID
           schema:
             type: number
       responses:
@@ -1206,6 +1217,7 @@ paths:
                 errors: []
       security:
         - bearer: []
+      summary: Increment product view count
       tags:
         - Products
   /api/v1/sales/buy:
@@ -1409,6 +1421,244 @@ paths:
         - bearer: []
       tags:
         - Sales
+  /api/v1/notifications:
+    get:
+      operationId: getNotifications
+      parameters:
+        - name: page
+          required: false
+          in: query
+          description: Page number
+          schema:
+            minimum: 1
+            default: 1
+            type: number
+        - name: limit
+          required: false
+          in: query
+          description: Items per page
+          schema:
+            minimum: 1
+            maximum: 100
+            default: 20
+            type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationsListResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      summary: Get all notifications for current user
+      tags:
+        - Notifications
+  /api/v1/notifications/unread-count:
+    get:
+      operationId: getUnreadCount
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnreadCountResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      summary: Get count of unread notifications
+      tags:
+        - Notifications
+  /api/v1/notifications/{id}/read:
+    patch:
+      operationId: markAsRead
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      summary: Mark a single notification as read
+      tags:
+        - Notifications
+  /api/v1/notifications/read-all:
+    patch:
+      operationId: markAllAsRead
+      parameters: []
+      responses:
+        '200':
+          description: ''
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      summary: Mark all notifications as read
+      tags:
+        - Notifications
   /api/v1/rents:
     post:
       operationId: createRent
@@ -2304,6 +2554,339 @@ paths:
                       additionalProperties: true
       tags:
         - Health
+  /api/v1/conversations:
+    post:
+      operationId: createConversation
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateConversationDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      summary: Create a new conversation
+      tags:
+        - Conversations
+    get:
+      operationId: getConversations
+      parameters:
+        - name: page
+          required: false
+          in: query
+          schema:
+            minimum: 1
+            default: 1
+            type: number
+        - name: limit
+          required: false
+          in: query
+          schema:
+            minimum: 1
+            maximum: 100
+            default: 20
+            type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationsListResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      summary: Get all conversations for current user
+      tags:
+        - Conversations
+  /api/v1/conversations/{id}:
+    get:
+      operationId: getConversation
+      parameters:
+        - name: id
+          required: true
+          in: path
+          description: Conversation ID
+          schema:
+            type: number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConversationResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      summary: Get a conversation by ID
+      tags:
+        - Conversations
+  /api/v1/conversations/{conversationId}/messages:
+    post:
+      operationId: createMessage
+      parameters:
+        - name: conversationId
+          required: true
+          in: path
+          description: Conversation ID
+          schema:
+            type: number
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMessageDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      summary: Send a message in a conversation
+      tags:
+        - Messages
+    get:
+      operationId: getMessages
+      parameters:
+        - name: conversationId
+          required: true
+          in: path
+          description: Conversation ID
+          schema:
+            type: number
+        - name: page
+          required: false
+          in: query
+          schema:
+            $ref: '#/components/schemas/Object'
+        - name: limit
+          required: false
+          in: query
+          schema:
+            $ref: '#/components/schemas/Object'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessagesListResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 400
+                message: Bad Request
+                errors: []
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 401
+                message: Unauthorized
+                errors: []
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 403
+                message: Forbidden
+                errors: []
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponseDto'
+              example:
+                statusCode: 500
+                message: Internal Server Error
+                errors: []
+      security:
+        - bearer: []
+      summary: Get all messages in a conversation
+      tags:
+        - Messages
 info:
   title: Teebay API
   description: The Backend API for Teebay
@@ -2378,6 +2961,7 @@ components:
       enum:
         - SUPER_USER
         - ADMIN
+        - USER
     TokenizedUser:
       type: object
       properties:
@@ -2946,6 +3530,55 @@ components:
       required:
         - data
         - meta
+    NotificationResponse:
+      type: object
+      properties:
+        id:
+          type: number
+        type:
+          enum:
+            - MESSAGE
+            - RENT_REQUEST
+            - SALE_REQUEST
+          type: string
+        referenceId:
+          type: number
+        title:
+          type: string
+        body:
+          type: string
+        readAt:
+          format: date-time
+          type: string
+          nullable: true
+        createdAt:
+          format: date-time
+          type: string
+      required:
+        - id
+        - type
+        - title
+        - body
+        - createdAt
+    NotificationsListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/NotificationResponse'
+        meta:
+          $ref: '#/components/schemas/PaginationMetadataResponse'
+      required:
+        - data
+        - meta
+    UnreadCountResponse:
+      type: object
+      properties:
+        count:
+          type: number
+      required:
+        - count
     CreateRentDto:
       type: object
       properties:
@@ -3104,6 +3737,122 @@ components:
       required:
         - currentPassword
         - newPassword
+    CreateConversationDto:
+      type: object
+      properties:
+        participantId:
+          type: number
+          example: 2
+        productId:
+          type: number
+          example: 1
+      required:
+        - participantId
+    UserProfile:
+      type: object
+      properties: {}
+    ConversationParticipantResponse:
+      type: object
+      properties:
+        id:
+          type: number
+        email:
+          type: string
+        userProfile:
+          $ref: '#/components/schemas/UserProfile'
+      required:
+        - id
+        - email
+    ConversationResponse:
+      type: object
+      properties:
+        id:
+          type: number
+        participant1:
+          $ref: '#/components/schemas/ConversationParticipantResponse'
+        participant2:
+          $ref: '#/components/schemas/ConversationParticipantResponse'
+        product:
+          $ref: '#/components/schemas/ProductResponse'
+        lastMessageAt:
+          format: date-time
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+        - id
+        - participant1
+        - participant2
+        - createdAt
+    ConversationsListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConversationResponse'
+        meta:
+          $ref: '#/components/schemas/PaginationMetadataResponse'
+      required:
+        - data
+        - meta
+    CreateMessageDto:
+      type: object
+      properties:
+        content:
+          type: string
+          maxLength: 1000
+          example: Hello, is this still available?
+      required:
+        - content
+    MessageSenderResponse:
+      type: object
+      properties:
+        id:
+          type: number
+        email:
+          type: string
+        userProfile:
+          $ref: '#/components/schemas/UserProfile'
+      required:
+        - id
+        - email
+    MessageResponse:
+      type: object
+      properties:
+        id:
+          type: number
+        conversationId:
+          type: number
+        sender:
+          $ref: '#/components/schemas/MessageSenderResponse'
+        content:
+          type: string
+        readAt:
+          format: date-time
+          type: string
+        createdAt:
+          format: date-time
+          type: string
+      required:
+        - id
+        - conversationId
+        - sender
+        - content
+        - createdAt
+    MessagesListResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageResponse'
+        meta:
+          $ref: '#/components/schemas/PaginationMetadataResponse'
+      required:
+        - data
+        - meta
     ErrorResponseDto:
       type: object
       properties:
