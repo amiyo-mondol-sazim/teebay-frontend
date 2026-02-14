@@ -1,21 +1,15 @@
 <script setup lang="ts">
-import { computed } from "vue";
-import type { components } from "~/common/typedefs/api-schema";
-import { useConversationsList } from "~/features/conversations/composables/useConversationsList";
+import { useConversationsListQuery } from "~/common/api/conversations/conversations.queries";
 import { useConversationsState } from "~/features/conversations/composables/useConversationsState";
 import ConversationListItem from "./ConversationListItem.vue";
-
-type ConversationResponse = components["schemas"]["ConversationResponse"];
 
 const { activeConversationId, handleSelectConversation } =
   useConversationsState();
 
-const { data: conversations, isLoading, error } = useConversationsList();
+const { data: conversations, isLoading, error } = useConversationsListQuery();
 
 const conversationList = computed(() => {
-  const data = conversations.value;
-  if (!data) return [];
-  return (data.data ?? []) as unknown as ConversationResponse[];
+  return conversations.value?.data ?? [];
 });
 </script>
 

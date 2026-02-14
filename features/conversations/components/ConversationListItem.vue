@@ -1,18 +1,15 @@
 <script setup lang="ts">
 import { computed } from "vue";
-import type { components } from "~/common/typedefs/api-schema";
-
-type ConversationResponse = components["schemas"]["ConversationResponse"];
 
 interface Props {
-  conversation: ConversationResponse;
+  conversation: components["schemas"]["ConversationResponse"];
   isActive: boolean;
 }
 
 const props = defineProps<Props>();
 
 const participantName = computed(() => {
-  return props.conversation.participant1?.email ?? "Unknown";
+  return props.conversation.participant2?.email ?? "Unknown";
 });
 
 const productTitle = computed(() => {

@@ -22,10 +22,6 @@ const props = withDefaults(defineProps<Props>(), {
 const isDisabled = computed(() =>
   isProductSoldOrOwned(props.productStatus, props.isOwnProduct),
 );
-
-const showMessageButton = computed(
-  () => !props.isOwnProduct && props.productStatus !== EProductStatus.SOLD,
-);
 </script>
 
 <template>
@@ -52,7 +48,6 @@ const showMessageButton = computed(
     </UiButton>
 
     <UiButton
-      v-if="showMessageButton"
       variant="outline"
       :loading="isMessaging"
       class="flex-1 transition-transform duration-200 hover:scale-105"

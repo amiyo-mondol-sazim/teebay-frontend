@@ -5,10 +5,10 @@ import ConversationMessages from "~/features/conversations/components/Conversati
 
 <template>
   <div class="flex h-[calc(100vh-4rem)]">
-    <div class="w-full md:w-[15%] border-r">
+    <div class="w-full md:w-[20%] border-r">
       <ConversationList />
     </div>
-    <div class="w-full md:w-[85%]">
+    <div class="w-full md:w-[80%]">
       <ConversationMessages />
     </div>
   </div>
