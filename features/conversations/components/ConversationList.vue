@@ -18,24 +18,36 @@ const conversationList = computed(() => {
 </script>
 
 <template>
-  <div class="h-full overflow-y-auto border-r">
-    <ConversationsEmptyState
-      v-if="!isLoading && conversationList.length === 0"
-    />
-    <div v-else-if="isLoading" class="flex justify-center p-4">
-      <Icon name="ph:spinner" class="animate-spin h-6 w-6" />
+  <div class="h-full flex flex-col overflow-hidden border-r">
+    <div
+      class="flex items-center justify-between border-b border-border/50 px-4 py-5"
+    >
+      <h2 class="text-lg font-semibold">Messages</h2>
+      <button
+        class="flex h-8 w-8 items-center justify-center rounded-full hover:bg-muted"
+      ></button>
     </div>
-    <div v-else-if="error" class="p-4 text-destructive">
-      Error loading conversations
-    </div>
-    <div v-else class="p-2 space-y-2">
-      <ConversationListItem
-        v-for="conversation in conversationList"
-        :key="conversation.id"
-        :conversation="conversation"
-        :is-active="conversation.id === props.conversationId"
-        @click="router.push('/conversations?conversationId=' + conversation.id)"
+    <div class="flex-1 overflow-y-auto p-2 space-y-2">
+      <ConversationsEmptyState
+        v-if="!isLoading && conversationList.length === 0"
       />
+      <div v-else-if="isLoading" class="flex justify-center p-4">
+        <Icon name="ph:spinner" class="animate-spin h-6 w-6" />
+      </div>
+      <div v-else-if="error" class="p-4 text-destructive">
+        Error loading conversations
+      </div>
+      <template v-else>
+        <ConversationListItem
+          v-for="conversation in conversationList"
+          :key="conversation.id"
+          :conversation="conversation"
+          :is-active="conversation.id === props.conversationId"
+          @click="
+            router.push('/conversations?conversationId=' + conversation.id)
+          "
+        />
+      </template>
     </div>
   </div>
 </template>

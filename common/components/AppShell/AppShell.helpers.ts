@@ -31,4 +31,9 @@ export const NAV_ITEMS: TAppNavItem[] = [
     path: PAGE_URLS.CONVERSATIONS,
     icon: "ph:chat-circle-dots",
   },
+  {
+    name: "Notifications",
+    path: PAGE_URLS.NOTIFICATIONS,
+    icon: "ph:bell",
+  },
 ];
