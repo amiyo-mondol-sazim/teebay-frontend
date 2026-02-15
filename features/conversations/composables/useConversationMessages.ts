@@ -1,15 +1,18 @@
-import { computed, onUnmounted, ref, watch } from "vue";
 import { useQueryClient } from "@tanstack/vue-query";
+import { io, type Socket } from "socket.io-client";
+import { computed, onUnmounted, ref, type Ref, watch } from "vue";
 import type { components } from "~/common/typedefs/api-schema";
 
 import { conversationKeys } from "~/common/api/conversations/conversations.keys";
 import { useMessagesListQuery } from "~/common/api/conversations/conversations.queries";
+import { useSendMessage } from "~/common/api/conversations/conversations.mutations";
+import { getAccessToken } from "~/common/utils/token";
 
 type MessageResponse = components["schemas"]["MessageResponse"];
 
 export function useConversationMessages(conversationId: Ref<number | null>) {
   const queryClient = useQueryClient();
-  const ws = ref<WebSocket | null>(null);
+  const socket = ref<Socket | null>(null);
   const config = useRuntimeConfig();
 
   const conversationIdValue = computed(() => conversationId.value ?? 0);
@@ -31,42 +34,83 @@ export function useConversationMessages(conversationId: Ref<number | null>) {
     });
   };
 
-  const connectWebSocket = () => {
-    if (ws.value?.readyState === WebSocket.OPEN) return;
+  const connectSocket = () => {
+    const token = getAccessToken();
+    if (!token) return;
+    if (socket.value?.connected) return;
     if (!conversationId.value) return;
 
-    const wsUrl = `${config.public.wsUrl}/conversations/${conversationId.value}`;
-    ws.value = new WebSocket(wsUrl);
-
-    ws.value.addEventListener("message", (event) => {
-      const data = JSON.parse(event.data);
-      if (data.type === "newMessage" && conversationId.value) {
-        queryClient.setQueryData(
-          conversationKeys.messages(conversationId.value.toString()),
-          (old: MessageResponse[] | undefined) => {
-            return old ? [...old, data.message] : [data.message];
-          }
-        );
-      }
+    socket.value = io(`${config.public.wsUrl}/chat`, {
+      auth: { token },
+      transports: ["websocket", "polling"],
     });
+
+    socket.value.on("connect", () => {
+      socket.value?.emit("join", { conversations: [conversationId.value] });
+    });
+
+    socket.value.on("connect_error", (error) => {
+      console.error("Socket connection error:", error.message);
+    });
+
+    socket.value.on("disconnect", (reason) => {
+      console.warn("Socket disconnected:", reason);
+    });
+
+    socket.value.on("newMessage", (data: MessageResponse) => {
+      if (!conversationId.value) return;
+      const transformedMessage = {
+        ...data,
+        sender: { id: data.sender.id, email: data.sender.email },
+        readAt: null,
+      };
+
+      queryClient.setQueryData(
+        conversationKeys.messages(conversationId.value.toString()),
+        (old: unknown) => {
+          const currentData = old as { data?: MessageResponse[] } | undefined;
+          const messages = Array.isArray(currentData?.data)
+            ? currentData.data
+            : Array.isArray(currentData)
+              ? currentData
+              : [];
+
+          const exists = messages.some((m) => m.id === transformedMessage.id);
+          if (exists) return old;
+          return {
+            ...currentData,
+            data: [...messages, transformedMessage] as MessageResponse[],
+          };
+        },
+      );
+    });
+  };
+
+  const disconnectSocket = () => {
+    if (socket.value) {
+      socket.value.disconnect();
+      socket.value = null;
+    }
   };
 
   watch(
     () => conversationId.value,
-    (newId) => {
-      if (ws.value) {
-        ws.value.close();
-        ws.value = null;
+    (newId, oldId) => {
+      if (oldId && socket.value?.connected) {
+        socket.value.emit("leave", { conversations: [oldId] });
       }
       if (newId) {
-        connectWebSocket();
+        disconnectSocket();
+        connectSocket();
+      } else {
+        disconnectSocket();
       }
     },
     { immediate: true },
   );
 
   onUnmounted(() => {
-    ws.value?.close();
+    disconnectSocket();
   });
 
   return {

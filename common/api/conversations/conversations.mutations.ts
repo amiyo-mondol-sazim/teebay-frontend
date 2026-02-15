@@ -24,7 +24,6 @@ export function useCreateConversationMutation() {
     mutationFn: createConversation,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: conversationKeys.all });
-      toast.success("Conversation created!");
     },
     onError: (error) => {
       toast.error(error?.message || "Failed to create conversation");
@@ -57,7 +56,6 @@ export function useSendMessage() {
       queryClient.invalidateQueries({
         queryKey: conversationKeys.messages(String(variables.conversationId)),
       });
-      toast.success("Message sent!");
     },
     onError: (error) => {
       toast.error(error?.message || "Failed to send message");

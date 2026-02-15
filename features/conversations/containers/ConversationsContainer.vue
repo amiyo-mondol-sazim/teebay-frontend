@@ -10,7 +10,7 @@ const conversationId = computed(() => {
 </script>
 
 <template>
-  <div class="flex min-h-screen">
+  <div class="flex h-screen overflow-hidden">
     <div class="w-full md:w-[20%] border-r">
       <ConversationList :conversation-id="conversationId" />
     </div>

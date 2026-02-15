@@ -165,11 +165,7 @@ watch(messageContent, () => {
           :key="message.id"
           :message="message"
           :is-from-current-user="message.sender.email === currentUserEmail"
-          :show-avatar="
-            index === 0 ||
-            [...(messages?.data ?? [])].reverse()[index - 1]?.sender.email !==
-              message.sender.email
-          "
+          :show-avatar="user?.email !== message.sender.email"
         />
       </div>
     </div>
