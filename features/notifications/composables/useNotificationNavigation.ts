@@ -15,13 +15,13 @@ export function useNotificationNavigation() {
 
       case ENotificationType.RENT_REQUEST:
         if (notification.referenceId) {
-          return `/rents/${notification.referenceId}`;
+          return `/products/${notification.referenceId}`;
         }
         return PAGE_URLS.RENTS;
 
       case ENotificationType.SALE_REQUEST:
         if (notification.referenceId) {
-          return `/sales/${notification.referenceId}`;
+          return `/products/${notification.referenceId}`;
         }
         return PAGE_URLS.SALES;
 

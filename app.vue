@@ -1,5 +1,8 @@
 <script lang="ts" setup>
+import { useRealtimeNotifications } from "./features/notifications/composables/useRealtimeNotifications";
+
 useAuthBroadcastListener();
+useRealtimeNotifications();
 </script>
 
 <template>
