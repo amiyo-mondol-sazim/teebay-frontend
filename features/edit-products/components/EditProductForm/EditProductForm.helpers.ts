@@ -32,6 +32,7 @@ export const editProductSchema = z.object({
   rentalPeriod: z.enum(["DAY", "WEEK", "MONTH"], {
     required_error: "Select a rental period",
   }),
+  imageUrl: z.string().optional(),
 }) satisfies z.ZodType<TUpdateProductInput>;
 
 export const validationSchema = toTypedSchema(editProductSchema);

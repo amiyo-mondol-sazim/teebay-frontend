@@ -78,10 +78,15 @@ const onNext = handleSubmit(() => {
       </div>
 
       <div class="flex justify-between">
-        <UiButton type="button" variant="outline" @click="emit('back')">
+        <UiButton
+          type="button"
+          variant="outline"
+          @click="emit('back')"
+          class="cursor-pointer"
+        >
           Back
         </UiButton>
-        <UiButton type="submit"> Next </UiButton>
+        <UiButton type="submit" class="cursor-pointer"> Next </UiButton>
       </div>
     </form>
   </div>

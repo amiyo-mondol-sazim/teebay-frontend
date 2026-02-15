@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { NuxtLink } from "#components";
+</script>
+
 <template>
   <div class="flex flex-col items-center justify-center h-full p-8 text-center">
     <Icon
@@ -8,6 +12,8 @@
     <p class="text-muted-foreground mb-6 max-w-md">
       Browse products and start a conversation with owners to get started.
     </p>
-    <UiButton as="NuxtLink" to="/products"> Browse Products </UiButton>
+    <UiButton :as="NuxtLink" to="/" class="cursor-pointer">
+      Browse Products
+    </UiButton>
   </div>
 </template>

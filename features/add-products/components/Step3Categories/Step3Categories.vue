@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { toTypedSchema } from "@vee-validate/zod";
 import { useForm } from "vee-validate";
-import CategorySelector from "../CategorySelector/CategorySelector.vue";
 import { addProductSchema } from "../../add-products.schemas";
+import CategorySelector from "../CategorySelector/CategorySelector.vue";
 
 const props = defineProps<{
   categories: string[];
@@ -54,10 +54,15 @@ const onNext = handleSubmit(() => {
       </div>
 
       <div class="flex justify-between">
-        <UiButton type="button" variant="outline" @click="emit('back')">
+        <UiButton
+          type="button"
+          variant="outline"
+          @click="emit('back')"
+          class="cursor-pointer"
+        >
           Back
         </UiButton>
-        <UiButton type="submit"> Next </UiButton>
+        <UiButton type="submit" class="cursor-pointer"> Next </UiButton>
       </div>
     </form>
   </div>

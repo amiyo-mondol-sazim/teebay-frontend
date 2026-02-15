@@ -5,6 +5,13 @@ import "vue-sonner/style.css";
 <template>
   <div>
     <slot />
-    <UiToaster :rich-colors="true" />
+    <UiToaster
+      position="top-right"
+      :rich-colors="true"
+      :expand="true"
+      :duration="4000"
+      :gap="8"
+      theme="system"
+    />
   </div>
 </template>

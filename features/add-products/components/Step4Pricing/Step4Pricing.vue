@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { toTypedSchema } from "@vee-validate/zod";
 import { useForm } from "vee-validate";
-import { addProductSchema } from "../../add-products.schemas";
 import { rentalPeriodOptions } from "../../add-products.constants";
+import { addProductSchema } from "../../add-products.schemas";
 
 const props = defineProps<{
   purchasePrice: number;
@@ -33,8 +33,8 @@ const schema = toTypedSchema(
 const { handleSubmit, values } = useForm({
   validationSchema: schema,
   initialValues: {
-    purchasePrice: props.purchasePrice,
-    rentPrice: props.rentPrice,
+    purchasePrice: props.purchasePrice || undefined,
+    rentPrice: props.rentPrice || undefined,
     rentalPeriod: props.rentalPeriod as "DAY" | "WEEK" | "MONTH",
   },
 });
@@ -97,10 +97,15 @@ const onSubmit = handleSubmit(() => {
       />
 
       <div class="flex justify-between">
-        <UiButton type="button" variant="outline" @click="emit('back')">
+        <UiButton
+          type="button"
+          variant="outline"
+          @click="emit('back')"
+          class="cursor-pointer"
+        >
           Back
         </UiButton>
-        <UiButton type="submit"> Submit </UiButton>
+        <UiButton type="submit" class="cursor-pointer"> Submit </UiButton>
       </div>
     </form>
   </div>

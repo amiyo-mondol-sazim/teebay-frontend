@@ -4,10 +4,8 @@ import { isProductSoldOrOwned } from "./ProductDetails.helper";
 interface Props {
   onBuy: () => void;
   onRent: () => void;
-  onMessage: () => void;
   isBuying?: boolean;
   isRenting?: boolean;
-  isMessaging?: boolean;
   isOwnProduct?: boolean;
   productStatus: EProductStatus;
 }
@@ -15,7 +13,6 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   isBuying: false,
   isRenting: false,
-  isMessaging: false,
   isOwnProduct: false,
 });
 
@@ -29,7 +26,7 @@ const isDisabled = computed(() =>
     <UiButton
       :disabled="isDisabled || isBuying"
       :loading="isBuying"
-      class="flex-1 transition-transform duration-200 hover:scale-105"
+      class="flex-1 cursor-pointer"
       @click="onBuy"
     >
       <Icon name="heroicons:shopping-cart" class="mr-2 h-4 w-4" />
@@ -40,21 +37,11 @@ const isDisabled = computed(() =>
       variant="outline"
       :disabled="isDisabled || isRenting"
       :loading="isRenting"
-      class="flex-1 transition-transform duration-200 hover:scale-105"
+      class="flex-1 cursor-pointer"
       @click="onRent"
     >
       <Icon name="heroicons:calendar" class="mr-2 h-4 w-4" />
       Rent
-    </UiButton>
-
-    <UiButton
-      variant="outline"
-      :loading="isMessaging"
-      class="flex-1 transition-transform duration-200 hover:scale-105"
-      @click="onMessage"
-    >
-      <Icon name="heroicons:chat-bubble-left" class="mr-2 h-4 w-4" />
-      Message Owner
     </UiButton>
   </div>
 </template>

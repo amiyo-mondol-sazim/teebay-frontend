@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 import { useEditProductForm } from "./EditProductForm.composables";
 import { rentalPeriodOptions } from "./EditProductForm.constants";
+import type { TGetPresignedUrlInput } from "~/common/api/file-uploads/file-uploads.mutations";
+import { handleFileUpdate } from "~/features/add-products/components/Step1ImageUpload/Step1ImageUpload.helpers";
+import type { Step1Emits } from "~/features/add-products/components/Step1ImageUpload/Step1ImageUpload.types";
 
 const props = defineProps<{
   productId: number;
@@ -26,6 +29,11 @@ const form = useEditProductForm();
 
 const categories = ref<string[]>([]);
 
+const getPresignedUrlMutation = useGetPresignedUrlMutation();
+const uploadFileMutation = useUploadFileMutation();
+
+const selectedFile = ref<File | { id: number; image_url?: string } | null>(null);
+
 watch(
   () => product.value,
   (newProduct) => {
@@ -37,8 +45,12 @@ watch(
         purchasePrice: newProduct.purchasePrice,
         rentPrice: newProduct.rentPrice,
         rentalPeriod: newProduct.rentalPeriod,
+        imageUrl: newProduct.imageUrl,
       });
       categories.value = newProduct.categories;
+      selectedFile.value = newProduct.imageUrl
+        ? { id: 0, image_url: newProduct.imageUrl }
+        : null;
     }
   },
   { immediate: true }
@@ -55,6 +67,20 @@ watch(
 const onSubmit = form.handleSubmit((values) => {
   mutation.mutate({ id: props.productId, data: values });
 });
+
+const handleUpload = async (file: File | null) => {
+  await handleFileUpdate(
+    file,
+    selectedFile,
+    ((event: "update" | "next", value?: string) => {
+      if (event === "update" && value) {
+        form.setFieldValue("imageUrl", value);
+      }
+    }) as Step1Emits,
+    (input: TGetPresignedUrlInput) => getPresignedUrlMutation.mutateAsync(input),
+    (input: { url: string; file: File }) => uploadFileMutation.mutateAsync(input)
+  );
+};
 
 const onCancel = () => {
   navigateTo(`/products/${props.productId}`);
@@ -135,6 +161,13 @@ const onCancel = () => {
       <UiCard class="w-full">
         <form @submit.prevent="onSubmit">
           <UiCardContent class="space-y-6 pt-6">
+            <DndImageUpload
+              :model-value="selectedFile"
+              :accept="['image/png', 'image/jpeg', 'image/jpg', 'image/webp']"
+              :max-file-size="5 * 1024 * 1024"
+              @update:model-value="handleUpload"
+            />
+
             <FormTextfield
               label="Title"
               name="title"

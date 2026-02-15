@@ -1,6 +1,10 @@
 <script setup lang="ts">
+import {
+  useFilteredProducts,
+  useInfiniteScroll,
+  useMyProductsState,
+} from "./MyProductsContainer.composables";
 import { getAnimationDelay } from "./MyProductsContainer.helpers";
-import { useFilteredProducts, useInfiniteScroll, useMyProductsState } from "./MyProductsContainer.composables";
 
 const {
   isUserLoading,
@@ -19,7 +23,12 @@ const { products, allProducts } = useFilteredProducts(data, statusFilter);
 
 const { loadMoreTrigger, setLoadMoreTrigger } = useLoadMoreTrigger();
 
-useInfiniteScroll(loadMoreTrigger, hasNextPage, isFetchingNextPage, fetchNextPage);
+useInfiniteScroll(
+  loadMoreTrigger,
+  hasNextPage,
+  isFetchingNextPage,
+  fetchNextPage,
+);
 </script>
 
 <template>
@@ -57,7 +66,10 @@ useInfiniteScroll(loadMoreTrigger, hasNextPage, isFetchingNextPage, fetchNextPag
           </div>
 
           <NuxtLink to="/add-product">
-            <UiButton size="lg" class="shadow-lg shadow-primary/20">
+            <UiButton
+              size="lg"
+              class="shadow-lg shadow-primary/20 cursor-pointer"
+            >
               <Icon name="ph:plus" class="mr-2 h-5 w-5" />
               Add Product
             </UiButton>

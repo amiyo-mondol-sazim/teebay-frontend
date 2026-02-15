@@ -7,6 +7,14 @@ import "vue-sonner/style.css";
     <AppShell>
       <slot />
     </AppShell>
-    <UiToaster />
+    <UiToaster
+      position="top-right"
+      :rich-colors="true"
+      :expand="true"
+      :close-button="false"
+      :duration="4000"
+      :gap="8"
+      theme="system"
+    />
   </div>
 </template>

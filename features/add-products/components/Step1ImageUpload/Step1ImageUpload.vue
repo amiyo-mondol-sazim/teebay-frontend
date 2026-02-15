@@ -40,6 +40,7 @@ const handleUpload = async (file: File | null) => {
     <div class="flex justify-end">
       <UiButton
         :disabled="!props.imageUrl || isProcessing"
+        class="cursor-pointer"
         @click="emit('next')"
       >
         Next

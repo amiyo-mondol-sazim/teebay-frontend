@@ -105,9 +105,7 @@ const handleRentCancel = () => {
   </div>
 
   <div v-else-if="product">
-    <div
-      class="hover-card rounded-xl bg-card p-6 shadow-lg transition-all duration-200"
-    >
+    <div class="rounded-xl bg-card p-6">
       <div class="grid gap-6 md:grid-cols-2 items-start">
         <div
           class="aspect-video rounded-lg bg-muted flex items-center justify-center md:sticky md:top-6 md:self-stretch md:aspect-auto"
@@ -123,13 +121,24 @@ const handleRentCancel = () => {
 
         <div class="flex flex-col h-full">
           <div class="space-y-4 shrink-0">
-            <div>
-              <h1 class="font-serif text-2xl font-bold text-primary">
-                {{ product.title }}
-              </h1>
-              <p class="mt-2 text-muted-foreground">
-                {{ product.description }}
-              </p>
+            <div class="flex justify-between">
+              <div>
+                <h1 class="font-serif text-2xl font-bold text-primary">
+                  {{ product.title }}
+                </h1>
+                <p class="mt-2 text-muted-foreground">
+                  {{ product.description }}
+                </p>
+              </div>
+              <UiButton
+                :loading="isMessaging"
+                :disabled="isOwnProduct"
+                @click="handleMessageOwner"
+                class="cursor-pointer"
+              >
+                <Icon name="heroicons:chat-bubble-left" class="mr-2 h-4 w-4" />
+                Message Owner
+              </UiButton>
             </div>
 
             <div class="flex flex-wrap gap-2">
@@ -168,10 +177,8 @@ const handleRentCancel = () => {
             <ProductActionButtons
               :on-buy="handleBuy"
               :on-rent="handleRent"
-              :on-message="handleMessageOwner"
               :is-buying="isBuying"
               :is-renting="isRenting"
-              :is-messaging="isMessaging"
               :is-own-product="isOwnProduct"
               :product-status="product.status as EProductStatus"
             />
