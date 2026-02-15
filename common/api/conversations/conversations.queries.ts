@@ -43,9 +43,7 @@ export function useMessagesListQuery(
   enabled?: MaybeRef<boolean>,
 ) {
   return useQuery({
-    queryKey: computed(() =>
-      conversationKeys.messages(unref(conversationId).toString()),
-    ),
+    queryKey: computed(() => conversationKeys.messages(unref(conversationId).toString())),
     queryFn: () => getMessages(unref(conversationId)),
     enabled: enabled ?? true,
   });

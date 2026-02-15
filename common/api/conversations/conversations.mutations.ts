@@ -52,10 +52,19 @@ export function useSendMessage() {
 
   return useMutation({
     mutationFn: sendMessage,
-    onSuccess: (_, variables) => {
-      queryClient.invalidateQueries({
-        queryKey: conversationKeys.messages(String(variables.conversationId)),
-      });
+    onSuccess: (data, variables) => {
+      queryClient.setQueryData(
+        conversationKeys.messages(String(variables.conversationId)),
+        (oldData: any) => {
+          if (!oldData) {
+            return { data: [data], meta: { total: 1 } };
+          }
+          return {
+            ...oldData,
+            data: [...oldData.data, data],
+          };
+        },
+      );
     },
     onError: (error) => {
       toast.error(error?.message || "Failed to send message");

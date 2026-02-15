@@ -1,18 +1,19 @@
-import { useQueryClient } from "@tanstack/vue-query";
 import { io, type Socket } from "socket.io-client";
 import { computed, onUnmounted, ref, type Ref, watch } from "vue";
+import { useQueryClient } from "@tanstack/vue-query";
 import type { components } from "~/common/typedefs/api-schema";
 
-import { conversationKeys } from "~/common/api/conversations/conversations.keys";
-import { useMessagesListQuery } from "~/common/api/conversations/conversations.queries";
 import { useSendMessage } from "~/common/api/conversations/conversations.mutations";
+import { useMessagesListQuery } from "~/common/api/conversations/conversations.queries";
+import { conversationKeys } from "~/common/api/conversations/conversations.keys";
 import { getAccessToken } from "~/common/utils/token";
 
 type MessageResponse = components["schemas"]["MessageResponse"];
+type MessagesListResponse = components["schemas"]["MessagesListResponse"];
 
 export function useConversationMessages(conversationId: Ref<number | null>) {
-  const queryClient = useQueryClient();
   const socket = ref<Socket | null>(null);
+  const queryClient = useQueryClient();
   const config = useRuntimeConfig();
 
   const conversationIdValue = computed(() => conversationId.value ?? 0);
@@ -24,6 +25,7 @@ export function useConversationMessages(conversationId: Ref<number | null>) {
     conversationIdValue,
     isConversationIdValid,
   );
+
   const sendMessageMutation = useSendMessage();
 
   const sendMessage = (content: string) => {
@@ -59,27 +61,21 @@ export function useConversationMessages(conversationId: Ref<number | null>) {
 
     socket.value.on("newMessage", (data: MessageResponse) => {
       if (!conversationId.value) return;
+
       const transformedMessage = {
         ...data,
         sender: { id: data.sender.id, email: data.sender.email },
-        readAt: null,
+        readAt: undefined,
       };
+      console.log("New message received:", transformedMessage);
 
       queryClient.setQueryData(
-        conversationKeys.messages(conversationId.value.toString()),
-        (old: unknown) => {
-          const currentData = old as { data?: MessageResponse[] } | undefined;
-          const messages = Array.isArray(currentData?.data)
-            ? currentData.data
-            : Array.isArray(currentData)
-              ? currentData
-              : [];
-
-          const exists = messages.some((m) => m.id === transformedMessage.id);
-          if (exists) return old;
+        conversationKeys.messages(String(conversationId.value)),
+        (oldData: MessagesListResponse | undefined) => {
+          if (!oldData) return oldData;
           return {
-            ...currentData,
-            data: [...messages, transformedMessage] as MessageResponse[],
+            ...oldData,
+            data: [...oldData.data, transformedMessage],
           };
         },
       );
