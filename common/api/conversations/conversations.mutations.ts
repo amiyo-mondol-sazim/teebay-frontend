@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/vue-query";
 import { toast } from "vue-sonner";
+import type { components } from "~/common/typedefs/api-schema";
 import { client } from "../client";
 import { conversationKeys } from "./conversations.keys";
-import type { components } from "~/common/typedefs/api-schema";
 
 type CreateMessageDto = components["schemas"]["CreateMessageDto"];
 type CreateConversationDto = components["schemas"]["CreateConversationDto"];
@@ -48,24 +48,8 @@ const sendMessage = async (
 };
 
 export function useSendMessage() {
-  const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: sendMessage,
-    onSuccess: (data, variables) => {
-      queryClient.setQueryData(
-        conversationKeys.messages(String(variables.conversationId)),
-        (oldData: any) => {
-          if (!oldData) {
-            return { data: [data], meta: { total: 1 } };
-          }
-          return {
-            ...oldData,
-            data: [...oldData.data, data],
-          };
-        },
-      );
-    },
     onError: (error) => {
       toast.error(error?.message || "Failed to send message");
     },

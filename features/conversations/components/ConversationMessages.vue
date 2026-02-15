@@ -161,7 +161,7 @@ watch(messageContent, () => {
       </div>
       <div v-else class="flex flex-col gap-4">
         <MessageBubble
-          v-for="(message, index) in [...(messages?.data ?? [])].reverse()"
+          v-for="message in messages?.data ?? []"
           :key="message.id"
           :message="message"
           :is-from-current-user="message.sender.email === currentUserEmail"

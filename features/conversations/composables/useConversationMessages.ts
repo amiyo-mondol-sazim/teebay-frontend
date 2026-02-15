@@ -67,7 +67,6 @@ export function useConversationMessages(conversationId: Ref<number | null>) {
         sender: { id: data.sender.id, email: data.sender.email },
         readAt: undefined,
       };
-      console.log("New message received:", transformedMessage);
 
       queryClient.setQueryData(
         conversationKeys.messages(String(conversationId.value)),
