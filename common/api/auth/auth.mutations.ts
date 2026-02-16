@@ -15,10 +15,12 @@ const registerFn = async (input: TRegisterInput) => {
   });
 
   if (error) {
+    toast.error(error.message || "Registration failed");
     throw new Error(error.message || "Registration failed");
   }
 
   if (!data) {
+    toast.error("Registration failed");
     throw new Error("Failed to register");
   }
   return data;
@@ -76,10 +78,6 @@ export const useLogoutMutation = () => {
 export const useRegisterMutation = () => {
   const loginMutation = useMutation({
     mutationFn: registerFn,
-    onSuccess: () => {
-      toast("Registration successful. Please log in.");
-      navigateTo("/auth/login");
-    },
   });
   return loginMutation;
 };

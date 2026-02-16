@@ -81,8 +81,8 @@ const onNext = handleSubmit(() => {
         <UiButton
           type="button"
           variant="outline"
-          @click="emit('back')"
           class="cursor-pointer"
+          @click="emit('back')"
         >
           Back
         </UiButton>

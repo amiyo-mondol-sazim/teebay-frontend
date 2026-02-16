@@ -9,7 +9,6 @@ export const editProductSchema = z.object({
     .max(100, "Title must not exceed 100 characters"),
   description: z
     .string()
-    .min(10, "Description must be at least 10 characters")
     .max(1000, "Description must not exceed 1000 characters"),
   categories: z
     .array(z.string())

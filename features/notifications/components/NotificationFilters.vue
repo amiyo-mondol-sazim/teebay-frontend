@@ -29,8 +29,8 @@ const statusFilterModel = computed({
 const typeOptions = [
   { value: ENotificationTypeFilter.ALL, label: "All Types" },
   { value: ENotificationTypeFilter.MESSAGE, label: "Messages" },
-  { value: ENotificationTypeFilter.RENT_REQUEST, label: "Rent Requests" },
-  { value: ENotificationTypeFilter.SALE_REQUEST, label: "Sale Requests" },
+  { value: ENotificationTypeFilter.RENT_REQUEST, label: "Rents" },
+  { value: ENotificationTypeFilter.SALE_REQUEST, label: "Sales" },
 ];
 
 const statusOptions = [

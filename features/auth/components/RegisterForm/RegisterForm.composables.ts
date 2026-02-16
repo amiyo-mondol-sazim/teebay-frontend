@@ -19,13 +19,21 @@ export const useRegister = () => {
   const { mutate, isPending } = useRegisterMutation();
 
   const register = (values: TRegisterInput) => {
-    mutate({
-      firstName: values.firstName,
-      lastName: values.lastName,
-      email: values.email,
-      password: values.password,
-      confirmPassword: values.confirmPassword,
-    });
+    mutate(
+      {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        password: values.password,
+        confirmPassword: values.confirmPassword,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Registration successful. Please log in.");
+          navigateTo("/auth/login");
+        },
+      },
+    );
   };
 
   return {

@@ -1,27 +1,22 @@
-import { useForm } from 'vee-validate';
-import { loginFormSchema } from './LoginForm.helpers';
+import { useForm } from "vee-validate";
+import { loginFormSchema } from "./LoginForm.helpers";
 
 export function useLoginForm() {
   return useForm({
     validationSchema: loginFormSchema,
     initialValues: {
-      email: '',
-      password: '',
+      email: "",
+      password: "",
     },
   });
 }
 
 export function useLogin() {
   const { mutate: loginFn, isPending } = useLoginMutation();
-  const { onLogin, broadcastLogin } = useAuthBroadcaster();
+  const { onLogin } = useAuthBroadcaster();
 
   const login = (params: Parameters<typeof loginFn>[0]) => {
     loginFn(params, {
-      onSuccess: () => {
-        navigateTo(PAGE_URLS.HOME);
-        toast.success('Login successful');
-        broadcastLogin();
-      },
       onError: (error) => {
         toast.error(error.message);
       },

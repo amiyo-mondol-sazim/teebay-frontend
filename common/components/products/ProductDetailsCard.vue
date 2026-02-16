@@ -114,7 +114,7 @@ const handleRentCancel = () => {
             v-if="product.imageUrl"
             :src="product.imageUrl"
             :alt="product.title"
-            class="w-full h-full object-cover rounded-lg"
+            class="max-w-full max-h-full object-contain rounded-lg"
           />
           <span v-else class="text-muted-foreground">Image Placeholder</span>
         </div>

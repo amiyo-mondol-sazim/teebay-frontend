@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { MAX_CATEGORIES } from "./CategorySelector.constants";
+import { AVAILABLE_CATEGORIES } from "~/common/utils/constants";
 import {
   isCategoryDisabled,
   isCategorySelected,
@@ -43,7 +44,7 @@ const handleToggleCategory = (category: string) => {
         >
           <UiCheckbox
             :id="category"
-            :checked="isCategorySelected(props.categories, category)"
+            :model-value="isCategorySelected(props.categories, category)"
             :disabled="isCategoryDisabled(props.categories, category)"
           />
           <UiLabel

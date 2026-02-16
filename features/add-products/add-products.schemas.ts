@@ -1,6 +1,5 @@
 import { toTypedSchema } from "@vee-validate/zod";
 import * as z from "zod";
-import type { TCreateProductInput } from "~/common/typedefs/products";
 
 export const addProductSchema = z.object({
   title: z
@@ -9,8 +8,15 @@ export const addProductSchema = z.object({
     .max(100, "Title must not exceed 100 characters"),
   description: z
     .string()
-    .min(10, "Description must be at least 10 characters")
-    .max(1000, "Description must not exceed 1000 characters"),
+    .optional()
+    .refine(
+      (val) => !val || val.length >= 10,
+      "Description must be at least 10 characters",
+    )
+    .refine(
+      (val) => !val || val.length <= 1000,
+      "Description must not exceed 1000 characters",
+    ),
   categories: z
     .array(z.string())
     .min(1, "Add at least one category")
@@ -32,6 +38,6 @@ export const addProductSchema = z.object({
   rentalPeriod: z.enum(["DAY", "WEEK", "MONTH"], {
     required_error: "Select a rental period",
   }),
-}) satisfies z.ZodType<TCreateProductInput>;
+});
 
 export const validationSchema = toTypedSchema(addProductSchema);

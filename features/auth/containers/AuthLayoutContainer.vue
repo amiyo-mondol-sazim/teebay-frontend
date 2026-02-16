@@ -10,7 +10,6 @@ import bgShadow from "~/assets/images/sigup-bg-shadow.svg";
     <div class="relative z-10 w-full">
       <slot />
     </div>
-    <UiToaster />
     <img
       :src="bgShadow"
       alt="bg shadow"
